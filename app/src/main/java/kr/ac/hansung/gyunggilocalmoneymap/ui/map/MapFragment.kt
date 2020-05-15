@@ -3,6 +3,7 @@ package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -41,6 +42,13 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         map.apply {
             locationSource = this@MapFragment.locationSource
             locationTrackingMode = locationState
+            addOnLocationChangeListener { location ->
+                vm.onChangedMyLocation(location)
+            }
+            addOnCameraIdleListener {
+                vm.onChangedLocation(LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude))
+            }
+
         }
     }
 
