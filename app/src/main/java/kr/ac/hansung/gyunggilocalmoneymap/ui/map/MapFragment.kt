@@ -50,6 +50,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             }
 
         }
+
+        vm.initMap()
     }
 
 
