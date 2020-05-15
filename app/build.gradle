@@ -35,6 +35,10 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
@@ -46,6 +50,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //design
+    implementation "com.google.android.material:material:$material_version"
 
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
@@ -76,4 +83,9 @@ dependencies {
     // Koin for Android Architecture ViewModel
 
     implementation "com.naver.maps:map-sdk:3.8.0"
+
+    //구글 위치 정보
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+
 }
