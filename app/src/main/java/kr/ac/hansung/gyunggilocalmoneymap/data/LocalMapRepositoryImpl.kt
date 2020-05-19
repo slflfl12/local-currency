@@ -8,5 +8,5 @@ class LocalMapRepositoryImpl(
     private val localMapDataSource: LocalMapDataSource
 ) : LocalMapRepository{
 
-    override fun getAllPlace(): Single<LocalMapResponse> = localMapDataSource.getPlaces()
+    override fun getPlaces(pIndex: String): Single<LocalMapResponse> = localMapDataSource.getPlaces(pIndex)
 }

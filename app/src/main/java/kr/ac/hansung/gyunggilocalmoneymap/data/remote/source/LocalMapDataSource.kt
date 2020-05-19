@@ -5,5 +5,5 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.model.LocalMapResponse
 
 interface LocalMapDataSource {
 
-    fun getPlaces() : Single<LocalMapResponse>
+    fun getPlaces(pIndex: String) : Single<LocalMapResponse>
 }

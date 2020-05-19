@@ -7,5 +7,5 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.LocalMapDataSource
 
 class LocalMapDataSourceImpl(private val openApiService: OpenApiService) : LocalMapDataSource {
 
-    override fun getPlaces(): Single<LocalMapResponse> = openApiService.getAllPlaces()
+    override fun getPlaces(pIndex: String): Single<LocalMapResponse> = openApiService.getPlaces(pIndex)
 }

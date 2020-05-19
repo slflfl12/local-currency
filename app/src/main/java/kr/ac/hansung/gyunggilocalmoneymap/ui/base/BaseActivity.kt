@@ -1,6 +1,7 @@
 package kr.ac.hansung.gyunggilocalmoneymap.ui.base
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -22,6 +23,10 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(private val
     override fun onDestroy() {
         vm.clearDisposable()
         super.onDestroy()
+    }
+
+    protected fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
 }

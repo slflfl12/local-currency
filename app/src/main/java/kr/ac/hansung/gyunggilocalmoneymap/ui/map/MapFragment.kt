@@ -3,14 +3,17 @@ package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
 import kr.ac.hansung.gyunggilocalmoneymap.R
+import kr.ac.hansung.gyunggilocalmoneymap.data.model.LocalMapResponse
 import kr.ac.hansung.gyunggilocalmoneymap.databinding.FragmentMapBinding
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseFragment
+import kr.ac.hansung.gyunggilocalmoneymap.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.fragment_map),
@@ -23,7 +26,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
     private var locationState: LocationTrackingMode = LocationTrackingMode.Follow
-
+    private lateinit var markerManager: MarkerManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,6 +37,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             getMapAsync(this@MapFragment)
         }
 
+        initMap()
+        initObserve()
     }
 
 
@@ -49,9 +54,34 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 vm.onChangedLocation(LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude))
             }
 
+
         }
 
-        vm.initMap()
+        markerManager = MarkerManager(context!!, naverMap)
+
+
+    }
+
+    private fun initMap() {
+
+
+        vm.init()
+    }
+
+    private fun initObserve() {
+
+        vm.initEvent.observe(this, Observer {
+            vm.saveDatas()
+        })
+
+        vm._placeDatas.observe(this, Observer {
+            markerManager.setMarkers(it)
+        })
+
+
+        vm.errorResult.observe(this, Observer {
+            showToast(it.toString())
+        })
     }
 
 
