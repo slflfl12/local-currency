@@ -2,13 +2,13 @@ package kr.ac.hansung.gyunggilocalmoneymap.di
 
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.FirebaseDataSource
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.FirebaseDataSourceImpl
-import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.LocalMapDataSource
-import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.LocalMapDataSourceImpl
+import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.MapRemoteDataSource
+import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.MapRemoteDataSourceImpl
 import org.koin.dsl.module
 
 
 val datasourceModule = module {
 
-    single<LocalMapDataSource> { LocalMapDataSourceImpl(get()) }
+    single<MapRemoteDataSource> { MapRemoteDataSourceImpl(get()) }
     single<FirebaseDataSource> { FirebaseDataSourceImpl() }
 }

@@ -3,23 +3,16 @@ package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.naver.maps.geometry.LatLng
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kr.ac.hansung.gyunggilocalmoneymap.data.LocalMapRepository
-import kr.ac.hansung.gyunggilocalmoneymap.data.model.LocalMapResponse
+import kr.ac.hansung.gyunggilocalmoneymap.data.MapRepository
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
 import kr.ac.hansung.gyunggilocalmoneymap.data.model.LocalMapResponse.RegionMnyFacltStu.Place
-import kr.ac.hansung.gyunggilocalmoneymap.util.Event
 import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
-import android.util.Log
 import io.reactivex.Observable
-import io.reactivex.Single
 import kr.ac.hansung.gyunggilocalmoneymap.data.FirebaseRepository
-import timber.log.Timber
 
-class MapViewModel(private val localMapRepository: LocalMapRepository,
+class MapViewModel(private val mapRepository: MapRepository,
                    private val firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
@@ -78,7 +71,7 @@ class MapViewModel(private val localMapRepository: LocalMapRepository,
                 Schedulers.single()
             )
             .concatMap {
-                localMapRepository.getPlaces(it.toString()).toObservable()
+                mapRepository.getPlaces(it.toString()).toObservable()
             }
             .concatMapCompletable {
                 firebaseRepository.savePlaces(it.regionMnyFacltStus[1].places)
