@@ -1,7 +1,7 @@
 package kr.ac.hansung.gyunggilocalmoneymap.data
 
 import io.reactivex.Single
-import kr.ac.hansung.gyunggilocalmoneymap.data.model.LocalMapResponse
+import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.MapRemoteDataSource
 
 class MapRepositoryImpl(

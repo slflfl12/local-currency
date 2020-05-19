@@ -12,6 +12,7 @@ buildscript {
         rxjava_version = '2.2.1'
         rxandroid_verison = '2.1.1'
         material_version = '1.2.0-alpha03'
+        room_version = '2.2.2'
     }
 
     repositories {

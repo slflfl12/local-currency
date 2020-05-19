@@ -7,7 +7,7 @@ import com.naver.maps.geometry.LatLng
 import io.reactivex.schedulers.Schedulers
 import kr.ac.hansung.gyunggilocalmoneymap.data.MapRepository
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
-import kr.ac.hansung.gyunggilocalmoneymap.data.model.LocalMapResponse.RegionMnyFacltStu.Place
+import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
 import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
 import io.reactivex.Observable
 import kr.ac.hansung.gyunggilocalmoneymap.data.FirebaseRepository

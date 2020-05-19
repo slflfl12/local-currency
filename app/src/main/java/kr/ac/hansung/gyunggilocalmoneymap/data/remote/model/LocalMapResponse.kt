@@ -1,4 +1,4 @@
-package kr.ac.hansung.gyunggilocalmoneymap.data.model
+package kr.ac.hansung.gyunggilocalmoneymap.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
