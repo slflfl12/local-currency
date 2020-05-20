@@ -18,5 +18,8 @@ interface MapDao {
     @Query("SELECT * FROM map")
     fun getMaps() : Single<List<MapEntity>>
 
+    @Query("DELETE FROM map")
+    fun deleteAll() : Completable
+
 
 }

@@ -1,6 +1,7 @@
 package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 
 import android.location.Location
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.naver.maps.geometry.LatLng
@@ -10,10 +11,10 @@ import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
 import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
 import io.reactivex.Observable
-import kr.ac.hansung.gyunggilocalmoneymap.data.FirebaseRepository
+import io.reactivex.rxkotlin.addTo
 
-class MapViewModel(private val mapRepository: MapRepository,
-                   private val firebaseRepository: FirebaseRepository
+class MapViewModel(
+    private val mapRepository: MapRepository
 ) : BaseViewModel() {
 
 
@@ -35,9 +36,6 @@ class MapViewModel(private val mapRepository: MapRepository,
         get() = _placeArrayDatas*/
 
 
-
-
-
     private val _errorResult = MutableLiveData<Throwable>()
     val errorResult: LiveData<Throwable>
         get() = _errorResult
@@ -45,7 +43,6 @@ class MapViewModel(private val mapRepository: MapRepository,
     private val _initEvent = SingleLiveEvent<Unit>()
     val initEvent: LiveData<Unit>
         get() = _initEvent
-
 
 
     fun onChangedLocation(latLng: LatLng) {
@@ -63,41 +60,15 @@ class MapViewModel(private val mapRepository: MapRepository,
 
     fun saveDatas() {
 
-        compositeDisposable.add(Observable.fromIterable(1..570)
-            .subscribeOn(
-                Schedulers.io()
-            )
-            .observeOn(
-                Schedulers.single()
-            )
-            .concatMap {
-                mapRepository.getPlaces(it.toString()).toObservable()
-            }
-            .concatMapCompletable {
-                firebaseRepository.savePlaces(it.regionMnyFacltStus[1].places)
-            }
-            .subscribe({
-            }, {
+            mapRepository.saveAll()
+                .subscribe({
 
-            })
-        )
+                }, {
+                    Log.d("save error", it.toString())
+                }).addTo(compositeDisposable)
 
 
-/*        compositeDisposable.add(localMapRepository.getPlaces("1")
-            .subscribeOn(
-                Schedulers.io()
-            )
-            .observeOn(
-                AndroidSchedulers.mainThread()
-            ).subscribe({
-                Log.d("size", it.regionMnyFacltStus[1].places.size.toString())
-                _placeDatas.value = ArrayList(it.regionMnyFacltStus[1].places)
 
-                Log.d("load", "load")
-            }, {
-
-            })
-        )*/
 
     }
 

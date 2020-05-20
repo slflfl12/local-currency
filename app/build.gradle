@@ -16,7 +16,7 @@ android {
         minSdkVersion 28
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
@@ -66,9 +66,10 @@ dependencies {
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
-    // Rxjava
+    // Rx
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_verison"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
@@ -100,9 +101,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 
     //FireStore
-    implementation 'com.google.firebase:firebase-firestore:21.4.1'
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
 
-    //room
+    //Steho
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+
+    //Room
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // For Kotlin use kapt instead of annotationProcessor

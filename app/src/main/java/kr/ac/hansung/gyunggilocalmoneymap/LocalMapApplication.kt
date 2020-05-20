@@ -3,6 +3,7 @@ package kr.ac.hansung.gyunggilocalmoneymap
 import android.app.Application
 import android.util.Log
 import androidx.databinding.library.BuildConfig
+import com.facebook.stetho.Stetho
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import kr.ac.hansung.gyunggilocalmoneymap.di.appModule
@@ -20,6 +21,7 @@ class LocalMapApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        Stetho.initializeWithDefaults(this)
         RxJavaPlugins.setErrorHandler { e ->
             var error = e
             if (error is UndeliverableException) {
@@ -47,6 +49,8 @@ class LocalMapApplication : Application() {
             }
             Log.w("Undeliverable exception received, not sure what to do", error)
         }
+
+
 
         startKoin {
             if (BuildConfig.DEBUG) androidLogger()

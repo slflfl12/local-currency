@@ -1,9 +1,12 @@
 package kr.ac.hansung.gyunggilocalmoneymap.data.remote.source
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse
 
 interface MapRemoteDataSource {
 
     fun getPlaces(pIndex: String) : Single<LocalMapResponse>
+
+    fun saveAll() : Observable<Int>
 }

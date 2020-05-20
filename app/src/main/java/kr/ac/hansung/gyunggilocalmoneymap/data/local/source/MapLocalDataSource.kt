@@ -7,7 +7,11 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.Reg
 
 interface MapLocalDataSource {
 
+    var appVersion: String?
+
     fun insertMaps(places: List<Place>) : Completable
 
     fun getMaps(): Single<List<MapEntity>>
+
+    fun deleteAll(): Completable
 }

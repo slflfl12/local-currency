@@ -3,6 +3,8 @@ package kr.ac.hansung.gyunggilocalmoneymap.di
 import androidx.room.Room
 import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.MapDatabase
+import kr.ac.hansung.gyunggilocalmoneymap.data.local.pref.PreferencesHelper
+import kr.ac.hansung.gyunggilocalmoneymap.data.local.pref.PreferencesHelperImpl
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.network.OpenApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -57,6 +59,10 @@ val networkModule = module {
 
     single {
         get<MapDatabase>().mapDao()
+    }
+
+    single<PreferencesHelper> {
+        PreferencesHelperImpl(androidContext())
     }
 
 }
