@@ -6,6 +6,7 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
+import ted.gun0912.clustering.naver.TedNaverClustering
 
 class MarkerManager(val context: Context, private val naverMap: NaverMap) {
 
@@ -41,6 +42,8 @@ class MarkerManager(val context: Context, private val naverMap: NaverMap) {
                     markers[place] = this
                     places[this] = place
                     map = naverMap
+
+
                 }
             }
         }

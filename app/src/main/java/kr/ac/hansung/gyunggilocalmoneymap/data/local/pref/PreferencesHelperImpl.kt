@@ -5,7 +5,7 @@ import androidx.core.content.edit
 
 
 class PreferencesHelperImpl(
-    private val context: Context
+    context: Context
 ) :PreferencesHelper {
 
     private val preferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)

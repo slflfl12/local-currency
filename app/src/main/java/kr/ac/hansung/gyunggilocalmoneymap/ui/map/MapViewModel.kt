@@ -11,12 +11,17 @@ import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
 import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
+import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
+import timber.log.Timber
 
 class MapViewModel(
     private val mapRepository: MapRepository
 ) : BaseViewModel() {
 
+
+    private val appVersion = mapRepository.appVersion
 
     private val _currentLocation = MutableLiveData<LatLng>()
     val currentLocation: LiveData<LatLng>
@@ -45,6 +50,7 @@ class MapViewModel(
         get() = _initEvent
 
 
+
     fun onChangedLocation(latLng: LatLng) {
         if (_currentLocation.value != latLng) {
             _currentLocation.value = latLng
@@ -58,21 +64,10 @@ class MapViewModel(
         }
     }
 
-    fun saveDatas() {
-
-            mapRepository.saveAll()
-                .subscribe({
-
-                }, {
-                    Log.d("save error", it.toString())
-                }).addTo(compositeDisposable)
 
 
-
-
-    }
-
-    fun init() {
+    private fun init() {
         _initEvent.call()
     }
+
 }

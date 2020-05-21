@@ -37,7 +37,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             getMapAsync(this@MapFragment)
         }
 
-        initMap()
         initObserve()
     }
 
@@ -62,16 +61,12 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     }
 
-    private fun initMap() {
 
-
-        vm.init()
-    }
 
     private fun initObserve() {
 
         vm.initEvent.observe(this, Observer {
-            vm.saveDatas()
+            vm.saveAll()
         })
 
         vm._placeDatas.observe(this, Observer {

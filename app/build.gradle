@@ -100,11 +100,12 @@ dependencies {
     //구글 위치 정보
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 
-    //FireStore
-    implementation 'com.google.firebase:firebase-firestore:21.4.0'
 
     //Steho
     implementation 'com.facebook.stetho:stetho:1.5.1'
+
+    //Lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
 
     //Room
     implementation "androidx.room:room-runtime:$room_version"
@@ -119,4 +120,8 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
     kapt("androidx.room:room-compiler:2.2.0-rc01")
+
+    // naverMap Clusterer
+    implementation 'gun0912.ted:tedclustering-naver:1.0.2'
+
 }

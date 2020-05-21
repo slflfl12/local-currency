@@ -7,6 +7,7 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse
 
 interface MapRepository {
 
+    val appVersion: String?
 
     fun getPlaces(pIndex: String): Single<LocalMapResponse>
 

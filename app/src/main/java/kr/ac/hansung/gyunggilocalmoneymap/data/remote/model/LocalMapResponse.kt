@@ -47,7 +47,7 @@ data class LocalMapResponse(
             val SIGUN_CD: String?,
             val SIGUN_NM: String?,
             @SerializedName("TELNO")
-            val telephone: String?
+            val telePhone: String?
         )
     }
 }

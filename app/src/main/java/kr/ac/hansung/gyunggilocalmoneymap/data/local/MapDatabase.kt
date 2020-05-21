@@ -2,6 +2,7 @@ package kr.ac.hansung.gyunggilocalmoneymap.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import kr.ac.hansung.gyunggilocalmoneymap.data.local.dao.MapDao
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.model.MapEntity
 
 
