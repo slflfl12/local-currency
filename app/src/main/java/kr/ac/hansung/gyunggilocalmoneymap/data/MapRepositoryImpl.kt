@@ -8,6 +8,7 @@ import io.reactivex.Single
 import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.source.MapLocalDataSource
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse
+import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.MapRemoteDataSource
 
 class MapRepositoryImpl(
@@ -18,14 +19,14 @@ class MapRepositoryImpl(
     override val appVersion: String?
         get() = mapLocalDataSource.appVersion
 
-    override fun getPlaces(pIndex: String): Single<LocalMapResponse> =
+    override fun getPlaces(pIndex: String): Single<List<SHPlace>> =
         mapRemoteDataSource.getPlaces(pIndex)
 
     override fun saveAll(): Completable {
         return Observable.fromIterable(1..570).concatMap {
                 mapRemoteDataSource.getPlaces(it.toString()).toObservable()
             }.concatMapCompletable {
-                mapLocalDataSource.insertMaps(it.regionMnyFacltStus[1].places)
+                mapLocalDataSource.insertMaps(it)
         }.doAfterTerminate {
             mapLocalDataSource.appVersion = BuildConfig.VERSION_NAME
             Log.d("ddddddddddd", "dddddddddd")

@@ -65,9 +65,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     private fun initObserve() {
 
-        vm.initEvent.observe(this, Observer {
-            vm.saveAll()
-        })
 
         vm._placeDatas.observe(this, Observer {
             markerManager.setMarkers(it)

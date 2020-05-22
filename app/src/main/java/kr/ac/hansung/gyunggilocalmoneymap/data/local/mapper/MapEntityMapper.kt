@@ -6,13 +6,13 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 
 object MapEntityMapper {
 
-    fun mapToLocal(from: Place): MapEntity = MapEntity(
+    fun mapToLocal(from: SHPlace): MapEntity = MapEntity(
         id = 0L,
         title = from.title,
         telePhone = from.telePhone,
         roadAddress = from.roadAddress,
-        latitude = from.latitude,
-        longitude = from.longitude
+        latitude = from.latitude.toString(),
+        longitude = from.longitude.toString()
     )
 
     fun mapToSHPlace(from: MapEntity): SHPlace = SHPlace(

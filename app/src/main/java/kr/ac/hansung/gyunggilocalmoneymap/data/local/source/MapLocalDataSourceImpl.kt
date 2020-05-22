@@ -8,6 +8,7 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.local.mapper.MapEntityMapper
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.model.MapEntity
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.pref.PreferencesHelper
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
+import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 
 class MapLocalDataSourceImpl(
     private val mapDao: MapDao,
@@ -20,7 +21,7 @@ class MapLocalDataSourceImpl(
             pref.appVersion = value
         }
 
-    override fun insertMaps(places: List<Place>): Completable {
+    override fun insertMaps(places: List<SHPlace>): Completable {
         return mapDao.deleteAll()
             .andThen(Single.just(places))
             .map { it.map(MapEntityMapper::mapToLocal) }
