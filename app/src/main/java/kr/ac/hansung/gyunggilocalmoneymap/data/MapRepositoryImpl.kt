@@ -6,6 +6,7 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
+import kr.ac.hansung.gyunggilocalmoneymap.data.local.mapper.MapEntityMapper
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.source.MapLocalDataSource
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
@@ -44,6 +45,14 @@ class MapRepositoryImpl(
                 mapLocalDataSource.appVersion = BuildConfig.VERSION_NAME
             }*/
 
+    }
+
+    override fun getMapEntities(): Single<List<SHPlace>> {
+        return mapLocalDataSource.getMapEntities()
+            .map { it.map(MapEntityMapper::mapToSHPlace) }
+            .doOnSubscribe { 
+                Log.d("sh 처리중", "sh 처리중")
+            }
     }
 
     override fun deleteAll(): Completable {

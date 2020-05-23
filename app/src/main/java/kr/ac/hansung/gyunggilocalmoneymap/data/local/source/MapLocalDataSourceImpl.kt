@@ -29,9 +29,11 @@ class MapLocalDataSourceImpl(
 
     }
 
-    override fun getMaps(): Single<List<MapEntity>> {
+    override fun getMapEntities(): Single<List<MapEntity>> {
         return mapDao.getMaps()
+
     }
+
 
     override fun deleteAll(): Completable {
         return mapDao.deleteAll()

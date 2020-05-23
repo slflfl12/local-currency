@@ -12,6 +12,8 @@ interface MapRepository {
 
     fun getPlaces(pIndex: String): Single<List<SHPlace>>
 
+    fun getMapEntities() : Single<List<SHPlace>>
+
     fun saveAll(): Completable
 
     fun deleteAll(): Completable

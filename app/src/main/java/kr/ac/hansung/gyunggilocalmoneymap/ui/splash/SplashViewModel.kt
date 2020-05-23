@@ -21,10 +21,9 @@ class SplashViewModel(private val mapRepository: MapRepository) : BaseViewModel(
     init {
         if(appVersion.equals(BuildConfig.VERSION_NAME)) {
             Log.d("sh", "sh $appVersion")
-
+            _loadingCompleteEvent.postValue(1)
         } else {
             Log.d("sh", "sh $appVersion")
-            appVersion = "aaa"
             saveAll()
         }
     }

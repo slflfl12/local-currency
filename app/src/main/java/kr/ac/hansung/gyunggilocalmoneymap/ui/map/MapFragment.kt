@@ -58,7 +58,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
         markerManager = MarkerManager(context!!, naverMap)
 
-
+        vm.getMapEntities()
     }
 
 
@@ -66,8 +66,9 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private fun initObserve() {
 
 
-        vm._placeDatas.observe(this, Observer {
-            markerManager.setMarkers(it)
+        vm.mapEntities.observe(this, Observer {
+            markerManager.setMarkers(ArrayList(it))
+            Log.d("sh hh", "hhhhhhh")
         })
 
 

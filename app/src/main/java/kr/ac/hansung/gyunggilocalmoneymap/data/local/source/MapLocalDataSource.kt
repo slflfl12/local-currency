@@ -12,7 +12,7 @@ interface MapLocalDataSource {
 
     fun insertMaps(places: List<SHPlace>) : Completable
 
-    fun getMaps(): Single<List<MapEntity>>
+    fun getMapEntities(): Single<List<MapEntity>>
 
     fun deleteAll(): Completable
 }
