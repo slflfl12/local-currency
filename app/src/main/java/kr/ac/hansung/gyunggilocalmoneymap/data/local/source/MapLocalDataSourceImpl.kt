@@ -1,5 +1,6 @@
 package kr.ac.hansung.gyunggilocalmoneymap.data.local.source
 
+import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -22,11 +23,9 @@ class MapLocalDataSourceImpl(
         }
 
     override fun insertMaps(places: List<SHPlace>): Completable {
-        return mapDao.deleteAll()
-            .andThen(Single.just(places))
+        return Single.just(places)
             .map { it.map(MapEntityMapper::mapToLocal) }
             .flatMapCompletable { mapDao.insertMaps(it) }
-
     }
 
     override fun getMapEntities(): Single<List<MapEntity>> {

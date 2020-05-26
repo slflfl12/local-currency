@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_loading"
+            android:id="@+id/lottie_splash"
             android:layout_width="match_parent"
             android:layout_height="580dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -22,10 +22,13 @@
             />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie1"
+            android:id="@+id/lottie_progress"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintTop_toBottomOf="@id/lottie_loading"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toBottomOf="@id/lottie_splash"
+            app:lottie_fileName="lottie_progress.json"
+            app:lottie_loop="false"
+            app:lottie_autoPlay="false"
  />
 
 

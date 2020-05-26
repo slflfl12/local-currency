@@ -1,5 +1,6 @@
 package kr.ac.hansung.gyunggilocalmoneymap.ui.splash
 
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -17,11 +18,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.la
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initObserve()
         initView()
+        initObserve()
     }
 
     private fun initView() {
+        lottie_progress.apply {
+            setMaxProgress(1f)
+        }.playAnimation()
     }
 
     private fun initObserve() {
@@ -30,6 +34,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.la
                 finish()
                 startActivity(this)
             }
+        })
+
+        vm.pageLoading.observe(this, Observer {
+            lottie_progress.progress = it
         })
     }
 }
