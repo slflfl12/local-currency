@@ -2,7 +2,7 @@ package kr.ac.hansung.gyunggilocalmoneymap.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class LocalMapResponse(
+data class OpenApiMapResponse(
     @SerializedName("RegionMnyFacltStus")
     val regionMnyFacltStus: List<RegionMnyFacltStu>
 ) {
@@ -45,7 +45,8 @@ data class LocalMapResponse(
             val REFINE_ZIP_CD: String?,
             val REGION_MNY_NM: String?,
             val SIGUN_CD: String?,
-            val SIGUN_NM: String?,
+            @SerializedName("SIGUN_NM")
+            val sigun: String?,
             @SerializedName("TELNO")
             val telePhone: String?
         )

@@ -2,7 +2,7 @@ package kr.ac.hansung.gyunggilocalmoneymap.util
 
 import com.naver.maps.geometry.LatLng
 
-fun LatLng.toDistance(from: LatLng?): Double = from?.let { this?.distanceTo(it) } ?: 0.0
+fun LatLng.toDistance(from: LatLng?): Double = from?.let { this.distanceTo(it) } ?: 0.0
 
 fun LatLng.toDistanceString(from: LatLng?): String {
 
@@ -15,4 +15,11 @@ fun LatLng.toDistanceString(from: LatLng?): String {
         }
         else -> String.format("%.2f m", meter)
     }
+}
+
+//lat,lng
+fun LatLng.toForApiString(): String {
+
+
+    return "$latitude,$longitude"
 }

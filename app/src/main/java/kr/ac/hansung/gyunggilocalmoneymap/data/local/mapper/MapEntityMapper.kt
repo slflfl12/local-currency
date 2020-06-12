@@ -1,7 +1,6 @@
 package kr.ac.hansung.gyunggilocalmoneymap.data.local.mapper
 
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.model.MapEntity
-import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 
 object MapEntityMapper {
@@ -12,7 +11,8 @@ object MapEntityMapper {
         telePhone = from.telePhone,
         roadAddress = from.roadAddress,
         latitude = from.latitude.toString(),
-        longitude = from.longitude.toString()
+        longitude = from.longitude.toString(),
+        sigun = from.sigun
     )
 
     fun mapToSHPlace(from: MapEntity): SHPlace = SHPlace(
@@ -20,7 +20,8 @@ object MapEntityMapper {
         roadAddress = from.roadAddress,
         latitude = from.latitude!!.toDouble(),
         longitude = from.longitude!!.toDouble(),
-        telePhone = from.telePhone
+        telePhone = from.telePhone,
+        sigun = from.sigun
     )
 
 

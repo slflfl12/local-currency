@@ -1,20 +1,17 @@
 package kr.ac.hansung.gyunggilocalmoneymap.data.local.source
 
-import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.dao.MapDao
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.mapper.MapEntityMapper
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.model.MapEntity
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.pref.PreferencesHelper
-import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 
-class MapLocalDataSourceImpl(
+class OpenApiLocalDataSourceImpl(
     private val mapDao: MapDao,
     private val pref: PreferencesHelper
-) : MapLocalDataSource {
+) : OpenApiLocalDataSource {
 
     override var appVersion: String?
         get() = pref.appVersion

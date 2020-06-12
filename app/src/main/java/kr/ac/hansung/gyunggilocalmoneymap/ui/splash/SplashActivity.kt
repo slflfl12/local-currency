@@ -38,6 +38,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.la
 
         vm.pageLoading.observe(this, Observer {
             lottie_progress.progress = it
+            tv_progress.text = String.format(getString(R.string.progress_text), 1)
         })
     }
 }

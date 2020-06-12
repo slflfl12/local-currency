@@ -5,7 +5,6 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
-import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 import ted.gun0912.clustering.naver.TedNaverClustering
 
@@ -53,6 +52,7 @@ class MarkerManager(val context: Context, private val naverMap: NaverMap) {
                 captionText = it.title!!
             }
         }.make()
+
     }
 
     private fun drawMarker(place: SHPlace): Marker {

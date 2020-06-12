@@ -22,5 +22,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_map"
+            android:background="@drawable/background_white_round"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="50dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_refresh"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/background_white_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="현재위치에서 찾기"
+            android:fontFamily="@font/notosans_bold" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

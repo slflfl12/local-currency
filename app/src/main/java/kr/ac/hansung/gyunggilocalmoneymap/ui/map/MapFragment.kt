@@ -1,8 +1,12 @@
 package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
@@ -10,10 +14,8 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
 import kr.ac.hansung.gyunggilocalmoneymap.R
-import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse
 import kr.ac.hansung.gyunggilocalmoneymap.databinding.FragmentMapBinding
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseFragment
-import kr.ac.hansung.gyunggilocalmoneymap.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.fragment_map),
@@ -36,8 +38,9 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             onCreate(savedInstanceState)
             getMapAsync(this@MapFragment)
         }
-
+        initView()
         initObserve()
+
     }
 
 
@@ -58,10 +61,22 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
         markerManager = MarkerManager(context!!, naverMap)
 
-        vm.getMapEntities()
+        //vm.getMapEntities()
     }
 
 
+
+    private fun initView() {
+
+        (activity as AppCompatActivity).setSupportActionBar(binding.tbMap)
+        (activity as AppCompatActivity).supportActionBar?.run {
+            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu_black)
+            setDisplayShowTitleEnabled(false)
+        }
+
+    }
 
     private fun initObserve() {
 
@@ -75,6 +90,17 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         vm.errorResult.observe(this, Observer {
             showToast(it.toString())
         })
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_toolbar, menu)
+
+        val item = menu.findItem(R.id.action_spinner)
+        val spinner = item.actionView
+
+
     }
 
 

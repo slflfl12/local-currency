@@ -6,14 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
-import kr.ac.hansung.gyunggilocalmoneymap.data.MapRepository
+import kr.ac.hansung.gyunggilocalmoneymap.data.OpenApiRepository
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
 import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
-import timber.log.Timber
 
-class SplashViewModel(private val mapRepository: MapRepository) : BaseViewModel() {
+class SplashViewModel(private val openApiRepository: OpenApiRepository) : BaseViewModel() {
 
-    private val appVersion = mapRepository.appVersion
+    private val appVersion = openApiRepository.appVersion
 
     private val _pageLoading = MutableLiveData<Float>()
     val pageLoading: LiveData<Float>
@@ -35,7 +34,7 @@ class SplashViewModel(private val mapRepository: MapRepository) : BaseViewModel(
     private fun saveAll() {
         Log.d("sh saveAll", "sh saveAll()")
         compositeDisposable.add(
-            mapRepository.saveAll()
+            openApiRepository.saveAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.single())
                 .subscribe({
@@ -47,7 +46,7 @@ class SplashViewModel(private val mapRepository: MapRepository) : BaseViewModel(
     }
 
     private fun pageLoading() {
-        mapRepository.pageLoadingSubject
+        openApiRepository.pageLoadingSubject
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .subscribe({

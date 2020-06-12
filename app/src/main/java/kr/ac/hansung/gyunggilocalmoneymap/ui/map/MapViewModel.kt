@@ -4,22 +4,21 @@ import android.location.Location
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.naver.maps.geometry.LatLng
-import io.reactivex.schedulers.Schedulers
-import kr.ac.hansung.gyunggilocalmoneymap.data.MapRepository
-import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
-import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.LocalMapResponse.RegionMnyFacltStu.Place
-import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import kr.ac.hansung.gyunggilocalmoneymap.data.OpenApiRepository
+import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
+import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
 import io.reactivex.rxkotlin.addTo
 import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
+import kr.ac.hansung.gyunggilocalmoneymap.data.NaverMapRepository
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
-import timber.log.Timber
+import kr.ac.hansung.gyunggilocalmoneymap.util.toForApiString
 
 class MapViewModel(
-    private val mapRepository: MapRepository
+    private val openApiRepository: OpenApiRepository,
+    private val naverMapRepository: NaverMapRepository
 ) : BaseViewModel() {
 
 
@@ -59,7 +58,7 @@ class MapViewModel(
     }
 
     fun getMapEntities() {
-        mapRepository.getMapEntities()
+        openApiRepository.getMapEntities()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.single())
             .subscribe({
@@ -69,6 +68,24 @@ class MapViewModel(
                 Log.d("sh Error", it.toString())
             })
             .addTo(compositeDisposable)
+    }
+
+    fun getGeocode(coords: String) {
+        naverMapRepository.getGeocode(coords)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+
+            }
+            ,{
+
+                })
+    }
+
+    fun onClickRefresh() {
+        _currentLocation.value?.let {
+            getGeocode(it.toForApiString())
+        }
     }
 
 
