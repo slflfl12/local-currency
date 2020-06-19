@@ -30,6 +30,8 @@ class OpenApiLocalDataSourceImpl(
 
     }
 
+    override fun getMapEntitiesBySi(si:String): Single<List<MapEntity>> = mapDao.getMapsBySi(si)
+
 
     override fun deleteAll(): Completable {
         return mapDao.deleteAll()

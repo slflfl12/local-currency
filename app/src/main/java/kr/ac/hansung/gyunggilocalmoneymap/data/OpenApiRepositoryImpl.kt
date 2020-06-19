@@ -22,34 +22,26 @@ class OpenApiRepositoryImpl(
     override val pageLoadingSubject: BehaviorSubject<Float>
         get() = openApiRemoteDataSource.pageLoadingSubject
 
-    override fun getPlaces(pIndex: String): Single<List<SHPlace>> =
-        openApiRemoteDataSource.getPlaces(pIndex)
+    override fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>> =
+        openApiRemoteDataSource.getPlacesByIndex(pIndex)
 
     override fun saveAll(): Completable {
         return openApiLocalDataSource.deleteAll()
             .andThen(Observable.fromIterable(1..570))
             .flatMapSingle { page ->
-                pageLoadingSubject.onNext(page / 570f)
-                openApiRemoteDataSource.getPlaces(page.toString())
+                pageLoadingSubject.onNext((page / 570).toFloat())
+                Log.d(
+                    "sh loading repository",
+                    (page / 570f).toString()
+                )
+                openApiRemoteDataSource.getPlacesByIndex(page.toString())
             }.concatMapCompletable {
                 openApiLocalDataSource.insertMaps(it)
-            }.doOnTerminate{
-                openApiLocalDataSource.appVersion = BuildConfig.VERSION_NAME
+            }.doOnTerminate {
+                openApiLocalDataSource.appVersion =
+                    BuildConfig.VERSION_NAME
                 Log.d("sh caching", "sh caching")
             }
-
-
-/*        return mapRemoteDataSource.saveAll()
-            .concatMap {
-                mapRemoteDataSource.getPlaces(it.toString()).toObservable()
-            }
-            .concatMapCompletable {
-                mapLocalDataSource.insertMaps(it.regionMnyFacltStus[1].places)
-            }
-            .doAfterTerminate {
-                mapLocalDataSource.appVersion = BuildConfig.VERSION_NAME
-            }*/
-
     }
 
     override fun getMapEntities(): Single<List<SHPlace>> {
@@ -58,6 +50,11 @@ class OpenApiRepositoryImpl(
             .doOnSubscribe {
                 Log.d("sh 처리중", "sh 처리중")
             }
+    }
+
+    override fun getPlacesBySi(si: String): Single<List<SHPlace>> {
+        return openApiLocalDataSource.getMapEntitiesBySi(si)
+            .map {it.map(MapEntityMapper::mapToSHPlace) }
     }
 
     override fun deleteAll(): Completable {

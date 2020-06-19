@@ -11,9 +11,9 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.OpenApiRepository
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
 import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
 import io.reactivex.rxkotlin.addTo
-import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
 import kr.ac.hansung.gyunggilocalmoneymap.data.NaverMapRepository
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
+import kr.ac.hansung.gyunggilocalmoneymap.util.siguntoSi
 import kr.ac.hansung.gyunggilocalmoneymap.util.toForApiString
 
 class MapViewModel(
@@ -21,6 +21,10 @@ class MapViewModel(
     private val naverMapRepository: NaverMapRepository
 ) : BaseViewModel() {
 
+
+    private val _currentCameraSigun = MutableLiveData<String>()
+    val currentCameraSigun: LiveData<String>
+        get() = _currentCameraSigun
 
     private val _currentLocation = MutableLiveData<LatLng>()
     val currentLocation: LiveData<LatLng>
@@ -30,10 +34,32 @@ class MapViewModel(
     val currentMyLocation: LiveData<LatLng>
         get() = _currentMyLocation
 
+    private val _currentNearByValue = MutableLiveData<Float>(1.5f)
+    val currentNearByValue: LiveData<Float>
+        get() = _currentNearByValue
 
-    private val _mapEntities = MutableLiveData<List<SHPlace>>()
-    val mapEntities: LiveData<List<SHPlace>>
-        get() = _mapEntities
+    private val _sigunSpinnerItem = MutableLiveData<String>("성남시")
+    val sigunSpinnerItem: LiveData<String>
+        get() = _sigunSpinnerItem
+
+
+        private val _places = MutableLiveData<List<SHPlace>>()
+    val places: LiveData<List<SHPlace>>
+        get() = _places
+
+    private val _sigunSelectedEvent = SingleLiveEvent<String>()
+    val sigunSelectedEvent: LiveData<String>
+        get() = _sigunSelectedEvent
+
+    private val _getNearBySelectedEvent = SingleLiveEvent<Float>()
+    val getNearBySelectedEvent: LiveData<Float>
+        get() = _getNearBySelectedEvent
+
+
+
+
+
+
 
 
 
@@ -62,36 +88,50 @@ class MapViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.single())
             .subscribe({
-                _mapEntities.postValue(it)
+                _places.postValue(it)
                 Log.d("sh mapEntities = ", it.size.toString())
             }, {
                 Log.d("sh Error", it.toString())
             })
             .addTo(compositeDisposable)
     }
+    
 
-    fun getGeocode(coords: String) {
-        naverMapRepository.getGeocode(coords)
+    private fun getGeocode(coords: LatLng) {
+        naverMapRepository.getGeocode(coords.toForApiString())
             .subscribeOn(Schedulers.io())
+            .map{ it.results[0].region.area2.name.siguntoSi() }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-
+            .subscribe({sigun ->
+                sigun?.let {
+                    _currentCameraSigun.value = it
+                }
+                Log.d("sh sigun", sigun)
             }
             ,{
 
-                })
+                }).addTo(compositeDisposable)
     }
 
-    fun onClickRefresh() {
-        _currentLocation.value?.let {
-            getGeocode(it.toForApiString())
-        }
+    private fun getPlacesBySi(si: String) {
+        openApiRepository.getPlacesBySi(si)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe( {
+                _places.value = it
+            }, {
+
+            }).addTo(compositeDisposable)
+    }
+
+    fun onClickNearByRefresh() {
     }
 
 
     fun onChangedLocation(latLng: LatLng) {
         if (_currentLocation.value != latLng) {
             _currentLocation.value = latLng
+            getGeocode(latLng)
         }
     }
 
@@ -100,6 +140,15 @@ class MapViewModel(
         if (_currentMyLocation.value != latLng) {
             _currentMyLocation.value = latLng
         }
+    }
+
+    fun setNearByValue(distance: Float) {
+        _currentNearByValue.value = distance
+    }
+
+    fun setSigunItem(sigun: String) {
+        _sigunSpinnerItem.value = sigun
+        Log.d("sh sigunSpinner", sigun)
     }
 
 

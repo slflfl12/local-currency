@@ -6,6 +6,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
@@ -29,6 +34,13 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private lateinit var locationSource: FusedLocationSource
     private var locationState: LocationTrackingMode = LocationTrackingMode.Follow
     private lateinit var markerManager: MarkerManager
+
+
+    private var isFabOpen = false
+    private lateinit var fabOpen: Animation
+    private lateinit var fabClose: Animation
+    private lateinit var rotateForward: Animation
+    private lateinit var rotateBackward: Animation
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,6 +79,11 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
 
     private fun initView() {
+        setHasOptionsMenu(true)
+        fabOpen = AnimationUtils.loadAnimation(context, R.anim.fab_open)
+        fabClose = AnimationUtils.loadAnimation(context, R.anim.fab_close)
+        rotateForward = AnimationUtils.loadAnimation(context, R.anim.rotate_forward)
+        rotateBackward = AnimationUtils.loadAnimation(context, R.anim.rotate_backward)
 
         (activity as AppCompatActivity).setSupportActionBar(binding.tbMap)
         (activity as AppCompatActivity).supportActionBar?.run {
@@ -76,12 +93,24 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             setDisplayShowTitleEnabled(false)
         }
 
+        binding.fab.setOnClickListener {
+            animateFab()
+        }
+
+        binding.fab1.setOnClickListener {
+            vm.setNearByValue(1.5f)
+        }
+
+        binding.fab2.setOnClickListener {
+            vm.setNearByValue(2f)
+        }
+
     }
 
     private fun initObserve() {
 
 
-        vm.mapEntities.observe(this, Observer {
+        vm.places.observe(this, Observer {
             markerManager.setMarkers(ArrayList(it))
             Log.d("sh hh", "hhhhhhh")
         })
@@ -90,6 +119,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         vm.errorResult.observe(this, Observer {
             showToast(it.toString())
         })
+
+
     }
 
     @SuppressLint("RestrictedApi")
@@ -97,10 +128,64 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar, menu)
 
-        val item = menu.findItem(R.id.action_spinner)
-        val spinner = item.actionView
+
+        val spinnerItem = menu.findItem(R.id.action_spinner)
+        val spinner = spinnerItem.actionView as Spinner
+
+        ArrayAdapter.createFromResource(context!!,R.array.sigun,
+            android.R.layout.simple_spinner_item
+            ).also {adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+            spinner.adapter = adapter
+        }
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
 
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            )
+            {
+                vm.setSigunItem(parent?.getItemAtPosition(position).toString())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        val searchItem = menu.findItem(R.id.action_search).actionView
+
+    }
+
+    private fun animateFab() {
+
+        if(isFabOpen) {
+            binding.fab.startAnimation(rotateForward)
+            binding.fab1.apply {
+                startAnimation(fabClose)
+                visibility = View.INVISIBLE
+            }
+            binding.fab2.apply {
+                startAnimation(fabClose)
+                visibility = View.INVISIBLE
+            }
+
+            isFabOpen = false;
+        } else {
+            binding.fab.startAnimation(rotateBackward)
+            binding.fab1.apply {
+                startAnimation(fabOpen)
+                visibility = View.VISIBLE
+            }
+            binding.fab2.apply {
+                startAnimation(fabOpen)
+                visibility = View.VISIBLE
+            }
+            isFabOpen = true;
+        }
     }
 
 

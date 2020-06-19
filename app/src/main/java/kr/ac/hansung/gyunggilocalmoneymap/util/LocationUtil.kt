@@ -1,8 +1,11 @@
 package kr.ac.hansung.gyunggilocalmoneymap.util
 
+import android.util.Log
 import com.naver.maps.geometry.LatLng
 
 fun LatLng.toDistance(from: LatLng?): Double = from?.let { this.distanceTo(it) } ?: 0.0
+
+
 
 fun LatLng.toDistanceString(from: LatLng?): String {
 
@@ -21,5 +24,5 @@ fun LatLng.toDistanceString(from: LatLng?): String {
 fun LatLng.toForApiString(): String {
 
 
-    return "$latitude,$longitude"
+    return "$longitude,$latitude"
 }

@@ -10,7 +10,7 @@ class OpenApiRemoteDataSourceImpl(private val openApiService: OpenApiService) : 
 
     override val pageLoadingSubject = BehaviorSubject.createDefault<Float>(0f)
 
-    override fun getPlaces(pIndex: String): Single<List<SHPlace>> = openApiService.getPlaces(pIndex)
+    override fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>> = openApiService.getPlaces(pIndex)
         .map {
             it.regionMnyFacltStus[1].places.filter { place ->
                 place.latitude != null && place.longitude != null
@@ -18,6 +18,7 @@ class OpenApiRemoteDataSourceImpl(private val openApiService: OpenApiService) : 
         }.map {
             it.map(SHPlaceRemoteMapper::mapToData)
         }
+
 
 
 }

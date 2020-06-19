@@ -11,7 +11,9 @@ interface OpenApiRepository {
 
     val pageLoadingSubject: BehaviorSubject<Float>
 
-    fun getPlaces(pIndex: String): Single<List<SHPlace>>
+    fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>>
+
+    fun getPlacesBySi(si: String) : Single<List<SHPlace>>
 
     fun getMapEntities() : Single<List<SHPlace>>
 

@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 private const val OPEN_API_BASE_URL = "https://openapi.gg.go.kr/"
-private const val NAVER_REVERSE_GEOCODE_BASE_URL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc"
+private const val NAVER_REVERSE_GEOCODE_BASE_URL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/"
 
 
 val networkModule = module {

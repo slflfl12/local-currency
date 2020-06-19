@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface ReverseGeoCodeService {
 
 
-    @GET("?request=coordsToaddr&sourcecrs=epsg:4326&output=json&orders=roadaddr")
+    @GET("gc?request=coordsToaddr&sourcecrs=epsg:4326&output=json")
     fun getGeocode(@Query("coords") coords: String): Single<GeocodeResponse>
 }
