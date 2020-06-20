@@ -28,7 +28,7 @@ abstract class BaseFragment<B: ViewDataBinding, VM: BaseViewModel>(private val l
     }
 
     override fun onDestroyView() {
-        vm.clearDisposable()
+        vm.unbindViewModel()
         super.onDestroyView()
     }
 

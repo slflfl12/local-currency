@@ -13,7 +13,7 @@ interface OpenApiLocalDataSource {
 
     fun getMapEntities(): Single<List<MapEntity>>
 
-    fun getMapEntitiesBySi(si: String): Single<List<MapEntity>>
+    fun getMapEntitiesBySigun(si: String): Single<List<MapEntity>>
 
     fun deleteAll(): Completable
 }

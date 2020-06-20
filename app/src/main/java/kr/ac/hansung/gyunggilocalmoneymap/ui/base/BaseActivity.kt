@@ -20,9 +20,9 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(private val
         binding.lifecycleOwner = this
     }
 
-    override fun onDestroy() {
-        vm.clearDisposable()
-        super.onDestroy()
+    override fun onPause() {
+        vm.unbindViewModel()
+        super.onPause()
     }
 
     protected fun showToast(text: String) {

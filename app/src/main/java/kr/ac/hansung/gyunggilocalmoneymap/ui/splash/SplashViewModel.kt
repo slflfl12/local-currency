@@ -14,9 +14,12 @@ class SplashViewModel(private val openApiRepository: OpenApiRepository) : BaseVi
 
     private val appVersion = openApiRepository.appVersion
 
+    val loadingSubject = openApiRepository.pageLoadingSubject
+
     private val _pageLoading = MutableLiveData<Float>()
     val pageLoading: LiveData<Float>
         get() = _pageLoading
+
 
     val _loadingCompleteEvent = SingleLiveEvent<Int>()
 

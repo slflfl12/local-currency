@@ -12,12 +12,17 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import kotlinx.android.synthetic.main.fragment_map.*
 import kr.ac.hansung.gyunggilocalmoneymap.R
 import kr.ac.hansung.gyunggilocalmoneymap.databinding.FragmentMapBinding
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseFragment
@@ -28,6 +33,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
 
     override val vm: MapViewModel by viewModel()
+    private val compositeDisposable = CompositeDisposable()
 
 
     private lateinit var naverMap: NaverMap
@@ -80,6 +86,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     private fun initView() {
         setHasOptionsMenu(true)
+
         fabOpen = AnimationUtils.loadAnimation(context, R.anim.fab_open)
         fabClose = AnimationUtils.loadAnimation(context, R.anim.fab_close)
         rotateForward = AnimationUtils.loadAnimation(context, R.anim.rotate_forward)
@@ -111,16 +118,32 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
 
         vm.places.observe(this, Observer {
-            markerManager.setMarkers(ArrayList(it))
-            Log.d("sh hh", "hhhhhhh")
+            it?.let {
+                markerManager.setMarkers(ArrayList(it))
+                Log.d("sh hh", "hhhhhhh")
+            }
         })
 
 
-        vm.errorResult.observe(this, Observer {
+        vm.errorMessage.observe(this, Observer {
             showToast(it.toString())
         })
 
+        vm.sigunSpinnerItem.observe(this, Observer {
+            it?.let {
+                vm.getPlacesBySigun(it)
+            }
+        })
 
+
+    }
+
+    private fun bindViewModel() {
+
+        vm.loadingSubject
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{ lottie_loading.isVisible = it}
+            .addTo(compositeDisposable)
     }
 
     @SuppressLint("RestrictedApi")
@@ -149,6 +172,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             )
             {
                 vm.setSigunItem(parent?.getItemAtPosition(position).toString())
+                Log.d("sh sigunSelected", parent?.getItemAtPosition(position).toString())
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -209,12 +233,14 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
+        bindViewModel()
     }
 
     override fun onPause() {
         super.onPause()
         binding.mapView.onResume()
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -229,6 +255,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     override fun onDestroyView() {
         super.onDestroyView()
         binding.mapView.onDestroy()
+        compositeDisposable.clear()
     }
 
     override fun onLowMemory() {

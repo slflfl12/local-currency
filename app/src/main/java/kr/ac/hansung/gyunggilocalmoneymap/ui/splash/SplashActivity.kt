@@ -4,6 +4,9 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.activity_splash.*
 import kr.ac.hansung.gyunggilocalmoneymap.R
 import kr.ac.hansung.gyunggilocalmoneymap.databinding.ActivitySplashBinding
@@ -14,6 +17,7 @@ import org.koin.android.ext.android.inject
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.layout.activity_splash) {
 
     override val vm: SplashViewModel by inject()
+    private val compositeDisposable = CompositeDisposable()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +27,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.la
     }
 
     private fun initView() {
+        bindViewModel()
         lottie_progress.apply {
             setMaxProgress(1f)
         }.playAnimation()
@@ -40,5 +45,19 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.la
             lottie_progress.progress = it
             tv_progress.text = String.format(getString(R.string.progress_text), 1)
         })
+    }
+
+    private fun bindViewModel() {
+        vm.loadingSubject
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                lottie_progress.progress = it
+                tv_progress.text = String.format(getString(R.string.progress_text), 1)
+            }.addTo(compositeDisposable)
+    }
+
+    override fun onPause() {
+        compositeDisposable.clear()
+        super.onPause()
     }
 }

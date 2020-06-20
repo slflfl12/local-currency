@@ -11,9 +11,10 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.OpenApiRepository
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
 import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
 import io.reactivex.rxkotlin.addTo
+import io.reactivex.subjects.BehaviorSubject
 import kr.ac.hansung.gyunggilocalmoneymap.data.NaverMapRepository
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
-import kr.ac.hansung.gyunggilocalmoneymap.util.siguntoSi
+import kr.ac.hansung.gyunggilocalmoneymap.util.splitFirst
 import kr.ac.hansung.gyunggilocalmoneymap.util.toForApiString
 
 class MapViewModel(
@@ -22,7 +23,7 @@ class MapViewModel(
 ) : BaseViewModel() {
 
 
-    private val _currentCameraSigun = MutableLiveData<String>()
+    private val _currentCameraSigun = MutableLiveData<String>().apply { postValue("성남시")}
     val currentCameraSigun: LiveData<String>
         get() = _currentCameraSigun
 
@@ -34,18 +35,19 @@ class MapViewModel(
     val currentMyLocation: LiveData<LatLng>
         get() = _currentMyLocation
 
-    private val _currentNearByValue = MutableLiveData<Float>(1.5f)
+    private val _currentNearByValue = MutableLiveData<Float>().apply {postValue(1.5f)}
     val currentNearByValue: LiveData<Float>
         get() = _currentNearByValue
 
-    private val _sigunSpinnerItem = MutableLiveData<String>("성남시")
+    private val _sigunSpinnerItem = MutableLiveData<String>()
     val sigunSpinnerItem: LiveData<String>
         get() = _sigunSpinnerItem
 
 
-        private val _places = MutableLiveData<List<SHPlace>>()
+    private val _places = MutableLiveData<List<SHPlace>>()
     val places: LiveData<List<SHPlace>>
         get() = _places
+
 
     private val _sigunSelectedEvent = SingleLiveEvent<String>()
     val sigunSelectedEvent: LiveData<String>
@@ -55,12 +57,7 @@ class MapViewModel(
     val getNearBySelectedEvent: LiveData<Float>
         get() = _getNearBySelectedEvent
 
-
-
-
-
-
-
+    val loadingSubject = BehaviorSubject.createDefault(false)
 
 
 /*    private val _placeArrayDatas: LiveData<Event<ArrayList<Place>>> = Transformations.map(_placeDatas) {
@@ -71,9 +68,9 @@ class MapViewModel(
         get() = _placeArrayDatas*/
 
 
-    private val _errorResult = MutableLiveData<Throwable>()
-    val errorResult: LiveData<Throwable>
-        get() = _errorResult
+    private val _errorMessage = MutableLiveData<Throwable>()
+    val errorMessage: LiveData<Throwable>
+        get() = _errorMessage
 
     private val _initEvent = SingleLiveEvent<Unit>()
     val initEvent: LiveData<Unit>
@@ -91,36 +88,43 @@ class MapViewModel(
                 _places.postValue(it)
                 Log.d("sh mapEntities = ", it.size.toString())
             }, {
-                Log.d("sh Error", it.toString())
+                _errorMessage.value = it
             })
             .addTo(compositeDisposable)
     }
-    
 
-    private fun getGeocode(coords: LatLng) {
+
+    fun getGeocode(coords: LatLng) {
         naverMapRepository.getGeocode(coords.toForApiString())
             .subscribeOn(Schedulers.io())
-            .map{ it.results[0].region.area2.name.siguntoSi() }
+            .map { it.results[0].region.area2.name.splitFirst() }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({sigun ->
+            .subscribe({ sigun ->
                 sigun?.let {
                     _currentCameraSigun.value = it
                 }
                 Log.d("sh sigun", sigun)
             }
-            ,{
-
+                , {
+                    _errorMessage.value = it
                 }).addTo(compositeDisposable)
     }
 
-    private fun getPlacesBySi(si: String) {
-        openApiRepository.getPlacesBySi(si)
+    fun getPlacesBySigun(sigun: String) {
+        openApiRepository.getPlacesBySigun(sigun)
             .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                loadingSubject.onNext(true)
+            }
+            .doAfterTerminate {
+                loadingSubject.onNext(false)
+            }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe( {
+            .subscribe({
                 _places.value = it
+                Log.d("sh getPlacesBySi", it.toString())
             }, {
-
+                _errorMessage.value = it
             }).addTo(compositeDisposable)
     }
 
@@ -131,7 +135,7 @@ class MapViewModel(
     fun onChangedLocation(latLng: LatLng) {
         if (_currentLocation.value != latLng) {
             _currentLocation.value = latLng
-            getGeocode(latLng)
+            //getGeocode(latLng)
         }
     }
 
@@ -152,7 +156,7 @@ class MapViewModel(
     }
 
 
-    private fun init() {
+    fun init() {
         _initEvent.call()
     }
 

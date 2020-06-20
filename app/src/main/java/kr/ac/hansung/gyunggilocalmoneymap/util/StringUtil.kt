@@ -1,6 +1,6 @@
 package kr.ac.hansung.gyunggilocalmoneymap.util
 
-fun String.siguntoSi(): String {
+fun String.splitFirst(): String {
 
     if (this.contains(" ")) {
         return this.split(" ")[0]

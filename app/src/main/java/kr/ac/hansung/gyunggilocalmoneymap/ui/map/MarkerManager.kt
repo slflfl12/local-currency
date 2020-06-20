@@ -1,7 +1,7 @@
 package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 
 import android.content.Context
-import com.naver.maps.geometry.LatLng
+import android.util.Log
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
@@ -10,55 +10,69 @@ import ted.gun0912.clustering.naver.TedNaverClustering
 
 class MarkerManager(val context: Context, private val naverMap: NaverMap) {
 
-    private val places = HashMap<Marker, SHPlace>()
+    private val markerProperties = HashMap<Marker, SHPlace>()
     private val markers = HashMap<SHPlace, Marker>()
 
-    private val cluster = TedNaverClustering.with<SHPlace>(context, naverMap)
+    private val cluster = TedNaverClustering.with<SHPlace>(context, naverMap).make()
 
-    fun setMarkers(placeList: ArrayList<SHPlace>) {
-        println("set")
-        removeMarkers()
-        addMarkers(placeList)
-
+    fun setMarkers(markerProperties: ArrayList<SHPlace>) {
+        removeMarkers(markerProperties)
+        addMarkers(markerProperties)
+        Log.d("sh setMarker", "sh, setMarker")
     }
 
 
-    private fun removeMarkers() {
-        val iterator = markers.iterator()
+    private fun removeMarkers(markerArray: ArrayList<SHPlace>) {
+/*        val iterator = markers.iterator()
         while (iterator.hasNext()) {
             var hash = iterator.next()
             var place = hash.key
             markers[place]?.run {
                 map = null
-                places.remove(this)
+                markerProperties.remove(this)
                 iterator.remove()
             }
+        }*/
+        val removeMarkerProperties = ArrayList<SHPlace>()
+        for (markerProperty in markers.keys) { //현재 맵에 띄워진 마커들
+            for (newMarker in markerArray) { // 추가하려는 마커들
+                if (markerProperty.equals(newMarker).not()) {
+                    removeMarkerProperties.add(markerProperty)
+                }
+            }
         }
+
+        for (removeMarker in removeMarkerProperties) {
+            markers[removeMarker]?.run {
+                markers.remove(removeMarker)
+                markerProperties.remove(this)
+                cluster.removeItem(removeMarker)
+            }
+        }
+
+
     }
 
     private fun addMarkers(placeList: ArrayList<SHPlace>) {
-/*        for (place in placeList) {
+        for (place in placeList) {
             if (markers.containsKey(place).not()) {
-                drawMarker(place).run {
+                makeMarker(place).run {
                     markers[place] = this
-                    places[this] = place
-                    map = naverMap
+                    markerProperties[this] = place
+                    cluster.addItem(place)
                 }
             }
-        }*/
+        }
+        val markerArray: List<SHPlace> = ArrayList<SHPlace>(markerProperties.values)
 
-        cluster.items(placeList).customMarker {
-            Marker().apply {
-                captionText = it.title!!
-            }
-        }.make()
+
+
 
     }
 
-    private fun drawMarker(place: SHPlace): Marker {
+    private fun makeMarker(place: SHPlace): Marker {
         place.let { place ->
             return Marker().apply {
-                position = LatLng(place.latitude, place.longitude)
                 captionText = place.title!!
                 onClickListener = Overlay.OnClickListener {
 

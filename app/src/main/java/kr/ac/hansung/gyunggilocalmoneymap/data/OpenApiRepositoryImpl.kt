@@ -52,8 +52,8 @@ class OpenApiRepositoryImpl(
             }
     }
 
-    override fun getPlacesBySi(si: String): Single<List<SHPlace>> {
-        return openApiLocalDataSource.getMapEntitiesBySi(si)
+    override fun getPlacesBySigun(si: String): Single<List<SHPlace>> {
+        return openApiLocalDataSource.getMapEntitiesBySigun(si)
             .map {it.map(MapEntityMapper::mapToSHPlace) }
     }
 

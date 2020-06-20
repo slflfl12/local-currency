@@ -13,7 +13,7 @@ interface OpenApiRepository {
 
     fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>>
 
-    fun getPlacesBySi(si: String) : Single<List<SHPlace>>
+    fun getPlacesBySigun(si: String) : Single<List<SHPlace>>
 
     fun getMapEntities() : Single<List<SHPlace>>
 
