@@ -1,5 +1,8 @@
 package kr.ac.hansung.gyunggilocalmoneymap.util
 
+import android.content.Context
+import android.widget.Toast
+
 fun String.splitFirst(): String {
 
     if (this.contains(" ")) {
@@ -7,4 +10,8 @@ fun String.splitFirst(): String {
     } else {
         return this
     }
+}
+
+fun showToast(context: Context, text: String) {
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }

@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import kr.ac.hansung.gyunggilocalmoneymap.R
 import kr.ac.hansung.gyunggilocalmoneymap.databinding.FragmentMapBinding
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseFragment
+import kr.ac.hansung.gyunggilocalmoneymap.util.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.fragment_map),
@@ -126,7 +127,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
 
         vm.errorMessage.observe(this, Observer {
-            showToast(it.toString())
+            showToast(requireContext(), it.toString())
         })
 
         vm.sigunSpinnerItem.observe(this, Observer {

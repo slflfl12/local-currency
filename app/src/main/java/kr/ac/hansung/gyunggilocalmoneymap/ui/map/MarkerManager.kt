@@ -2,18 +2,26 @@ package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 
 import android.content.Context
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
 import com.naver.maps.map.NaverMap
+import com.naver.maps.map.overlay.Align
+import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
+import kr.ac.hansung.gyunggilocalmoneymap.R
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 import ted.gun0912.clustering.naver.TedNaverClustering
 
-class MarkerManager(val context: Context, private val naverMap: NaverMap) {
+class MarkerManager(private val context: Context, private val naverMap: NaverMap) {
 
     private val markerProperties = HashMap<Marker, SHPlace>()
     private val markers = HashMap<SHPlace, Marker>()
 
-    private val cluster = TedNaverClustering.with<SHPlace>(context, naverMap).make()
+    private val cluster = TedNaverClustering.with<SHPlace>(context, naverMap)
+        .customMarker(::makeMarker)
+        .make()
 
     fun setMarkers(markerProperties: ArrayList<SHPlace>) {
         removeMarkers(markerProperties)
@@ -23,16 +31,7 @@ class MarkerManager(val context: Context, private val naverMap: NaverMap) {
 
 
     private fun removeMarkers(markerArray: ArrayList<SHPlace>) {
-/*        val iterator = markers.iterator()
-        while (iterator.hasNext()) {
-            var hash = iterator.next()
-            var place = hash.key
-            markers[place]?.run {
-                map = null
-                markerProperties.remove(this)
-                iterator.remove()
-            }
-        }*/
+
         val removeMarkerProperties = ArrayList<SHPlace>()
         for (markerProperty in markers.keys) { //현재 맵에 띄워진 마커들
             for (newMarker in markerArray) { // 추가하려는 마커들
@@ -63,9 +62,6 @@ class MarkerManager(val context: Context, private val naverMap: NaverMap) {
                 }
             }
         }
-        val markerArray: List<SHPlace> = ArrayList<SHPlace>(markerProperties.values)
-
-
 
 
     }
@@ -82,5 +78,15 @@ class MarkerManager(val context: Context, private val naverMap: NaverMap) {
 
         }
 
+    }
+
+    inner class InfoWindowAdapter(private val markerProperty: SHPlace) : InfoWindow.ViewAdapter() {
+        private val view = LayoutInflater.from(context).inflate(R.layout.item_marker_name, null)
+        private val name = view.findViewById<TextView>(R.id.tv_marker_name)
+
+        override fun getView(p0: InfoWindow): View {
+            name.text = markerProperty.title
+            return view
+        }
     }
 }

@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.DialogFragment
 
-abstract class BaseFragment<B: ViewDataBinding, VM: BaseViewModel>(private val layoutResId: Int) : Fragment() {
+abstract class BaseDialogFragment<B : ViewDataBinding, VM : BaseViewModel>(private val layoutResId: Int)
+    : DialogFragment() {
 
     protected lateinit var binding: B
 
@@ -22,8 +22,9 @@ abstract class BaseFragment<B: ViewDataBinding, VM: BaseViewModel>(private val l
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        binding.setVariable(BR.vm, vm)
+        binding.setVariable(BR.vm,vm)
         binding.lifecycleOwner = this
+
         return binding.root
     }
 
@@ -31,6 +32,4 @@ abstract class BaseFragment<B: ViewDataBinding, VM: BaseViewModel>(private val l
         vm.unbindViewModel()
         super.onDestroyView()
     }
-
-
 }
