@@ -19,10 +19,20 @@ class PreferencesHelperImpl(
             }
         }
 
+    override var loadedData: String?
+        get() = preferences.getString(KEY_LOADED_DATA, "1")
+        @Synchronized
+        set(value) {
+            preferences.edit(false) {
+                putString(KEY_LOADED_DATA, value)
+            }
+        }
+
 
     companion object {
         const val PREF_FILE_NAME = "kr.ac.hansung.gyunggilocalmoneymap.data.local.pref"
 
         const val KEY_APP_VERSION = "keyAppVersion"
+        const val KEY_LOADED_DATA = "keyLoadedData"
     }
 }

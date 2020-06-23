@@ -2,6 +2,12 @@ package kr.ac.hansung.gyunggilocalmoneymap.util
 
 import android.util.Log
 import com.naver.maps.geometry.LatLng
+import java.text.FieldPosition
+
+const val REFERANCE_LAT_X1 = 1 / 109.958489129649955
+const val REFERANCE_LNG_X1 = 1 / 88.74
+const val REFERANCE_LAT_X3 = 3 / 109.958489129649955
+const val REFERANCE_LNG_X3 = 3 / 88.74
 
 fun LatLng.toDistance(from: LatLng?): Double = from?.let { this.distanceTo(it) } ?: 0.0
 
@@ -25,4 +31,18 @@ fun LatLng.toForApiString(): String {
 
 
     return "$longitude,$latitude"
+}
+
+fun withinSightMarker_X3(currentPosition: LatLng, markerPosition: LatLng): Boolean {
+    val withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X3
+    val withinSightMarkerLng = Math.abs(currentPosition.longitude - markerPosition.longitude) <= REFERANCE_LNG_X3
+
+    return withinSightMarkerLat&&withinSightMarkerLng
+}
+
+fun withinSightMarker_X1(currentPosition: LatLng, markerPosition: LatLng): Boolean {
+    val withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X1
+    val withinSightMarkerLng = Math.abs(currentPosition.longitude - markerPosition.longitude) <= REFERANCE_LNG_X1
+
+    return withinSightMarkerLat&&withinSightMarkerLng
 }

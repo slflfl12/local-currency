@@ -15,9 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.LocationTrackingMode
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.*
 import com.naver.maps.map.util.FusedLocationSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -49,6 +47,10 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private lateinit var rotateForward: Animation
     private lateinit var rotateBackward: Animation
 
+    private lateinit var sigunStringArray: List<String>
+    private lateinit var sigunSpinner: Spinner
+    private lateinit var sigunSpinnerAdapter: ArrayAdapter<CharSequence>
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,9 +67,16 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     override fun onMapReady(map: NaverMap) {
         naverMap = map
+
+        map.uiSettings.apply {
+            isCompassEnabled = false
+            isScaleBarEnabled = false
+        }
         map.apply {
             locationSource = this@MapFragment.locationSource
             locationTrackingMode = locationState
+
+
             addOnLocationChangeListener { location ->
                 vm.onChangedMyLocation(location)
             }
@@ -76,9 +85,25 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             }
 
 
+
         }
 
         markerManager = MarkerManager(context!!, naverMap)
+
+
+
+
+/*        vm.currentMyLocation.value?.let {
+            CameraUpdate.scrollTo(it)
+                .animate(CameraAnimation.Fly)
+                .finishCallback {
+
+                }.also {
+                    map.moveCamera(it)
+                }
+        }*/
+
+
 
         //vm.getMapEntities()
     }
@@ -113,15 +138,25 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             vm.setNearByValue(2f)
         }
 
+        resources.getStringArray(R.array.sigun).asList().apply {
+            sigunStringArray = this
+            vm._sigunStringList.value = this
+        }
+
     }
 
     private fun initObserve() {
 
 
         vm.places.observe(this, Observer {
-            it?.let {
+            if(it.isEmpty()) {
+                markerManager.setMarkers(arrayListOf())
+
+            }else {
                 markerManager.setMarkers(ArrayList(it))
-                Log.d("sh hh", "hhhhhhh")
+                CameraUpdate.fitBounds(markerManager.makeBounds()).animate(CameraAnimation.Fly).run {
+                    naverMap.moveCamera(this)
+                }
             }
         })
 
@@ -133,6 +168,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         vm.sigunSpinnerItem.observe(this, Observer {
             it?.let {
                 vm.getPlacesBySigun(it)
+                /*val position = sigunSpinnerAdapter.getPosition(it)
+                sigunSpinner.setSelection(position)*/
             }
         })
 
@@ -143,7 +180,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
         vm.loadingSubject
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe{ lottie_loading.isVisible = it}
+            .subscribe{ pb_loading.isVisible = it}
             .addTo(compositeDisposable)
     }
 
@@ -154,15 +191,16 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
 
         val spinnerItem = menu.findItem(R.id.action_spinner)
-        val spinner = spinnerItem.actionView as Spinner
+        sigunSpinner = spinnerItem.actionView as Spinner
 
-        ArrayAdapter.createFromResource(context!!,R.array.sigun,
+        sigunSpinnerAdapter = ArrayAdapter.createFromResource(context!!,R.array.sigun,
             android.R.layout.simple_spinner_item
             ).also {adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
-            spinner.adapter = adapter
+            sigunSpinner.adapter = adapter
         }
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+        sigunSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
 
             override fun onItemSelected(

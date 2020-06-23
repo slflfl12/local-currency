@@ -1,4 +1,4 @@
-package kr.ac.hansung.gyunggilocalmoneymap.data
+package kr.ac.hansung.gyunggilocalmoneymap.data.repository
 
 import android.util.Log
 import io.reactivex.Completable
@@ -19,7 +19,10 @@ class OpenApiRepositoryImpl(
     override val appVersion: String?
         get() = openApiLocalDataSource.appVersion
 
-    override val pageLoadingSubject: BehaviorSubject<Float>
+    override val loadedData: Int?
+        get() = openApiLocalDataSource.loadedData?.toInt()
+
+    override val pageLoadingSubject: BehaviorSubject<Int>
         get() = openApiRemoteDataSource.pageLoadingSubject
 
     override fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>> =
@@ -27,22 +30,36 @@ class OpenApiRepositoryImpl(
 
     override fun saveAll(): Completable {
         return openApiLocalDataSource.deleteAll()
-            .andThen(Observable.fromIterable(1..570))
+            .andThen(Observable.fromIterable(1..270))
             .flatMapSingle { page ->
-                pageLoadingSubject.onNext((page / 570).toFloat())
-                Log.d(
-                    "sh loading repository",
-                    (page / 570f).toString()
-                )
+                pageLoadingSubject.onNext(page)
                 openApiRemoteDataSource.getPlacesByIndex(page.toString())
-            }.concatMapCompletable {
-                openApiLocalDataSource.insertMaps(it)
-            }.doOnTerminate {
+            }
+            .concatMapCompletable {
+                Log.d("shshshsh", it.toString())
+                    openApiLocalDataSource.insertMaps(it)
+                }.doOnTerminate {
+                    openApiLocalDataSource.appVersion =
+                        BuildConfig.VERSION_NAME
+                    Log.d("sh caching", "sh caching")
+                }
+            }
+
+    override fun saveData(): Completable =
+        Observable.fromIterable(loadedData?.rangeTo(270))
+                .flatMapSingle { page ->
+                pageLoadingSubject.onNext(page)
+                    openApiLocalDataSource.loadedData = page.toString()
+                openApiRemoteDataSource.getPlacesByIndex(page.toString())
+            }
+            .concatMapCompletable(openApiLocalDataSource::insertMaps)
+            .doOnComplete {
                 openApiLocalDataSource.appVersion =
                     BuildConfig.VERSION_NAME
                 Log.d("sh caching", "sh caching")
             }
-    }
+
+
 
     override fun getMapEntities(): Single<List<SHPlace>> {
         return openApiLocalDataSource.getMapEntities()

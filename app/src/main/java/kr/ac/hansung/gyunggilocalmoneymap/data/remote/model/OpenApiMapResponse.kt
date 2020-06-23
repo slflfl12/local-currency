@@ -33,7 +33,8 @@ data class OpenApiMapResponse(
             val title: String?,
             val DATA_STD_DE: String?,
             val INDUTYPE_CD: String?,
-            val INDUTYPE_NM: String?,
+            @SerializedName("INDUTYPE_NM")
+            val category: String?,
             val MOBILE_MNY_USE_POSBL_YN: String?,
             val REFINE_LOTNO_ADDR: String?,
             @SerializedName("REFINE_ROADNM_ADDR")

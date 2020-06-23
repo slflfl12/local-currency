@@ -19,6 +19,12 @@ class OpenApiLocalDataSourceImpl(
             pref.appVersion = value
         }
 
+    override var loadedData: String?
+        get() = pref.loadedData
+        set(value) {
+            pref.loadedData = value
+        }
+
     override fun insertMaps(places: List<SHPlace>): Completable {
         return Single.just(places)
             .map { it.map(MapEntityMapper::mapToLocal) }

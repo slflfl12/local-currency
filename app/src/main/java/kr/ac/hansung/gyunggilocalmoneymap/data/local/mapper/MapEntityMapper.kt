@@ -12,7 +12,8 @@ object MapEntityMapper {
         roadAddress = from.roadAddress,
         latitude = from.latitude.toString(),
         longitude = from.longitude.toString(),
-        sigun = from.sigun
+        sigun = from.sigun,
+        category = from.category
     )
 
     fun mapToSHPlace(from: MapEntity): SHPlace = SHPlace(
@@ -21,7 +22,8 @@ object MapEntityMapper {
         latitude = from.latitude!!.toDouble(),
         longitude = from.longitude!!.toDouble(),
         telePhone = from.telePhone,
-        sigun = from.sigun
+        sigun = from.sigun,
+        category = from.category
     )
 
 

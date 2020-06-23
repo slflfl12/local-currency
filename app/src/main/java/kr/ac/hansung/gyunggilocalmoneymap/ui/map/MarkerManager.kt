@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Align
 import com.naver.maps.map.overlay.InfoWindow
@@ -64,6 +66,12 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
         }
 
 
+    }
+
+    fun makeBounds(): LatLngBounds {
+        val bounds = LatLngBounds.Builder()
+        markers.map{ LatLng(it.key.longitude, it.key.latitude) }.forEach { bounds.include(it) }
+        return bounds.build()
     }
 
     private fun makeMarker(place: SHPlace): Marker {

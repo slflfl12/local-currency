@@ -27,7 +27,10 @@ data class MapEntity (
     val longitude: String?,
 
     @ColumnInfo(name = "sigun")
-    val sigun: String?
+    val sigun: String?,
+
+    @ColumnInfo(name = "category")
+    val category: String?
 
 
 

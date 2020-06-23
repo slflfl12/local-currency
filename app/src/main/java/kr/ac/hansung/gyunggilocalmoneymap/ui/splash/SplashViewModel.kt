@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
-import kr.ac.hansung.gyunggilocalmoneymap.data.OpenApiRepository
+import kr.ac.hansung.gyunggilocalmoneymap.data.repository.OpenApiRepository
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
 import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
 
@@ -15,11 +15,6 @@ class SplashViewModel(private val openApiRepository: OpenApiRepository) : BaseVi
     private val appVersion = openApiRepository.appVersion
 
     val loadingSubject = openApiRepository.pageLoadingSubject
-
-    private val _pageLoading = MutableLiveData<Float>()
-    val pageLoading: LiveData<Float>
-        get() = _pageLoading
-
 
     val _loadingCompleteEvent = SingleLiveEvent<Int>()
 
@@ -30,16 +25,15 @@ class SplashViewModel(private val openApiRepository: OpenApiRepository) : BaseVi
         } else {
             Log.d("sh", "sh $appVersion")
             saveAll()
-            pageLoading()
         }
     }
 
     private fun saveAll() {
         Log.d("sh saveAll", "sh saveAll()")
         compositeDisposable.add(
-            openApiRepository.saveAll()
+            openApiRepository.saveData()
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.single())
+                .observeOn(Schedulers.computation())
                 .subscribe({
                     _loadingCompleteEvent.postValue(1)
                 }, {
@@ -48,15 +42,4 @@ class SplashViewModel(private val openApiRepository: OpenApiRepository) : BaseVi
         )
     }
 
-    private fun pageLoading() {
-        openApiRepository.pageLoadingSubject
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe({
-                _pageLoading.value = it
-                Log.d("sh loading", it.toString())
-            }, {
-
-            }).addTo(compositeDisposable)
-    }
 }

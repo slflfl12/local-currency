@@ -9,6 +9,8 @@ interface OpenApiLocalDataSource {
 
     var appVersion: String?
 
+    var loadedData: String?
+
     fun insertMaps(places: List<SHPlace>) : Completable
 
     fun getMapEntities(): Single<List<MapEntity>>

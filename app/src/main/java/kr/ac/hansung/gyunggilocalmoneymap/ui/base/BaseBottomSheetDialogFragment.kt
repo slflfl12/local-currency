@@ -1,5 +1,7 @@
 package kr.ac.hansung.gyunggilocalmoneymap.ui.base
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +26,9 @@ abstract class BaseBottomSheetDialogFragment<B : ViewDataBinding, VM : BaseViewM
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         binding.setVariable(BR.vm,vm)
         binding.lifecycleOwner = this
+        dialog?.let{
+            it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
 
         return binding.root
     }

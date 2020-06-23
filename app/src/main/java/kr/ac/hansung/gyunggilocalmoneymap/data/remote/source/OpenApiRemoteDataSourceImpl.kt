@@ -8,7 +8,7 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.remote.network.OpenApiService
 
 class OpenApiRemoteDataSourceImpl(private val openApiService: OpenApiService) : OpenApiRemoteDataSource {
 
-    override val pageLoadingSubject = BehaviorSubject.createDefault<Float>(0f)
+    override val pageLoadingSubject = BehaviorSubject.createDefault(0)
 
     override fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>> = openApiService.getPlaces(pIndex)
         .map {
@@ -17,7 +17,7 @@ class OpenApiRemoteDataSourceImpl(private val openApiService: OpenApiService) : 
             }
         }.map {
             it.map(SHPlaceRemoteMapper::mapToData)
-        }
+        }.retry(3)
 
 
 

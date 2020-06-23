@@ -23,11 +23,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.la
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
+        bindViewModel()
         initObserve()
     }
 
     private fun initView() {
-        bindViewModel()
+
         lottie_progress.apply {
             setMaxProgress(1f)
         }.playAnimation()
@@ -41,18 +42,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.la
             }
         })
 
-        vm.pageLoading.observe(this, Observer {
+/*        vm.pageLoading.observe(this, Observer {
             lottie_progress.progress = it
-            tv_progress.text = String.format(getString(R.string.progress_text), 1)
-        })
+            tv_progress.text = it
+        })*/
     }
 
     private fun bindViewModel() {
         vm.loadingSubject
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                lottie_progress.progress = it
-                tv_progress.text = String.format(getString(R.string.progress_text), 1)
+                tv_progress.text = String.format(getString(R.string.progress_text), it)
             }.addTo(compositeDisposable)
     }
 

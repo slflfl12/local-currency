@@ -1,10 +1,10 @@
 package kr.ac.hansung.gyunggilocalmoneymap.di
 
 
-import kr.ac.hansung.gyunggilocalmoneymap.data.NaverMapRepository
-import kr.ac.hansung.gyunggilocalmoneymap.data.NaverMapRepositoryImpl
-import kr.ac.hansung.gyunggilocalmoneymap.data.OpenApiRepository
-import kr.ac.hansung.gyunggilocalmoneymap.data.OpenApiRepositoryImpl
+import kr.ac.hansung.gyunggilocalmoneymap.data.repository.NaverMapRepository
+import kr.ac.hansung.gyunggilocalmoneymap.data.repository.NaverMapRepositoryImpl
+import kr.ac.hansung.gyunggilocalmoneymap.data.repository.OpenApiRepository
+import kr.ac.hansung.gyunggilocalmoneymap.data.repository.OpenApiRepositoryImpl
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -15,6 +15,10 @@ val repositoryModule = module {
             get()
         )
     }
-    single<NaverMapRepository> { NaverMapRepositoryImpl(get()) }
+    single<NaverMapRepository> {
+        NaverMapRepositoryImpl(
+            get()
+        )
+    }
 }
 

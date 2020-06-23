@@ -1,4 +1,4 @@
-package kr.ac.hansung.gyunggilocalmoneymap.data
+package kr.ac.hansung.gyunggilocalmoneymap.data.repository
 
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -9,7 +9,9 @@ interface OpenApiRepository {
 
     val appVersion: String?
 
-    val pageLoadingSubject: BehaviorSubject<Float>
+    val loadedData: Int?
+
+    val pageLoadingSubject: BehaviorSubject<Int>
 
     fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>>
 
@@ -18,6 +20,8 @@ interface OpenApiRepository {
     fun getMapEntities() : Single<List<SHPlace>>
 
     fun saveAll(): Completable
+
+    fun saveData(): Completable
 
     fun deleteAll(): Completable
 }

@@ -15,7 +15,8 @@ data class SHPlace(
     val longitude: Double,
     @SerializedName("TELNO")
     val telePhone: String?,
-    val sigun: String?
+    val sigun: String?,
+    val category: String?
 ) : TedClusterItem {
     override fun getTedLatLng(): TedLatLng {
         return TedLatLng(latitude, longitude)
