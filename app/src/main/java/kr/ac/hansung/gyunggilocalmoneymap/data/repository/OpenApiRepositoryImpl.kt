@@ -1,6 +1,7 @@
 package kr.ac.hansung.gyunggilocalmoneymap.data.repository
 
 import android.util.Log
+import com.naver.maps.geometry.LatLng
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -10,6 +11,7 @@ import kr.ac.hansung.gyunggilocalmoneymap.data.local.mapper.MapEntityMapper
 import kr.ac.hansung.gyunggilocalmoneymap.data.local.source.OpenApiLocalDataSource
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.source.OpenApiRemoteDataSource
+import kr.ac.hansung.gyunggilocalmoneymap.util.withinSightMarker
 
 class OpenApiRepositoryImpl(
     private val openApiLocalDataSource: OpenApiLocalDataSource,
@@ -25,6 +27,8 @@ class OpenApiRepositoryImpl(
     override val pageLoadingSubject: BehaviorSubject<Int>
         get() = openApiRemoteDataSource.pageLoadingSubject
 
+    override val loadedDataCompletedSubject = BehaviorSubject.createDefault(false)
+
     override fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>> =
         openApiRemoteDataSource.getPlacesByIndex(pIndex)
 
@@ -36,12 +40,10 @@ class OpenApiRepositoryImpl(
                 openApiRemoteDataSource.getPlacesByIndex(page.toString())
             }
             .concatMapCompletable {
-                Log.d("shshshsh", it.toString())
                     openApiLocalDataSource.insertMaps(it)
                 }.doOnTerminate {
                     openApiLocalDataSource.appVersion =
                         BuildConfig.VERSION_NAME
-                    Log.d("sh caching", "sh caching")
                 }
             }
 
@@ -56,18 +58,27 @@ class OpenApiRepositoryImpl(
             .doOnComplete {
                 openApiLocalDataSource.appVersion =
                     BuildConfig.VERSION_NAME
-                Log.d("sh caching", "sh caching")
             }
 
 
 
-    override fun getMapEntities(): Single<List<SHPlace>> {
+    override fun getAllPlaces(): Observable<SHPlace> {
         return openApiLocalDataSource.getMapEntities()
             .map { it.map(MapEntityMapper::mapToSHPlace) }
-            .doOnSubscribe {
-                Log.d("sh 처리중", "sh 처리중")
+            .flatMapObservable{
+                Observable.fromIterable(it)
             }
     }
+
+    override fun getAllPlacesPrev(): Single<List<SHPlace>> {
+        return openApiLocalDataSource.getMapEntities()
+            .map { it.map(MapEntityMapper::mapToSHPlace)}
+    }
+
+    override fun getNearByPlaces(currentLatLng: LatLng): Single<List<SHPlace>> =
+        openApiLocalDataSource.getMapEntities()
+            .map { it.map(MapEntityMapper::mapToSHPlace)}
+            .map { it.filter{ it.withinSightMarker(currentLatLng)} }
 
     override fun getPlacesBySigun(si: String): Single<List<SHPlace>> {
         return openApiLocalDataSource.getMapEntitiesBySigun(si)
@@ -78,3 +89,4 @@ class OpenApiRepositoryImpl(
         return openApiLocalDataSource.deleteAll()
     }
 }
+

@@ -2,6 +2,7 @@ package kr.ac.hansung.gyunggilocalmoneymap.util
 
 import android.util.Log
 import com.naver.maps.geometry.LatLng
+import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 import java.text.FieldPosition
 
 const val REFERANCE_LAT_X1 = 1 / 109.958489129649955
@@ -43,6 +44,13 @@ fun withinSightMarker_X3(currentPosition: LatLng, markerPosition: LatLng): Boole
 fun withinSightMarker_X1(currentPosition: LatLng, markerPosition: LatLng): Boolean {
     val withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X1
     val withinSightMarkerLng = Math.abs(currentPosition.longitude - markerPosition.longitude) <= REFERANCE_LNG_X1
+
+    return withinSightMarkerLat&&withinSightMarkerLng
+}
+
+fun SHPlace.withinSightMarker(currentPosition: LatLng): Boolean {
+    val withinSightMarkerLat = Math.abs(currentPosition.latitude - this.latitude) <= REFERANCE_LAT_X1
+    val withinSightMarkerLng = Math.abs(currentPosition.longitude - this.longitude) <= REFERANCE_LNG_X1
 
     return withinSightMarkerLat&&withinSightMarkerLng
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.naver.maps.geometry.LatLng
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kr.ac.hansung.gyunggilocalmoneymap.data.repository.OpenApiRepository
@@ -14,16 +15,15 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import kr.ac.hansung.gyunggilocalmoneymap.data.repository.NaverMapRepository
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
-import kr.ac.hansung.gyunggilocalmoneymap.domain.usecase.GetMyLocationPlacesUseCase
+import kr.ac.hansung.gyunggilocalmoneymap.util.showToast
 import kr.ac.hansung.gyunggilocalmoneymap.util.splitFirst
 import kr.ac.hansung.gyunggilocalmoneymap.util.toForApiString
+import java.util.concurrent.Executors
 
 class MapViewModel(
     private val openApiRepository: OpenApiRepository,
-    private val naverMapRepository: NaverMapRepository,
-    private val getMyLocationPlacesUseCase: GetMyLocationPlacesUseCase
+    private val naverMapRepository: NaverMapRepository
 ) : BaseViewModel() {
-
 
 
 
@@ -64,6 +64,10 @@ class MapViewModel(
     val nearByPlaces: LiveData<ArrayList<SHPlace>>
         get() = _nearByPlaces
 
+    private val _allPlaces = MutableLiveData<ArrayList<SHPlace>>()
+    val allPlaces: LiveData<ArrayList<SHPlace>>
+        get() = _allPlaces
+
 
     private val _sigunSelectedEvent = SingleLiveEvent<String>()
     val sigunSelectedEvent: LiveData<String>
@@ -72,6 +76,8 @@ class MapViewModel(
     private val _getNearBySelectedEvent = SingleLiveEvent<Float>()
     val getNearBySelectedEvent: LiveData<Float>
         get() = _getNearBySelectedEvent
+
+
 
 
     val _sigunStringList = MutableLiveData<List<String>>()
@@ -89,24 +95,11 @@ class MapViewModel(
         get() = _initEvent
 
     init {
-
-    }
-
-    fun getMapEntities() {
-        openApiRepository.getMapEntities()
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.single())
-            .subscribe({
-                _places.postValue(it)
-                Log.d("sh mapEntities = ", it.size.toString())
-            }, {
-                _errorMessage.value = it
-            })
-            .addTo(compositeDisposable)
     }
 
 
-    fun getGeocode(coords: LatLng) {
+
+    fun reqGeocode(coords: LatLng) {
         naverMapRepository.getGeocode(coords.toForApiString())
             .subscribeOn(Schedulers.io())
             .map { it.results[0].region.area2.name.splitFirst() }
@@ -128,7 +121,7 @@ class MapViewModel(
                 }).addTo(compositeDisposable)
     }
 
-    fun getPlacesBySigun(sigun: String) {
+    fun reqPlacesBySigun(sigun: String) {
         openApiRepository.getPlacesBySigun(sigun)
             .subscribeOn(Schedulers.io())
             .doOnSubscribe {
@@ -145,20 +138,55 @@ class MapViewModel(
             }).addTo(compositeDisposable)
     }
 
-    fun getMyLocationPlaces(coords: LatLng) {
-        getMyLocationPlacesUseCase.invoke(coords.toForApiString())
-            .observeOn(AndroidSchedulers.mainThread())
+    fun reqNearByPlaces(currentLocation: LatLng) {
+        openApiRepository.getNearByPlaces(currentLocation)
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                loadingSubject.onNext(true)
+            }
+            .doAfterTerminate {
+                loadingSubject.onNext(false)
+            }
+            .observeOn(Schedulers.io())
             .subscribe({
                 if(it.isNotEmpty()) {
-                    _places.value = it
-                    _sigunSpinnerItem.postValue(coords.toForApiString())
+                    _places.postValue(it)
+                } else {
+                    Log.d("결과 없음", "결과 없음")
                 }
             }, {
 
             }).addTo(compositeDisposable)
     }
 
+    fun reqAllPlaces() {
+        openApiRepository.getAllPlaces()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .flatMap {
+                Observable.fromCallable {
+                    Log.d("_allplaces size", _allPlaces.value?.size.toString())
+                    _allPlaces.value?.add(it)
+                }
+            }
+            .doOnSubscribe {
+                loadingSubject.onNext(true)
+                Log.d("sh loading", "sh loading")
+            }
+            .doAfterTerminate {
+                loadingSubject.onNext(false)
+                Log.d("sh loading", "sh loading")
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("done", "done")
+            }, {
+
+            }).addTo(compositeDisposable)
+    }
+
+
     fun onClickNearByRefresh() {
+        Log.d("sh showData", _allPlaces.value!!.size.toString())
     }
 
 

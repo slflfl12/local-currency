@@ -52,7 +52,7 @@ class LocalMapApplication : Application() {
         startKoin {
             if (BuildConfig.DEBUG) androidLogger()
             androidContext(this@LocalMapApplication)
-            modules(listOf(appModule, repositoryModule, datasourceModule, networkModule, usecaseModule))
+            modules(listOf(appModule, repositoryModule, datasourceModule, networkModule))
 
         }
     }

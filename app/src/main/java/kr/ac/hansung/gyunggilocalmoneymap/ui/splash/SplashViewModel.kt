@@ -3,41 +3,41 @@ package kr.ac.hansung.gyunggilocalmoneymap.ui.splash
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import kr.ac.hansung.gyunggilocalmoneymap.BuildConfig
 import kr.ac.hansung.gyunggilocalmoneymap.data.repository.OpenApiRepository
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseViewModel
-import kr.ac.hansung.gyunggilocalmoneymap.util.SingleLiveEvent
 
 class SplashViewModel(private val openApiRepository: OpenApiRepository) : BaseViewModel() {
 
     private val appVersion = openApiRepository.appVersion
 
     val loadingSubject = openApiRepository.pageLoadingSubject
+    val loadedDataCompleteSubject = openApiRepository.loadedDataCompletedSubject
 
-    val _loadingCompleteEvent = SingleLiveEvent<Int>()
+    private val _errorMessage = MutableLiveData<Throwable>()
+    val errorMessage: LiveData<Throwable>
+        get() = _errorMessage
 
     init {
         if (appVersion.equals(BuildConfig.VERSION_NAME)) {
-            Log.d("sh", "sh $appVersion")
-            _loadingCompleteEvent.postValue(1)
+            loadedDataCompleteSubject.onNext(true)
+            loadingSubject.onNext(270)
         } else {
-            Log.d("sh", "sh $appVersion")
-            saveAll()
+            saveData()
         }
     }
 
-    private fun saveAll() {
-        Log.d("sh saveAll", "sh saveAll()")
+    private fun saveData() {
         compositeDisposable.add(
             openApiRepository.saveData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .subscribe({
-                    _loadingCompleteEvent.postValue(1)
+                    loadedDataCompleteSubject.onNext(true)
                 }, {
-                    Log.d("sh save error", it.toString())
+                    _errorMessage.value = it
                 })
         )
     }

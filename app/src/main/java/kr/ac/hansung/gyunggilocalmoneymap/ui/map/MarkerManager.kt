@@ -1,6 +1,7 @@
 package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +21,15 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
 
     private val markerProperties = HashMap<Marker, SHPlace>()
     private val markers = HashMap<SHPlace, Marker>()
-
     private val cluster = TedNaverClustering.with<SHPlace>(context, naverMap)
         .customMarker(::makeMarker)
+        .markerClickListener {
+            onMarkerClickListener?.markerClick(it)
+        }
         .make()
+
+    var onMarkerClickListener: OnMarkerClickListener? = null
+
 
     fun setMarkers(markerProperties: ArrayList<SHPlace>) {
         removeMarkers(markerProperties)
@@ -70,7 +76,7 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
 
     fun makeBounds(): LatLngBounds {
         val bounds = LatLngBounds.Builder()
-        markers.map{ LatLng(it.key.longitude, it.key.latitude) }.forEach { bounds.include(it) }
+        markers.map { LatLng(it.key.longitude, it.key.latitude) }.forEach { bounds.include(it) }
         return bounds.build()
     }
 
@@ -78,14 +84,26 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
         place.let { place ->
             return Marker().apply {
                 captionText = place.title!!
-                onClickListener = Overlay.OnClickListener {
-
-                    true
-                }
             }
 
         }
 
+    }
+
+    fun getMarkerProperty(marker: Marker) = markerProperties[marker]
+
+    fun getMarker(markerProperty: SHPlace) = markers[markerProperty]
+
+    fun selectMarker(markerProperty: SHPlace) {
+        val marker = markers[markerProperty]
+    }
+
+    fun deSelectMarker() {
+
+    }
+
+    interface OnMarkerClickListener {
+        fun markerClick(markerProperty: SHPlace)
     }
 
     inner class InfoWindowAdapter(private val markerProperty: SHPlace) : InfoWindow.ViewAdapter() {

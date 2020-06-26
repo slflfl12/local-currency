@@ -16,19 +16,23 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_map.*
 import kr.ac.hansung.gyunggilocalmoneymap.R
+import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 import kr.ac.hansung.gyunggilocalmoneymap.databinding.FragmentMapBinding
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseFragment
+import kr.ac.hansung.gyunggilocalmoneymap.ui.preview.PreviewFragment
 import kr.ac.hansung.gyunggilocalmoneymap.util.showToast
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.fragment_map),
-    OnMapReadyCallback {
+    OnMapReadyCallback, MarkerManager.OnMarkerClickListener {
 
 
     override val vm: MapViewModel by viewModel()
@@ -81,16 +85,20 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 vm.onChangedMyLocation(location)
             }
             addOnCameraIdleListener {
-                vm.onChangedLocation(LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude))
+                vm.onChangedLocation(
+                    LatLng(
+                        cameraPosition.target.latitude,
+                        cameraPosition.target.longitude
+                    )
+                )
             }
-
 
 
         }
 
-        markerManager = MarkerManager(context!!, naverMap)
-
-
+        markerManager = MarkerManager(context!!, naverMap).apply {
+            onMarkerClickListener = this@MapFragment
+        }
 
 
 /*        vm.currentMyLocation.value?.let {
@@ -104,10 +112,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         }*/
 
 
-
         //vm.getMapEntities()
     }
-
 
 
     private fun initView() {
@@ -149,14 +155,15 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
 
         vm.places.observe(this, Observer {
-            if(it.isEmpty()) {
+            if (it.isEmpty()) {
                 markerManager.setMarkers(arrayListOf())
 
-            }else {
+            } else {
                 markerManager.setMarkers(ArrayList(it))
-                CameraUpdate.fitBounds(markerManager.makeBounds()).animate(CameraAnimation.Fly).run {
-                    naverMap.moveCamera(this)
-                }
+                CameraUpdate.fitBounds(markerManager.makeBounds()).animate(CameraAnimation.Fly)
+                    .run {
+                        naverMap.moveCamera(this)
+                    }
             }
         })
 
@@ -167,7 +174,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
         vm.sigunSpinnerItem.observe(this, Observer {
             it?.let {
-                vm.getPlacesBySigun(it)
+                vm.reqPlacesBySigun(it)
                 /*val position = sigunSpinnerAdapter.getPosition(it)
                 sigunSpinner.setSelection(position)*/
             }
@@ -180,7 +187,10 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
         vm.loadingSubject
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe{ pb_loading.isVisible = it}
+            .subscribe {
+                pb_loading.isVisible = it
+                tv_refresh.isVisible = !it
+            }
             .addTo(compositeDisposable)
     }
 
@@ -193,9 +203,10 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         val spinnerItem = menu.findItem(R.id.action_spinner)
         sigunSpinner = spinnerItem.actionView as Spinner
 
-        sigunSpinnerAdapter = ArrayAdapter.createFromResource(context!!,R.array.sigun,
+        sigunSpinnerAdapter = ArrayAdapter.createFromResource(
+            context!!, R.array.sigun,
             android.R.layout.simple_spinner_item
-            ).also {adapter ->
+        ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
             sigunSpinner.adapter = adapter
         }
@@ -208,8 +219,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 view: View?,
                 position: Int,
                 id: Long
-            )
-            {
+            ) {
                 vm.setSigunItem(parent?.getItemAtPosition(position).toString())
                 Log.d("sh sigunSelected", parent?.getItemAtPosition(position).toString())
             }
@@ -225,9 +235,13 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     private fun animateFab() {
 
-        if(isFabOpen) {
+        if (isFabOpen) {
             binding.fab.startAnimation(rotateForward)
             binding.fab1.apply {
+                startAnimation(fabClose)
+                visibility = View.INVISIBLE
+            }
+            binding.tvFabText1.apply {
                 startAnimation(fabClose)
                 visibility = View.INVISIBLE
             }
@@ -235,7 +249,10 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 startAnimation(fabClose)
                 visibility = View.INVISIBLE
             }
-
+            binding.tvFabText2.apply {
+                startAnimation(fabClose)
+                visibility = View.INVISIBLE
+            }
             isFabOpen = false;
         } else {
             binding.fab.startAnimation(rotateBackward)
@@ -243,7 +260,15 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 startAnimation(fabOpen)
                 visibility = View.VISIBLE
             }
+            binding.tvFabText1.apply {
+                startAnimation(fabOpen)
+                visibility = View.VISIBLE
+            }
             binding.fab2.apply {
+                startAnimation(fabOpen)
+                visibility = View.VISIBLE
+            }
+            binding.tvFabText2.apply {
                 startAnimation(fabOpen)
                 visibility = View.VISIBLE
             }
@@ -251,6 +276,13 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         }
     }
 
+    override fun markerClick(markerProperty: SHPlace) {
+        vm.currentMyLocation.value?.let {
+            PreviewFragment.newInstance(markerProperty, doubleArrayOf(it.latitude, it.longitude))
+                .show(childFragmentManager, PreviewFragment.TAG)
+            Log.d("fragment", "fragment")
+        }
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
