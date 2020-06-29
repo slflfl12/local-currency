@@ -16,6 +16,7 @@ import com.naver.maps.map.overlay.Overlay
 import kr.ac.hansung.gyunggilocalmoneymap.R
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 import ted.gun0912.clustering.naver.TedNaverClustering
+import java.util.stream.Collectors
 
 class MarkerManager(private val context: Context, private val naverMap: NaverMap) {
 
@@ -25,6 +26,9 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
         .customMarker(::makeMarker)
         .markerClickListener {
             onMarkerClickListener?.markerClick(it)
+        }
+        .clusterClickListener { 
+
         }
         .make()
 
@@ -93,6 +97,10 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
     fun getMarkerProperty(marker: Marker) = markerProperties[marker]
 
     fun getMarker(markerProperty: SHPlace) = markers[markerProperty]
+
+    fun getMarkers() = markers.keys
+
+    fun getMarkerSize() = markers.size
 
     fun selectMarker(markerProperty: SHPlace) {
         val marker = markers[markerProperty]

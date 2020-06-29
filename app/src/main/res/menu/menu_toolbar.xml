@@ -9,7 +9,8 @@
             android:id="@+id/action_search"
             android:title="search"
             app:showAsAction="always"
-            app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+            android:icon="@drawable/ic_search"
+            />
 
         <item
             android:id="@+id/action_spinner"

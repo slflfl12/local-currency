@@ -17,11 +17,12 @@ import kr.ac.hansung.gyunggilocalmoneymap.databinding.ActivitySplashBinding
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseActivity
 import kr.ac.hansung.gyunggilocalmoneymap.ui.main.MainActivity
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity :
     BaseActivity<ActivitySplashBinding, SplashViewModel>(R.layout.activity_splash) {
 
-    override val vm: SplashViewModel by inject()
+    override val vm: SplashViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
 
     private val animaitonProgressSubject = BehaviorSubject.createDefault(false)

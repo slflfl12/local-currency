@@ -1,10 +1,12 @@
 package kr.ac.hansung.gyunggilocalmoneymap.ui.map
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -12,30 +14,43 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
-import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_map.*
 import kr.ac.hansung.gyunggilocalmoneymap.R
 import kr.ac.hansung.gyunggilocalmoneymap.data.remote.model.SHPlace
 import kr.ac.hansung.gyunggilocalmoneymap.databinding.FragmentMapBinding
 import kr.ac.hansung.gyunggilocalmoneymap.ui.base.BaseFragment
-import kr.ac.hansung.gyunggilocalmoneymap.ui.preview.PreviewFragment
+import kr.ac.hansung.gyunggilocalmoneymap.ui.map.preview.PreviewFragment
+import kr.ac.hansung.gyunggilocalmoneymap.ui.map.result.ResultAdapter
+import kr.ac.hansung.gyunggilocalmoneymap.ui.map.result.ResultFragment
+import kr.ac.hansung.gyunggilocalmoneymap.ui.model.PlaceUIData
+import kr.ac.hansung.gyunggilocalmoneymap.ui.search.SearchActivity
 import kr.ac.hansung.gyunggilocalmoneymap.util.showToast
+import kr.ac.hansung.gyunggilocalmoneymap.util.toDistance
+import kr.ac.hansung.gyunggilocalmoneymap.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.concurrent.TimeUnit
+
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.fragment_map),
-    OnMapReadyCallback, MarkerManager.OnMarkerClickListener {
+    OnMapReadyCallback, MarkerManager.OnMarkerClickListener, ResultAdapter.ItemClickListener {
 
 
-    override val vm: MapViewModel by viewModel()
+    override val vm: MapViewModel by sharedViewModel()
     private val compositeDisposable = CompositeDisposable()
 
 
@@ -54,6 +69,18 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private lateinit var sigunStringArray: List<String>
     private lateinit var sigunSpinner: Spinner
     private lateinit var sigunSpinnerAdapter: ArrayAdapter<CharSequence>
+
+    private val searchClickSubject = PublishSubject.create<Unit>()
+
+    //BottomSheet
+    private val resultAdapter: ResultAdapter by lazy {
+        ResultAdapter().apply {
+            itemClickListener = this@MapFragment
+        }
+    }
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -117,6 +144,9 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
 
     private fun initView() {
+
+        binding.rvResult.adapter = resultAdapter
+
         setHasOptionsMenu(true)
 
         fabOpen = AnimationUtils.loadAnimation(context, R.anim.fab_open)
@@ -149,30 +179,84 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             vm._sigunStringList.value = this
         }
 
+        //BottomSheet
+
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
+
+        binding.tvResult.setOnClickListener {
+            showToast(requireContext(), vm.allPlaces.value?.size.toString())
+            binding.bottomSheet.let {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+
+        }
+
+        binding.ivClear.setOnClickListener {
+            binding.ivClear.setOnClickListener {
+                binding.bottomSheet.let {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
+        }
+
+
     }
 
     private fun initObserve() {
 
 
         vm.places.observe(this, Observer {
-            if (it.isEmpty()) {
-                markerManager.setMarkers(arrayListOf())
 
-            } else {
-                markerManager.setMarkers(ArrayList(it))
-                CameraUpdate.fitBounds(markerManager.makeBounds()).animate(CameraAnimation.Fly)
-                    .run {
-                        naverMap.moveCamera(this)
-                    }
+
+            it?.let {
+                if (it.isEmpty()) {
+                    markerManager.setMarkers(arrayListOf())
+
+                } else {
+                    markerManager.setMarkers(ArrayList(it))
+                    CameraUpdate.fitBounds(markerManager.makeBounds()).animate(CameraAnimation.Fly)
+                        .run {
+                            naverMap.moveCamera(this)
+                        }
+                }
+
+
+                markerManager.getMarkers().map {
+                    val to = LatLng(it.latitude, it.longitude)
+                    PlaceUIData(
+                        title = it.title ?: "",
+                        roadAddress = it.roadAddress ?: "",
+                        telePhone = it.telePhone ?: "",
+                        category = it.category ?: "",
+                        distance = to.toDistanceString(vm.currentMyLocation.value),
+                        distanceDouble = to.toDistance(vm.currentMyLocation.value)
+                    )
+
+                }
+            }?.run {
+                sortedBy { it.distanceDouble }
+            }?.run {
+                resultAdapter.submitList(this)
             }
+
+
+            binding.tvTotal.text = "총 ${markerManager.getMarkerSize()}개"
+
+
+
+
         })
 
 
-        vm.errorMessage.observe(this, Observer {
+
+
+        vm.errorMessage.observe(this, Observer
+        {
             showToast(requireContext(), it.toString())
         })
 
-        vm.sigunSpinnerItem.observe(this, Observer {
+        vm.sigunSpinnerItem.observe(this, Observer
+        {
             it?.let {
                 vm.reqPlacesBySigun(it)
                 /*val position = sigunSpinnerAdapter.getPosition(it)
@@ -190,8 +274,17 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             .subscribe {
                 pb_loading.isVisible = it
                 tv_refresh.isVisible = !it
+                tv_result.isVisible = !it
             }
             .addTo(compositeDisposable)
+
+        searchClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                Intent(context, SearchActivity::class.java).also {
+                    startActivity(it)
+                }
+            }.addTo(compositeDisposable)
     }
 
     @SuppressLint("RestrictedApi")
@@ -229,8 +322,18 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             }
         }
 
-        val searchItem = menu.findItem(R.id.action_search).actionView
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId) {
+            R.id.action_search -> {
+                searchClickSubject.onNext(Unit)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun animateFab() {
@@ -279,9 +382,22 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     override fun markerClick(markerProperty: SHPlace) {
         vm.currentMyLocation.value?.let {
             PreviewFragment.newInstance(markerProperty, doubleArrayOf(it.latitude, it.longitude))
-                .show(childFragmentManager, PreviewFragment.TAG)
+                .apply {
+                    setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundBottomSheetDialog)
+                }.show(childFragmentManager, PreviewFragment.TAG)
+
             Log.d("fragment", "fragment")
         }
+    }
+
+    override fun itemClick(placeUiData: PlaceUIData) {
+        showToast(requireContext(), "클릭")
+    }
+
+    fun getBottomSheetState(): Int = bottomSheetBehavior.state
+
+    fun closeBottomSheet() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     override fun onRequestPermissionsResult(
@@ -299,17 +415,19 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     override fun onStart() {
         super.onStart()
         binding.mapView.onStart()
+        bindViewModel()
     }
 
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
-        bindViewModel()
+
     }
 
     override fun onPause() {
-        super.onPause()
         binding.mapView.onResume()
+        compositeDisposable.clear()
+        super.onPause()
     }
 
 
@@ -319,14 +437,14 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     }
 
     override fun onStop() {
-        super.onStop()
         binding.mapView.onStop()
+        super.onStop()
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         binding.mapView.onDestroy()
-        compositeDisposable.clear()
+        //여기에 clear가 있을 경우
+        super.onDestroyView()
     }
 
     override fun onLowMemory() {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GyunggiLocalMoneyMap</string>
+    <string name="app_name">경기지역화폐 가맹점 MAP</string>
 
     <string name="progress_text">데이터를 받아오는중 입니다 ... %d/270</string>
     <string name="loading_complete_text">로딩이 완료되었습니다. %d/270</string>

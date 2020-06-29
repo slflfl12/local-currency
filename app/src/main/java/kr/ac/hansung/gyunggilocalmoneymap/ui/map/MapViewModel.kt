@@ -95,6 +95,7 @@ class MapViewModel(
         get() = _initEvent
 
     init {
+        /*reqAllPlaces2()*/
     }
 
 
@@ -149,6 +150,7 @@ class MapViewModel(
             }
             .observeOn(Schedulers.io())
             .subscribe({
+                Log.d("list isze", it.size.toString())
                 if(it.isNotEmpty()) {
                     _places.postValue(it)
                 } else {
@@ -159,12 +161,30 @@ class MapViewModel(
             }).addTo(compositeDisposable)
     }
 
-    fun reqAllPlaces() {
+    fun reqAllPlaces2() {
+        openApiRepository.getAllPlacesPrev()
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                loadingSubject.onNext(true)
+                Log.d("sh loading", "sh loading")
+            }
+            .doAfterTerminate {
+                loadingSubject.onNext(false)
+                Log.d("sh loading", "sh loading")
+            }
+            .observeOn(Schedulers.io())
+            .subscribe({
+                _allPlaces.postValue(ArrayList(it))
+            }, {
+
+            }).addTo(compositeDisposable)
+    }
+
+/*    fun reqAllPlaces() {
         openApiRepository.getAllPlaces()
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
             .flatMap {
                 Observable.fromCallable {
-                    Log.d("_allplaces size", _allPlaces.value?.size.toString())
                     _allPlaces.value?.add(it)
                 }
             }
@@ -176,13 +196,13 @@ class MapViewModel(
                 loadingSubject.onNext(false)
                 Log.d("sh loading", "sh loading")
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.io())
             .subscribe({
                 Log.d("done", "done")
             }, {
 
             }).addTo(compositeDisposable)
-    }
+    }*/
 
 
     fun onClickNearByRefresh() {
