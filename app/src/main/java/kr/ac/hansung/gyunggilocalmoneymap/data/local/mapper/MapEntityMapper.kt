@@ -19,8 +19,8 @@ object MapEntityMapper {
     fun mapToSHPlace(from: MapEntity): SHPlace = SHPlace(
         title = from.title,
         roadAddress = from.roadAddress,
-        latitude = from.latitude!!.toDouble(),
-        longitude = from.longitude!!.toDouble(),
+        latitude = from.latitude?.toDouble()!!,
+        longitude = from.longitude?.toDouble()!!,
         telePhone = from.telePhone,
         sigun = from.sigun,
         category = from.category

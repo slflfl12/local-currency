@@ -1,7 +1,9 @@
 package kr.ac.hansung.gyunggilocalmoneymap.util
 
+import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import io.reactivex.subjects.Subject
 
 @BindingAdapter("bind:setPhone")
 fun TextView.setPhone(title: String?) {
@@ -27,5 +29,12 @@ fun TextView.setCategory(category: String?) {
         this.text = "분류정보 없음"
     } else {
         this.text = category
+    }
+}
+
+@BindingAdapter("bind:buttonClick")
+fun View.buttonClick(buttonClickSubject: Subject<Unit>) {
+    setOnClickListener {
+        buttonClickSubject.onNext(Unit)
     }
 }

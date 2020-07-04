@@ -3,5 +3,8 @@
 
     <string name="progress_text">데이터를 받아오는중 입니다 ... %d/270</string>
     <string name="loading_complete_text">로딩이 완료되었습니다. %d/270</string>
+    <string name="button_search">검색</string>
+    <string name="rv_empty_string">검색 결과가 없습니다</string>
+    <string name="error_query_empty">빈칸을 채워주세요</string>
 
 </resources>

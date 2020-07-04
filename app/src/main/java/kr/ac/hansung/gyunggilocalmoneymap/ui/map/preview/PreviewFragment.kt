@@ -13,7 +13,8 @@ import kr.ac.hansung.gyunggilocalmoneymap.util.toDistance
 import kr.ac.hansung.gyunggilocalmoneymap.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PreviewFragment : BaseBottomSheetDialogFragment<FragmentPreviewBinding, PreviewViewModel>(R.layout.fragment_preview){
+class PreviewFragment :
+    BaseBottomSheetDialogFragment<FragmentPreviewBinding, PreviewViewModel>(R.layout.fragment_preview) {
 
     override val vm: PreviewViewModel by viewModel()
 
@@ -27,18 +28,20 @@ class PreviewFragment : BaseBottomSheetDialogFragment<FragmentPreviewBinding, Pr
 
 
         data?.let {
-            val from = location?.let { LatLng(it[0], it[1])}
+            val from = location?.let { LatLng(it[0], it[1]) }
             val to = LatLng(it.latitude, it.longitude)
 
-            placeUIData =
-                PlaceUIData(
-                    title = it.title ?: "",
-                    roadAddress = it.roadAddress ?: "",
-                    telePhone = it.telePhone ?: "",
-                    category = it.category ?: "",
-                    distance = to.toDistanceString(from),
-                    distanceDouble = to.toDistance(from)
-                )
+            from?.let { from ->
+                placeUIData =
+                    PlaceUIData(
+                        title = it.title ?: "",
+                        roadAddress = it.roadAddress ?: "",
+                        telePhone = it.telePhone ?: "",
+                        category = it.category ?: "",
+                        distance = from.toDistanceString(to),
+                        distanceDouble = from.toDistance(to)
+                    )
+            }
         }
 
 
@@ -53,7 +56,6 @@ class PreviewFragment : BaseBottomSheetDialogFragment<FragmentPreviewBinding, Pr
     }
 
 
-
     companion object {
         val TAG: String = this::class.java.simpleName
 
@@ -62,11 +64,11 @@ class PreviewFragment : BaseBottomSheetDialogFragment<FragmentPreviewBinding, Pr
 
         fun newInstance(markerProperty: SHPlace, myLocationArray: DoubleArray) = PreviewFragment()
             .apply {
-            arguments =Bundle().apply {
-                putParcelable(KEY_MARKER_PROPERTY, markerProperty)
-                putDoubleArray(KEY_MY_LOCATION, myLocationArray)
+                arguments = Bundle().apply {
+                    putParcelable(KEY_MARKER_PROPERTY, markerProperty)
+                    putDoubleArray(KEY_MY_LOCATION, myLocationArray)
+                }
             }
-        }
     }
 
 

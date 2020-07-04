@@ -198,7 +198,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/tv_category"
-                bind:setCategory="@{data.telePhone}" />
+                bind:setCategory="@{data.category}" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

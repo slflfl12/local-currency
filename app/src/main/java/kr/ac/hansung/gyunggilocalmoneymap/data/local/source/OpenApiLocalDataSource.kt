@@ -17,5 +17,7 @@ interface OpenApiLocalDataSource {
 
     fun getMapEntitiesBySigun(si: String): Single<List<MapEntity>>
 
+    fun getMapEntitiesByQuery(query: String): Single<List<MapEntity>>
+
     fun deleteAll(): Completable
 }

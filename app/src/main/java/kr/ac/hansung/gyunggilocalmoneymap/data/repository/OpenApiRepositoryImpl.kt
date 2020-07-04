@@ -1,6 +1,5 @@
 package kr.ac.hansung.gyunggilocalmoneymap.data.repository
 
-import android.util.Log
 import com.naver.maps.geometry.LatLng
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -40,18 +39,18 @@ class OpenApiRepositoryImpl(
                 openApiRemoteDataSource.getPlacesByIndex(page.toString())
             }
             .concatMapCompletable {
-                    openApiLocalDataSource.insertMaps(it)
-                }.doOnTerminate {
-                    openApiLocalDataSource.appVersion =
-                        BuildConfig.VERSION_NAME
-                }
+                openApiLocalDataSource.insertMaps(it)
+            }.doOnTerminate {
+                openApiLocalDataSource.appVersion =
+                    BuildConfig.VERSION_NAME
             }
+    }
 
     override fun saveData(): Completable =
         Observable.fromIterable(loadedData?.rangeTo(270))
-                .flatMapSingle { page ->
+            .flatMapSingle { page ->
                 pageLoadingSubject.onNext(page)
-                    openApiLocalDataSource.loadedData = page.toString()
+                openApiLocalDataSource.loadedData = page.toString()
                 openApiRemoteDataSource.getPlacesByIndex(page.toString())
             }
             .concatMapCompletable(openApiLocalDataSource::insertMaps)
@@ -61,29 +60,32 @@ class OpenApiRepositoryImpl(
             }
 
 
-
     override fun getAllPlaces(): Observable<SHPlace> {
         return openApiLocalDataSource.getMapEntities()
             .map { it.map(MapEntityMapper::mapToSHPlace) }
-            .flatMapObservable{
+            .flatMapObservable {
                 Observable.fromIterable(it)
             }
     }
 
     override fun getAllPlacesPrev(): Single<List<SHPlace>> {
         return openApiLocalDataSource.getMapEntities()
-            .map { it.map(MapEntityMapper::mapToSHPlace)}
+            .map { it.map(MapEntityMapper::mapToSHPlace) }
     }
 
     override fun getNearByPlaces(currentLatLng: LatLng): Single<List<SHPlace>> =
         openApiLocalDataSource.getMapEntities()
-            .map { it.map(MapEntityMapper::mapToSHPlace)}
-            .map { it.filter{ it.withinSightMarker(currentLatLng)} }
+            .map { it.map(MapEntityMapper::mapToSHPlace) }
+            .map { it.filter { it.withinSightMarker(currentLatLng) } }
 
-    override fun getPlacesBySigun(si: String): Single<List<SHPlace>> {
-        return openApiLocalDataSource.getMapEntitiesBySigun(si)
-            .map {it.map(MapEntityMapper::mapToSHPlace) }
-    }
+    override fun getPlacesBySigun(si: String): Single<List<SHPlace>> =
+        openApiLocalDataSource.getMapEntitiesBySigun(si)
+            .map { it.map(MapEntityMapper::mapToSHPlace) }
+
+
+    override fun getMapsByQuery(query: String): Single<List<SHPlace>> =
+        openApiLocalDataSource.getMapEntitiesByQuery(query)
+            .map { it.map(MapEntityMapper::mapToSHPlace)}
 
     override fun deleteAll(): Completable {
         return openApiLocalDataSource.deleteAll()

@@ -235,8 +235,4 @@ class MapViewModel(
     }
 
 
-    fun init() {
-        _initEvent.call()
-    }
-
 }

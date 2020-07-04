@@ -243,8 +243,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             binding.tvTotal.text = "총 ${markerManager.getMarkerSize()}개"
 
 
-
-
         })
 
 
@@ -281,9 +279,18 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         searchClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                Intent(context, SearchActivity::class.java).also {
-                    startActivity(it)
+                vm.currentLocation.value?.let {
+                    Intent(context, SearchActivity::class.java).apply {
+                        putExtra(
+                            SearchActivity.KEY_LOCATION,
+                            doubleArrayOf(it.latitude, it.longitude)
+                        )
+                    }
+                        .also {
+                            startActivity(it)
+                        }
                 }
+
             }.addTo(compositeDisposable)
     }
 
@@ -327,7 +334,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.action_search -> {
                 searchClickSubject.onNext(Unit)
                 true

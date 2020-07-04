@@ -36,6 +36,8 @@ class OpenApiLocalDataSourceImpl(
 
     }
 
+    override fun getMapEntitiesByQuery(query: String): Single<List<MapEntity>> = mapDao.getMapByQuery(query)
+
     override fun getMapEntitiesBySigun(si:String): Single<List<MapEntity>> = mapDao.getMapsBySi(si)
 
 
