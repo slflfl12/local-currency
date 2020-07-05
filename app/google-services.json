@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "912564073279",
-    "firebase_url": "https://gyunggilocalmoneymap.firebaseio.com",
-    "project_id": "gyunggilocalmoneymap",
-    "storage_bucket": "gyunggilocalmoneymap.appspot.com"
+    "project_number": "195704157146",
+    "firebase_url": "https://localcurrency-3497c.firebaseio.com",
+    "project_id": "localcurrency-3497c",
+    "storage_bucket": "localcurrency-3497c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:912564073279:android:2f4b6765e29bc3cfc2598a",
+        "mobilesdk_app_id": "1:195704157146:android:37ef3a586a6427ecbac6e3",
         "android_client_info": {
-          "package_name": "kr.ac.hansung.gyunggilocalmoneymap"
+          "package_name": "kr.ac.hansung.localcurrency"
         }
       },
       "oauth_client": [
         {
-          "client_id": "912564073279-b3c8r6cc6lg10151e1n3sdcl1g101tbq.apps.googleusercontent.com",
+          "client_id": "195704157146-03k3cahm54ulob62pihiqtht88abfta2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAhbW6-4qFNHwKI8HAXnOjWxy4dxIoje1k"
+          "current_key": "AIzaSyCbwTb8jbvtprXXNQqAaMpx5AdjV0Qms00"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "912564073279-b3c8r6cc6lg10151e1n3sdcl1g101tbq.apps.googleusercontent.com",
+              "client_id": "195704157146-03k3cahm54ulob62pihiqtht88abfta2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="vm"
-            type="kr.ac.hansung.gyunggilocalmoneymap.ui.search.SearchViewModel" />
+            type="kr.ac.hansung.localcurrency.ui.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

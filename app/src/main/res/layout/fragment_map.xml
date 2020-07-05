@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="kr.ac.hansung.gyunggilocalmoneymap.ui.map.MapViewModel" />
+            type="kr.ac.hansung.localcurrency.ui.map.MapViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -49,7 +49,7 @@
                 android:background="@drawable/background_white_round"
                 android:fontFamily="@font/notosans_bold"
                 android:gravity="center"
-                android:onClick="@{()->vm.reqNearByPlaces(vm.currentLocation)}"
+                android:onClick="@{()->vm.reqNearByMaps()}"
                 android:paddingVertical="5dp"
                 android:text="현재위치 탐색"
                 app:layout_constraintEnd_toEndOf="parent"

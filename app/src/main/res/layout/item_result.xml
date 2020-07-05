@@ -6,7 +6,7 @@
     <data>
         <variable
             name="uiData"
-            type="kr.ac.hansung.gyunggilocalmoneymap.ui.model.PlaceUIData" />
+            type="kr.ac.hansung.localcurrency.ui.model.PlaceUIData" />
     </data>
 
 <androidx.cardview.widget.CardView

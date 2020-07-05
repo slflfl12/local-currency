@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0325e776-5f03-4abe-954e-53923c7a09da" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/google-services.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/proguard-rules.pro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/androidTest/java/kr/ac/hansung/gyunggilocalmoneymap/ExampleInstrumentedTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/LocalMapApplication.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/local/MapDatabase.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/local/dao/MapDao.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/local/mapper/MapEntityMapper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/local/model/MapEntity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/local/pref/PreferencesHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/local/pref/PreferencesHelperImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/local/source/OpenApiLocalDataSource.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/local/source/OpenApiLocalDataSourceImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/mapper/SHPlaceRemoteMapper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/model/GeocodeResponse.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/model/OpenApiMapResponse.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/model/SHPlace.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/network/OpenApiService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/network/ReverseGeoCodeService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/source/NaverMapRemoteDataSource.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/source/NaverMapRemoteDataSourceImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/source/OpenApiRemoteDataSource.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/remote/source/OpenApiRemoteDataSourceImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/repository/NaverMapRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/repository/NaverMapRepositoryImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/repository/OpenApiRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/data/repository/OpenApiRepositoryImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/di/appModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/di/datasourceModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/di/networkModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/di/repositoryModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/base/BaseActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/base/BaseBottomSheetDialogFragment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/base/BaseDialogFragment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/base/BaseFragment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/base/BaseViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/detail/DetailActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/detail/DetailViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/main/MainActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/map/MapFragment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/map/MapViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/map/MarkerManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/map/cluster/ClusterDialog.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/map/preview/PreviewFragment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/map/preview/PreviewViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/map/result/ResultAdapter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/map/result/ResultFragment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/model/PlaceUIData.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/search/SearchActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/search/SearchAdapter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/search/SearchViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/splash/SplashActivity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/ui/splash/SplashViewModel.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/util/BindingAdapter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/util/Event.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/util/EventObserver.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/util/LocationUtil.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/util/NetworkUtil.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/util/SingleLiveEvent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/gyunggilocalmoneymap/util/StringUtil.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_map.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_map.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_result.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/item_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/item_result.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/item_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/item_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/kr/ac/hansung/gyunggilocalmoneymap/ExampleUnitTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../settings.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1eGV1QhOTKdl2w4R0SPjEtypzsy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0325e776-5f03-4abe-954e-53923c7a09da" name="Default Changelist" comment="" />
+      <created>1593947700686</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1593947700686</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1593947783637">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1593947783637" />
+  </component>
+</project>

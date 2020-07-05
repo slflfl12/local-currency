@@ -7,11 +7,11 @@
 
         <variable
             name="vm"
-            type="kr.ac.hansung.gyunggilocalmoneymap.ui.map.preview.PreviewViewModel" />
+            type="kr.ac.hansung.localcurrency.ui.map.preview.PreviewViewModel" />
 
         <variable
             name="data"
-            type="kr.ac.hansung.gyunggilocalmoneymap.ui.model.PlaceUIData" />
+            type="kr.ac.hansung.localcurrency.ui.model.PlaceUIData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
