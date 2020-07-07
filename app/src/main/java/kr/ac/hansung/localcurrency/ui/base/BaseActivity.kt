@@ -1,6 +1,9 @@
 package kr.ac.hansung.localcurrency.ui.base
 
+import android.app.Activity
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -27,6 +30,18 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(private val
 
     protected fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showKeyboard() {
+        (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
+                InputMethodManager.SHOW_FORCED,0
+        )
+    }
+
+    fun hideKeyboard() {
+        (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+                (currentFocus ?: View(this)).windowToken, 0
+        )
     }
 
 }

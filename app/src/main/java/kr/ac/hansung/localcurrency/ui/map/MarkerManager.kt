@@ -15,6 +15,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
+import ted.gun0912.clustering.clustering.Cluster
 import ted.gun0912.clustering.naver.TedNaverClustering
 import java.util.stream.Collectors
 
@@ -28,7 +29,7 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
             onMarkerClickListener?.markerClick(it)
         }
         .clusterClickListener { 
-
+            onMarkerClickListener?.clusterClick(it.items)
         }
         .make()
 
@@ -112,6 +113,7 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
 
     interface OnMarkerClickListener {
         fun markerClick(markerProperty: SHPlace)
+        fun clusterClick(markerProperties: Collection<SHPlace>)
     }
 
     inner class InfoWindowAdapter(private val markerProperty: SHPlace) : InfoWindow.ViewAdapter() {

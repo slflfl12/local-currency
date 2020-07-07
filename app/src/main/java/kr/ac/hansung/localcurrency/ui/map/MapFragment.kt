@@ -33,6 +33,7 @@ import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
 import kr.ac.hansung.localcurrency.databinding.FragmentMapBinding
 import kr.ac.hansung.localcurrency.ui.base.BaseFragment
+import kr.ac.hansung.localcurrency.ui.map.cluster.ClusterDialog
 import kr.ac.hansung.localcurrency.ui.map.preview.PreviewFragment
 import kr.ac.hansung.localcurrency.ui.map.result.ResultAdapter
 import kr.ac.hansung.localcurrency.ui.map.result.ResultFragment
@@ -47,7 +48,7 @@ import java.util.concurrent.TimeUnit
 
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.fragment_map),
-    OnMapReadyCallback, MarkerManager.OnMarkerClickListener, ResultAdapter.ItemClickListener {
+        OnMapReadyCallback, MarkerManager.OnMarkerClickListener, ResultAdapter.ItemClickListener {
 
 
     override val vm: MapViewModel by sharedViewModel()
@@ -65,10 +66,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private lateinit var fabClose: Animation
     private lateinit var rotateForward: Animation
     private lateinit var rotateBackward: Animation
-
-    private lateinit var sigunStringArray: List<String>
-    private lateinit var sigunSpinner: Spinner
-    private lateinit var sigunSpinnerAdapter: ArrayAdapter<CharSequence>
 
     private val searchClickSubject = PublishSubject.create<Unit>()
 
@@ -108,15 +105,18 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             locationTrackingMode = locationState
 
 
+            setLayerGroupEnabled(NaverMap.LAYER_GROUP_BUILDING, false)
+
+
             addOnLocationChangeListener { location ->
                 vm.onChangedMyLocation(location)
             }
             addOnCameraIdleListener {
                 vm.onChangedLocation(
-                    LatLng(
-                        cameraPosition.target.latitude,
-                        cameraPosition.target.longitude
-                    )
+                        LatLng(
+                                cameraPosition.target.latitude,
+                                cameraPosition.target.longitude
+                        )
                 )
             }
 
@@ -145,6 +145,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     private fun initView() {
 
+
         binding.rvResult.adapter = resultAdapter
 
         setHasOptionsMenu(true)
@@ -153,6 +154,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         fabClose = AnimationUtils.loadAnimation(context, R.anim.fab_close)
         rotateForward = AnimationUtils.loadAnimation(context, R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(context, R.anim.rotate_backward)
+
 
         (activity as AppCompatActivity).setSupportActionBar(binding.tbMap)
         (activity as AppCompatActivity).supportActionBar?.run {
@@ -174,17 +176,12 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             vm.setNearByValue(2f)
         }
 
-        resources.getStringArray(R.array.sigun).asList().apply {
-            sigunStringArray = this
-            vm._sigunStringList.value = this
-        }
 
         //BottomSheet
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
 
         binding.tvResult.setOnClickListener {
-            showToast(requireContext(), vm.allPlaces.value?.size.toString())
             binding.bottomSheet.let {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
@@ -207,7 +204,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
         vm.places.observe(this, Observer {
 
-
             it?.let {
                 if (it.isEmpty()) {
                     markerManager.setMarkers(arrayListOf())
@@ -215,28 +211,29 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 } else {
                     markerManager.setMarkers(ArrayList(it))
                     CameraUpdate.fitBounds(markerManager.makeBounds()).animate(CameraAnimation.Fly)
-                        .run {
-                            naverMap.moveCamera(this)
-                        }
+                            .run {
+                                naverMap.moveCamera(this)
+                            }
                 }
-
 
                 markerManager.getMarkers().map {
                     val to = LatLng(it.latitude, it.longitude)
                     PlaceUIData(
-                        title = it.title ?: "",
-                        roadAddress = it.roadAddress ?: "",
-                        telePhone = it.telePhone ?: "",
-                        category = it.category ?: "",
-                        distance = to.toDistanceString(vm.currentMyLocation.value),
-                        distanceDouble = to.toDistance(vm.currentMyLocation.value)
+                            title = it.title ?: "",
+                            roadAddress = it.roadAddress ?: "",
+                            telePhone = it.telePhone ?: "",
+                            category = it.category ?: "",
+                            distance = to.toDistanceString(vm.currentMyLocation.value),
+                            distanceDouble = to.toDistance(vm.currentMyLocation.value)
                     )
 
                 }
             }?.run {
                 sortedBy { it.distanceDouble }
             }?.run {
-                resultAdapter.submitList(this)
+                if (::markerManager.isInitialized) {
+                    resultAdapter.submitList(this)
+                }
             }
 
 
@@ -246,20 +243,9 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         })
 
 
-
-
         vm.errorMessage.observe(this, Observer
         {
             showToast(requireContext(), it.toString())
-        })
-
-        vm.sigunSpinnerItem.observe(this, Observer
-        {
-            it?.let {
-                vm.reqPlacesBySigun(it)
-                /*val position = sigunSpinnerAdapter.getPosition(it)
-                sigunSpinner.setSelection(position)*/
-            }
         })
 
 
@@ -268,66 +254,36 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private fun bindViewModel() {
 
         vm.loadingSubject
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                pb_loading.isVisible = it
-                tv_refresh.isVisible = !it
-                tv_result.isVisible = !it
-            }
-            .addTo(compositeDisposable)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    pb_loading.isVisible = it
+                    tv_refresh.isVisible = !it
+                    tv_result.isVisible = !it
+                }
+                .addTo(compositeDisposable)
 
         searchClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                vm.currentLocation.value?.let {
-                    Intent(context, SearchActivity::class.java).apply {
-                        putExtra(
-                            SearchActivity.KEY_LOCATION,
-                            doubleArrayOf(it.latitude, it.longitude)
-                        )
-                    }
-                        .also {
-                            startActivity(it)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    vm.currentLocation.value?.let {
+                        Intent(context, SearchActivity::class.java).apply {
+                            putExtra(
+                                    SearchActivity.KEY_LOCATION,
+                                    doubleArrayOf(it.latitude, it.longitude)
+                            )
                         }
-                }
+                                .also {
+                                    startActivity(it)
+                                }
+                    }
 
-            }.addTo(compositeDisposable)
+                }.addTo(compositeDisposable)
     }
 
     @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar, menu)
-
-
-        val spinnerItem = menu.findItem(R.id.action_spinner)
-        sigunSpinner = spinnerItem.actionView as Spinner
-
-        sigunSpinnerAdapter = ArrayAdapter.createFromResource(
-            context!!, R.array.sigun,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
-            sigunSpinner.adapter = adapter
-        }
-
-        sigunSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                vm.setSigunItem(parent?.getItemAtPosition(position).toString())
-                Log.d("sh sigunSelected", parent?.getItemAtPosition(position).toString())
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
 
 
     }
@@ -389,12 +345,20 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     override fun markerClick(markerProperty: SHPlace) {
         vm.currentMyLocation.value?.let {
             PreviewFragment.newInstance(markerProperty, doubleArrayOf(it.latitude, it.longitude))
-                .apply {
-                    setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundBottomSheetDialog)
-                }.show(childFragmentManager, PreviewFragment.TAG)
+                    .apply {
+                        setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundBottomSheetDialog)
+                    }.show(childFragmentManager, PreviewFragment.TAG)
 
             Log.d("fragment", "fragment")
         }
+    }
+
+    override fun clusterClick(markers: Collection<SHPlace>) {
+        vm.currentLocation.value?.let {
+            ClusterDialog.newInstance(markers as ArrayList<SHPlace>, doubleArrayOf(it.latitude, it.longitude))
+                    .show(childFragmentManager, ClusterDialog.TAG)
+        }
+
     }
 
     override fun itemClick(placeUiData: PlaceUIData) {
@@ -408,9 +372,9 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             return

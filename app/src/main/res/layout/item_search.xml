@@ -206,28 +206,31 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:paddingHorizontal="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_category">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/tv_call"
                     android:layout_width="0dp"
+                    android:background="@drawable/background_color_btn"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="전화하기"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintWidth_percent="0.5" />
+                    app:layout_constraintWidth_percent="0.45" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/tv_find_load"
                     android:layout_width="0dp"
+                    android:background="@drawable/background_color_btn"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="길찾기"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintWidth_percent="0.5" />
+                    app:layout_constraintWidth_percent="0.45" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

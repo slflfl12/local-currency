@@ -46,8 +46,8 @@ class OpenApiRepositoryImpl(
             }
     }
 
-    override fun getNearByMaps(latitude: Double, longitude: Double): Single<List<SHPlace>> =
-            openApiLocalDataSource.getNearByMaps(latitude, longitude)
+    override fun getNearByMapsX5(latitude: Double, longitude: Double): Single<List<SHPlace>> =
+            openApiLocalDataSource.getNearByMapsX5(latitude, longitude)
                     .map { it.map(MapEntityMapper::mapToSHPlace) }
 
 
@@ -88,8 +88,8 @@ class OpenApiRepositoryImpl(
             .map { it.map(MapEntityMapper::mapToSHPlace) }
 
 
-    override fun getMapsByQuery(query: String): Single<List<SHPlace>> =
-        openApiLocalDataSource.getMapEntitiesByQuery(query)
+    override fun getMapsByQuery(query: String, latitude: Double, longitude: Double): Single<List<SHPlace>> =
+        openApiLocalDataSource.getMapEntitiesByQuery(query, latitude, longitude)
             .map { it.map(MapEntityMapper::mapToSHPlace)}
 
     override fun deleteAll(): Completable {

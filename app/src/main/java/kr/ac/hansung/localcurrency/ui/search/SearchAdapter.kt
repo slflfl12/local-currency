@@ -22,9 +22,7 @@ class SearchAdapter : ListAdapter<PlaceUIData, SearchAdapter.SearchViewHolder>(o
     }
 }) {
 
-
     var itemClickListener: ItemClickListener? = null
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val binding = DataBindingUtil.inflate<ItemSearchBinding>(

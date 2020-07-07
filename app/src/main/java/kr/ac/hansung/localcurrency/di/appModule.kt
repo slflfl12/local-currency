@@ -1,6 +1,7 @@
 package kr.ac.hansung.localcurrency.di
 
 import kr.ac.hansung.localcurrency.ui.map.MapViewModel
+import kr.ac.hansung.localcurrency.ui.map.cluster.ClusterViewModel
 import kr.ac.hansung.localcurrency.ui.map.preview.PreviewViewModel
 import kr.ac.hansung.localcurrency.ui.search.SearchViewModel
 import kr.ac.hansung.localcurrency.ui.splash.SplashViewModel
@@ -13,4 +14,5 @@ val appModule = module {
     viewModel { SplashViewModel(get())}
     viewModel { PreviewViewModel() }
     viewModel { SearchViewModel(get())}
+    viewModel { ClusterViewModel()}
 }

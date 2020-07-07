@@ -2,6 +2,7 @@ package kr.ac.hansung.localcurrency.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.naver.maps.geometry.LatLng
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
@@ -18,13 +19,22 @@ class SearchViewModel(
 
     val _query = MutableLiveData<String>()
 
+
     private val _places = MutableLiveData<List<SHPlace>>()
     val places: LiveData<List<SHPlace>>
         get() = _places
 
+    private val _currentLocation = MutableLiveData<LatLng>()
+    val currentLocation: LiveData<LatLng>
+        get() = _currentLocation
+
     private val _isProgressBoolean = MutableLiveData<Boolean>()
     val isProgressBoolean: LiveData<Boolean>
         get() = _isProgressBoolean
+
+    private val _isKeyBoardBoolean = MutableLiveData<Boolean>()
+    val isKeyBoardBoolean: LiveData<Boolean>
+        get() = _isKeyBoardBoolean
 
     private val _errorResultEmpty = MutableLiveData<Throwable>()
     val errorResultEmpty: LiveData<Throwable>
@@ -45,45 +55,57 @@ class SearchViewModel(
         buttonClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                getSearchPlaces()
+                searchPlaces()
             }, {
             }).addTo(compositeDisposable)
     }
 
 
-    private fun getSearchPlaces() {
+    fun searchPlaces() {
         _query.value?.let { query ->
-            if (query.isNullOrBlank()) {
+            if (query.isBlank()) {
                 _errorQueryEmpty.value = Throwable()
             } else {
-                openApiRepository.getMapsByQuery(query)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe {
-                        showProgress()
-                    }
-                    .doAfterTerminate {
-                        hideProgress()
-                    }
-                    .doOnError {
-                        hideProgress()
-                    }
-                    .subscribe({
-                        it?.let {
-                            if(it.isNotEmpty()) {
-                                _places.value = it
-                            } else {
-                                _errorResultEmpty.value = Throwable()
+                currentLocation.value?.let {
+                    val latitude = it.latitude
+                    val longitude = it.longitude
+                    openApiRepository.getMapsByQuery(
+                            query = query.trim(),
+                            latitude = latitude,
+                            longitude = longitude)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnSubscribe {
+                                showProgress()
                             }
-                        }
-                    }, {
+                            .doAfterTerminate {
+                                hideProgress()
+                                hideKeyBoard()
+                            }
+                            .doOnError {
+                                hideProgress()
+                            }
+                            .subscribe({
+                                it?.let {
+                                    if(it.isNotEmpty()) {
+                                        _places.value = it
+                                    } else {
+                                        _errorResultEmpty.value = Throwable()
+                                    }
+                                }
+                            }, {
+                                _errorThrowable.value = it
+                            }).addTo(compositeDisposable)
+                }
 
-                    }).addTo(compositeDisposable)
             }
         }
 
     }
 
+    private fun hideKeyBoard() {
+        _isKeyBoardBoolean.value = false
+    }
 
     private fun showProgress() {
         _isProgressBoolean.value = true
@@ -91,6 +113,12 @@ class SearchViewModel(
 
     private fun hideProgress() {
         _isProgressBoolean.value = false
+    }
+
+    fun setCurrentLocation(currentLocation: LatLng) {
+        if(_currentLocation.value != currentLocation) {
+            _currentLocation.value = currentLocation
+        }
     }
 
 

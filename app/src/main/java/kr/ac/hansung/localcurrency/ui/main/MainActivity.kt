@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 if(it.second - it.first < 2000L) {
                     super.onBackPressed()
                 } else {
-                    Toast.makeText(this, "앱을 종료하려면 한번 더 눌러주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.back_key_message, Toast.LENGTH_SHORT).show()
                 }
             }
             .addTo(compositeDisposable)

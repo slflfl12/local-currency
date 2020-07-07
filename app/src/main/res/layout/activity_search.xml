@@ -36,9 +36,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_info"
+            android:id="@+id/cl_search"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_back">
@@ -46,21 +46,27 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_search"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_height="0dp"
+                android:hint="@string/et_search_hint"
+                android:background="@drawable/backgorund_search_edit_text"
                 android:text="@={vm._query}"
                 app:layout_constraintEnd_toStartOf="@id/btn_search"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_search"
+                android:background="@drawable/background_color_btn"
                 bind:buttonClick="@{vm.buttonClickSubject}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/et_search"
+                app:layout_constraintBottom_toBottomOf="parent"
                 />
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -80,6 +86,32 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_info"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="#f5f6f7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_search"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosans_bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="10dp"
+                android:text="총 0개"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search"

@@ -27,9 +27,9 @@ interface OpenApiRepository {
 
     fun getNearByPlaces(currentLatLng: LatLng) : Single<List<SHPlace>>
 
-    fun getMapsByQuery(query: String): Single<List<SHPlace>>
+    fun getMapsByQuery(query: String, latitude: Double, longitude: Double): Single<List<SHPlace>>
 
-    fun getNearByMaps(latitude: Double, longitude: Double): Single<List<SHPlace>>
+    fun getNearByMapsX5(latitude: Double, longitude: Double): Single<List<SHPlace>>
 
     fun saveAll(): Completable
 

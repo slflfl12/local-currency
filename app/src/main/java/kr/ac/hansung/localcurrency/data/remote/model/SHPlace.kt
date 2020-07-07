@@ -3,8 +3,10 @@ package kr.ac.hansung.localcurrency.data.remote.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import ted.gun0912.clustering.clustering.TedClusterItem
 import ted.gun0912.clustering.geometry.TedLatLng
+
 
 data class SHPlace(
     @SerializedName("CMPNM_NM")
@@ -48,6 +50,7 @@ data class SHPlace(
     override fun describeContents(): Int {
         return 0
     }
+
 
     companion object CREATOR : Parcelable.Creator<SHPlace> {
         override fun createFromParcel(parcel: Parcel): SHPlace {

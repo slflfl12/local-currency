@@ -3,6 +3,7 @@ package kr.ac.hansung.localcurrency.ui.map.preview
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.DialogFragment
 import com.naver.maps.geometry.LatLng
 import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
@@ -68,6 +69,7 @@ class PreviewFragment :
                     putParcelable(KEY_MARKER_PROPERTY, markerProperty)
                     putDoubleArray(KEY_MY_LOCATION, myLocationArray)
                 }
+                setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundBottomSheetDialog)
             }
     }
 

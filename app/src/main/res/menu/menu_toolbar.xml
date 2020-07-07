@@ -12,9 +12,4 @@
             android:icon="@drawable/ic_search"
             />
 
-        <item
-            android:id="@+id/action_spinner"
-            android:title="Spinner"
-            app:actionViewClass="androidx.appcompat.widget.AppCompatSpinner"
-            app:showAsAction="always"/>
 </menu>

@@ -2,11 +2,20 @@ package kr.ac.hansung.localcurrency.ui.search
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_search.pb_loading
+import kotlinx.android.synthetic.main.fragment_map.*
 import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.data.remote.model.OpenApiMapResponse
 import kr.ac.hansung.localcurrency.databinding.ActivitySearchBinding
@@ -25,13 +34,17 @@ class SearchActivity :
 
     private var currentLocation: LatLng? = null
 
+    private val compositeDisposable = CompositeDisposable()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val data = intent.extras?.getDoubleArray(KEY_LOCATION)
         data?.let {
-            currentLocation = LatLng(it[0], it[1])
+            currentLocation = LatLng(it[0], it[1]).also {
+                vm.setCurrentLocation(it)
+            }
         }
         initView()
         initObserve()
@@ -41,12 +54,36 @@ class SearchActivity :
         searchAdapter = SearchAdapter()
         binding.rvSearch.adapter = searchAdapter
 
+
+
+        binding.etSearch.apply {
+
+            setOnKeyListener { v, keyCode, event ->
+                if(keyCode == KeyEvent.KEYCODE_ENTER){
+                    vm.searchPlaces()
+                    return@setOnKeyListener true
+                }
+                else if(keyCode == KeyEvent.KEYCODE_BACK) {
+                    clearFocus()
+                    return@setOnKeyListener true
+                }
+
+                return@setOnKeyListener false
+
+            }
+        }
+
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
     }
 
     private fun initObserve() {
 
         vm.places.observe(this, Observer {
             it?.let {
+
                 it.map {
                     currentLocation?.let { currentLocation ->
                         PlaceUIData(
@@ -60,10 +97,13 @@ class SearchActivity :
                     }
                 }
             }?.run {
+                sortedBy { it?.distanceDouble }
+            }?.run {
                 if(::searchAdapter.isInitialized)
                     searchAdapter.submitList(this)
-                Log.d("aa", this.toString())
+                binding.tvTotal.text = String.format(getString(R.string.tv_total_text), it.size)
             }
+
 
             binding.tvEmpty.visibility = View.INVISIBLE
             binding.rvSearch.visibility = View.VISIBLE
@@ -91,7 +131,11 @@ class SearchActivity :
             }
         })
 
-
+        vm.isKeyBoardBoolean.observe(this, Observer {
+            if(!it) {
+                hideKeyboard()
+            }
+        })
     }
 
     override fun itemClick(placeUIData: PlaceUIData) {
@@ -107,8 +151,16 @@ class SearchActivity :
     }
 
 
-    companion object {
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
 
+
+
+
+
+
+    companion object {
         const val KEY_LOCATION = "key_location"
     }
 

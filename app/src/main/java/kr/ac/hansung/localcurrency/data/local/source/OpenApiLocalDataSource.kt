@@ -17,9 +17,9 @@ interface OpenApiLocalDataSource {
 
     fun getMapEntitiesBySigun(si: String): Single<List<MapEntity>>
 
-    fun getMapEntitiesByQuery(query: String): Single<List<MapEntity>>
+    fun getMapEntitiesByQuery(query: String, latitude: Double, longitude: Double): Single<List<MapEntity>>
 
-    fun getNearByMaps(latitude: Double, longitude: Double): Single<List<MapEntity>>
+    fun getNearByMapsX5(latitude: Double, longitude: Double): Single<List<MapEntity>>
 
     fun deleteAll(): Completable
 }
