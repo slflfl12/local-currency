@@ -12,6 +12,26 @@ fun String.splitFirst(): String {
     }
 }
 
+fun String.splitPhoneNum(): String {
+
+    if(this == "") {
+        return ""
+    }
+
+    val split: List<String> = this.trim().split("-")
+
+    if (split.size == 1) {
+        return this
+    }
+
+    val builder = StringBuilder()
+    for (value in split) {
+        builder.append(value)
+    }
+    return builder.toString()
+}
+
+
 fun showToast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }

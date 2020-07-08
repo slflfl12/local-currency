@@ -12,49 +12,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0325e776-5f03-4abe-954e-53923c7a09da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/local/dao/MapDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/local/dao/MapDao.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/local/source/OpenApiLocalDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/local/source/OpenApiLocalDataSource.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/local/source/OpenApiLocalDataSourceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/local/source/OpenApiLocalDataSourceImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/remote/model/SHPlace.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/remote/model/SHPlace.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/repository/OpenApiRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/repository/OpenApiRepository.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/repository/OpenApiRepositoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/data/repository/OpenApiRepositoryImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/di/appModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/di/appModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/base/BaseActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/base/BaseActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/base/BaseBottomSheetDialogFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/base/BaseBottomSheetDialogFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/base/BaseDialogFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/base/BaseDialogFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/base/BaseFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/base/BaseFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/main/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/main/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/detail/DetailActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/detail/DetailActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/MapFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/MapFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/MapViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/MapViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/MarkerManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/MarkerManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/cluster/ClusterAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/cluster/ClusterAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/cluster/ClusterDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/cluster/ClusterDialog.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/preview/PreviewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/preview/PreviewFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/preview/PreviewViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/preview/PreviewViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/result/ResultAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/result/ResultAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/result/ResultFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/result/ResultFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/model/PlaceUIData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/model/PlaceUIData.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/search/SearchActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/search/SearchActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/search/SearchAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/search/SearchAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/search/SearchViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/search/SearchViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ic_category.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_category.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ic_location.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_location.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ic_phone.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_phone.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/util/BindingAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/util/BindingAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/util/StringUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/util/StringUtil.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_detail.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_splash.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_splash.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_map.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_map.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_result.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/item_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/item_result.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/item_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/item_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/menu/menu_toolbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/menu/menu_toolbar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5_API_29" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="ce041714d882e73905" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -70,9 +68,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="resourceFile" />
         <option value="Kotlin Class" />
         <option value="layoutResourceFile" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -90,8 +88,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../MyApplication2/app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../소스코드/Weeung-Android-master/app" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\seunghwan Seo\Desktop\GIT\GyunggiLocalMoneyMap\app\src\main\assets" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
@@ -167,46 +170,46 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="429" y="56" key="#com.intellij.ide.util.MemberChooser" timestamp="1594041375111">
+    <state x="429" y="56" key="#com.intellij.ide.util.MemberChooser" timestamp="1594214017151">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="429" y="56" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1594041375111" />
-    <state x="221" y="95" key="AndroidCreateResourceFileDialog" timestamp="1594068818747">
+    <state x="429" y="56" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1594214017151" />
+    <state x="234" y="33" key="AndroidCreateResourceFileDialog" timestamp="1594123914030">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="221" y="95" key="AndroidCreateResourceFileDialog/0.0.1280.680@0.0.1280.680" timestamp="1594068818747" />
-    <state x="497" y="153" key="AndroidCreateXmlResourceDialog" timestamp="1594046855560">
+    <state x="234" y="33" key="AndroidCreateResourceFileDialog/0.0.1280.680@0.0.1280.680" timestamp="1594123914030" />
+    <state x="497" y="153" key="AndroidCreateXmlResourceDialog" timestamp="1594214883779">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="497" y="153" key="AndroidCreateXmlResourceDialog/0.0.1280.680@0.0.1280.680" timestamp="1594046855560" />
-    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1594021373870">
+    <state x="497" y="153" key="AndroidCreateXmlResourceDialog/0.0.1280.680@0.0.1280.680" timestamp="1594214883779" />
+    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1594213166858">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1594021373870" />
-    <state width="1220" height="160" key="GridCell.Tab.0.bottom" timestamp="1594067761369">
+    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1594213166858" />
+    <state width="1220" height="160" key="GridCell.Tab.0.bottom" timestamp="1594201983207">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1594067761369" />
-    <state width="1220" height="160" key="GridCell.Tab.0.center" timestamp="1594067761369">
+    <state width="1220" height="160" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1594201983207" />
+    <state width="1220" height="160" key="GridCell.Tab.0.center" timestamp="1594201983207">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1594067761369" />
-    <state width="1220" height="160" key="GridCell.Tab.0.left" timestamp="1594067761368">
+    <state width="1220" height="160" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1594201983207" />
+    <state width="1220" height="160" key="GridCell.Tab.0.left" timestamp="1594201983207">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1594067761368" />
-    <state width="1220" height="160" key="GridCell.Tab.0.right" timestamp="1594067761369">
+    <state width="1220" height="160" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1594201983207" />
+    <state width="1220" height="160" key="GridCell.Tab.0.right" timestamp="1594201983207">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1594067761369" />
-    <state x="330" y="72" width="641" height="536" key="find.popup" timestamp="1594053290054">
+    <state width="1220" height="160" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1594201983207" />
+    <state x="330" y="72" width="641" height="536" key="find.popup" timestamp="1594202907518">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="330" y="72" width="641" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594053290054" />
-    <state x="363" y="0" key="refactoring.ChangeSignatureDialog" timestamp="1593959175524">
+    <state x="330" y="72" width="641" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594202907518" />
+    <state x="363" y="0" key="refactoring.ChangeSignatureDialog" timestamp="1594206240066">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="363" y="0" key="refactoring.ChangeSignatureDialog/0.0.1280.680@0.0.1280.680" timestamp="1593959175524" />
+    <state x="363" y="0" key="refactoring.ChangeSignatureDialog/0.0.1280.680@0.0.1280.680" timestamp="1594206240066" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1593959707746">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

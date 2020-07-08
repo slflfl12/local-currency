@@ -1,10 +1,15 @@
 package kr.ac.hansung.localcurrency.ui.search
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
@@ -20,13 +25,15 @@ import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.data.remote.model.OpenApiMapResponse
 import kr.ac.hansung.localcurrency.databinding.ActivitySearchBinding
 import kr.ac.hansung.localcurrency.ui.base.BaseActivity
+import kr.ac.hansung.localcurrency.ui.detail.DetailActivity
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
+import kr.ac.hansung.localcurrency.util.splitPhoneNum
 import kr.ac.hansung.localcurrency.util.toDistance
 import kr.ac.hansung.localcurrency.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity :
-    BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search), SearchAdapter.ItemClickListener {
+        BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search), SearchAdapter.ItemClickListener {
 
     override val vm: SearchViewModel by viewModel()
 
@@ -42,8 +49,8 @@ class SearchActivity :
 
         val data = intent.extras?.getDoubleArray(KEY_LOCATION)
         data?.let {
-            currentLocation = LatLng(it[0], it[1]).also {
-                vm.setCurrentLocation(it)
+            currentLocation = LatLng(it[0], it[1]).also { latLng ->
+                vm.setCurrentLocation(latLng)
             }
         }
         initView()
@@ -54,22 +61,16 @@ class SearchActivity :
         searchAdapter = SearchAdapter()
         binding.rvSearch.adapter = searchAdapter
 
-
-
         binding.etSearch.apply {
-
             setOnKeyListener { v, keyCode, event ->
-                if(keyCode == KeyEvent.KEYCODE_ENTER){
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     vm.searchPlaces()
                     return@setOnKeyListener true
-                }
-                else if(keyCode == KeyEvent.KEYCODE_BACK) {
+                } else if (keyCode == KeyEvent.KEYCODE_BACK) {
                     clearFocus()
                     return@setOnKeyListener true
                 }
-
                 return@setOnKeyListener false
-
             }
         }
 
@@ -87,19 +88,19 @@ class SearchActivity :
                 it.map {
                     currentLocation?.let { currentLocation ->
                         PlaceUIData(
-                            title = it.title ?: "",
-                            roadAddress = it.roadAddress ?: "",
-                            telePhone = it.telePhone ?: "",
-                            category = it.category ?: "",
-                            distance = currentLocation.toDistanceString(LatLng(it.latitude, it.longitude)),
-                            distanceDouble = currentLocation.toDistance(LatLng(it.latitude, it.longitude))
+                                title = it.title ?: "",
+                                roadAddress = it.roadAddress ?: "",
+                                telePhone = it.telePhone ?: "",
+                                category = it.category ?: "",
+                                distance = currentLocation.toDistanceString(LatLng(it.latitude, it.longitude)),
+                                distanceDouble = currentLocation.toDistance(LatLng(it.latitude, it.longitude))
                         )
                     }
                 }
             }?.run {
                 sortedBy { it?.distanceDouble }
             }?.run {
-                if(::searchAdapter.isInitialized)
+                if (::searchAdapter.isInitialized)
                     searchAdapter.submitList(this)
                 binding.tvTotal.text = String.format(getString(R.string.tv_total_text), it.size)
             }
@@ -124,7 +125,7 @@ class SearchActivity :
         })
 
         vm.isProgressBoolean.observe(this, Observer {
-            if(it) {
+            if (it) {
                 binding.pbLoading.visibility = View.VISIBLE
             } else {
                 binding.pbLoading.visibility = View.GONE
@@ -132,32 +133,44 @@ class SearchActivity :
         })
 
         vm.isKeyBoardBoolean.observe(this, Observer {
-            if(!it) {
+            if (!it) {
                 hideKeyboard()
             }
         })
     }
 
     override fun itemClick(placeUIData: PlaceUIData) {
-        showToast("itemClick")
+        Intent(this, DetailActivity::class.java).apply {
+            currentLocation?.let {
+                putExtra(DetailActivity.KEY_LOCATION, doubleArrayOf(it.latitude, it.longitude))
+                putExtra(DetailActivity.KEY_PLACE, placeUIData)
+            }.also {
+                startActivity(it)
+            }
+        }
     }
 
-    override fun callClick() {
-        showToast("callClick")
+    override fun callClick(placeUIData: PlaceUIData) {
+        startActivity(Intent(Intent.ACTION_DIAL, ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()))
     }
 
-    override fun findLoad() {
-        showToast("findLoadClick")
-    }
+    override fun findLoad(placeUIData: PlaceUIData) {
+        val url = "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
+        val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
 
+        val list: List<ResolveInfo> = getPackageManager()?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+
+        if (list.isEmpty()) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")))
+        } else {
+            startActivity(intent)
+        }
+    }
 
     override fun onBackPressed() {
         super.onBackPressed()
     }
-
-
-
-
 
 
     companion object {

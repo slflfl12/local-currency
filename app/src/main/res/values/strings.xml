@@ -10,5 +10,9 @@
     <string name="et_search_hint">장소명 혹은 주소를 입력하세요</string>
     <string name="tv_total_text">총 %d개</string>
     <string name="close">닫기</string>
+    <string name="app_title">경기지역화폐 가맹점지도</string>
+    <string name="text_1km">1km</string>
+    <string name="text_0.5km">0.5km</string>
+    <string name="set_distance_text">탐색 범위를 %.1fkm로 설정하였습니다</string>
 
 </resources>

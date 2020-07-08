@@ -34,10 +34,10 @@ class SearchAdapter : ListAdapter<PlaceUIData, SearchAdapter.SearchViewHolder>(o
             itemClickListener?.itemClick(getItem(holder.adapterPosition))
         }
         holder.itemView.tv_call.setOnClickListener {
-            itemClickListener?.callClick()
+            itemClickListener?.callClick(getItem(holder.adapterPosition))
         }
         holder.itemView.tv_find_load.setOnClickListener {
-            itemClickListener?.findLoad()
+            itemClickListener?.findLoad(getItem(holder.adapterPosition))
         }
 
 
@@ -50,8 +50,8 @@ class SearchAdapter : ListAdapter<PlaceUIData, SearchAdapter.SearchViewHolder>(o
 
     interface ItemClickListener {
         fun itemClick(placeUIData: PlaceUIData)
-        fun callClick()
-        fun findLoad()
+        fun callClick(placeUIData: PlaceUIData)
+        fun findLoad(placeUIData: PlaceUIData)
     }
 
 

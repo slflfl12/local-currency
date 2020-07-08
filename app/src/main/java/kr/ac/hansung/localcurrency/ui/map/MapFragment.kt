@@ -2,6 +2,9 @@ package kr.ac.hansung.localcurrency.ui.map
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -15,6 +18,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -33,6 +37,7 @@ import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
 import kr.ac.hansung.localcurrency.databinding.FragmentMapBinding
 import kr.ac.hansung.localcurrency.ui.base.BaseFragment
+import kr.ac.hansung.localcurrency.ui.detail.DetailActivity
 import kr.ac.hansung.localcurrency.ui.map.cluster.ClusterDialog
 import kr.ac.hansung.localcurrency.ui.map.preview.PreviewFragment
 import kr.ac.hansung.localcurrency.ui.map.result.ResultAdapter
@@ -40,6 +45,7 @@ import kr.ac.hansung.localcurrency.ui.map.result.ResultFragment
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 import kr.ac.hansung.localcurrency.ui.search.SearchActivity
 import kr.ac.hansung.localcurrency.util.showToast
+import kr.ac.hansung.localcurrency.util.splitPhoneNum
 import kr.ac.hansung.localcurrency.util.toDistance
 import kr.ac.hansung.localcurrency.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -51,7 +57,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         OnMapReadyCallback, MarkerManager.OnMarkerClickListener, ResultAdapter.ItemClickListener {
 
 
-    override val vm: MapViewModel by sharedViewModel()
+    override val vm: MapViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
 
 
@@ -127,19 +133,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             onMarkerClickListener = this@MapFragment
         }
 
-
-/*        vm.currentMyLocation.value?.let {
-            CameraUpdate.scrollTo(it)
-                .animate(CameraAnimation.Fly)
-                .finishCallback {
-
-                }.also {
-                    map.moveCamera(it)
-                }
-        }*/
-
-
-        //vm.getMapEntities()
     }
 
 
@@ -169,11 +162,13 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         }
 
         binding.fab1.setOnClickListener {
-            vm.setNearByValue(1.5f)
+            vm.setNearByValue(0.5)
+            animateFab()
         }
 
         binding.fab2.setOnClickListener {
-            vm.setNearByValue(2f)
+            vm.setNearByValue(1.0)
+            animateFab()
         }
 
 
@@ -236,6 +231,10 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 }
             }
 
+            vm.nearByValue.observe(this, Observer {
+                showToast(requireContext(), String.format(getString(R.string.set_distance_text), it))
+            })
+
 
             binding.tvTotal.text = "총 ${markerManager.getMarkerSize()}개"
 
@@ -265,7 +264,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         searchClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    vm.currentLocation.value?.let {
+                    vm.currentMyLocation.value?.let {
                         Intent(context, SearchActivity::class.java).apply {
                             putExtra(
                                     SearchActivity.KEY_LOCATION,
@@ -361,8 +360,33 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     }
 
-    override fun itemClick(placeUiData: PlaceUIData) {
-        showToast(requireContext(), "클릭")
+    override fun itemClick(placeUIData: PlaceUIData) {
+        Intent(context, DetailActivity::class.java).apply {
+            vm.currentMyLocation.value?.let {
+                putExtra(DetailActivity.KEY_LOCATION, doubleArrayOf(it.latitude, it.longitude))
+                putExtra(DetailActivity.KEY_PLACE, placeUIData)
+            }.also {
+                startActivity(it)
+            }
+        }
+    }
+
+    override fun callClick(placeUIData: PlaceUIData) {
+        startActivity(Intent(Intent.ACTION_DIAL, ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()))
+    }
+
+    override fun findLoad(placeUIData: PlaceUIData) {
+        val url = "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
+        val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+
+        val list: List<ResolveInfo> = context?.getPackageManager()?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+
+        if (list.isEmpty()) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")))
+        } else {
+            startActivity(intent)
+        }
     }
 
     fun getBottomSheetState(): Int = bottomSheetBehavior.state

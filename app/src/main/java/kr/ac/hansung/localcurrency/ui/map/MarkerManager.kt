@@ -90,7 +90,6 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
             return Marker().apply {
                 captionText = place.title!!
             }
-
         }
 
     }

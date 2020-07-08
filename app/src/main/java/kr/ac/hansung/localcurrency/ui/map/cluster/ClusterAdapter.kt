@@ -34,6 +34,7 @@ class ClusterAdapter : ListAdapter<PlaceUIData, ClusterAdapter.ClusterViewHolder
         holder.itemView.setOnClickListener {
             onItemClickListener?.onPlaceClick(getItem(holder.adapterPosition))
         }
+
         return holder
     }
 

@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.search.SearchActivity"/>
+        <activity android:name=".ui.detail.DetailActivity"/>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

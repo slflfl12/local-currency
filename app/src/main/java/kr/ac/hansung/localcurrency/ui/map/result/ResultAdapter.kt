@@ -4,14 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.item_search.view.*
 import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.databinding.ItemResultBinding
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 
-class ResultAdapter : RecyclerView.Adapter<ResultAdapter.ResultViewHolder>(){
+class ResultAdapter : ListAdapter<PlaceUIData, ResultAdapter.ResultViewHolder>(object :
+        DiffUtil.ItemCallback<PlaceUIData>() {
+    override fun areContentsTheSame(oldItem: PlaceUIData, newItem: PlaceUIData): Boolean {
+        return oldItem.title == oldItem.title
+    }
 
-    private var items = arrayListOf<PlaceUIData>()
+    override fun areItemsTheSame(oldItem: PlaceUIData, newItem: PlaceUIData): Boolean {
+        return newItem == oldItem
+    }
+}){
 
     var itemClickListener: ItemClickListener? = null
 
@@ -23,31 +32,21 @@ class ResultAdapter : RecyclerView.Adapter<ResultAdapter.ResultViewHolder>(){
         )
         val holder = ResultViewHolder(binding)
         holder.itemView.setOnClickListener {
-            itemClickListener?.itemClick(items[holder.adapterPosition])
+            itemClickListener?.itemClick(getItem(holder.adapterPosition))
+        }
+        holder.itemView.tv_call.setOnClickListener {
+            itemClickListener?.callClick(getItem(holder.adapterPosition))
+        }
+        holder.itemView.tv_find_load.setOnClickListener {
+            itemClickListener?.findLoad(getItem(holder.adapterPosition))
         }
 
         return holder
     }
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) =
-        holder.bind(items[position])
+        holder.bind(getItem(position))
 
-    override fun getItemCount(): Int = items.size
-
-    fun setItems(places: List<PlaceUIData>) {
-        items.clear()
-        items.addAll(places)
-        notifyDataSetChanged()
-    }
-
-    fun submitList(new: List<PlaceUIData>) {
-        val old = items
-        val diffResult:DiffUtil.DiffResult = DiffUtil.calculateDiff(
-            ResultDiffUtil(old, new)
-        )
-        items = ArrayList(new)
-        diffResult.dispatchUpdatesTo(this)
-    }
 
     class ResultViewHolder(private val binding: ItemResultBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -58,26 +57,10 @@ class ResultAdapter : RecyclerView.Adapter<ResultAdapter.ResultViewHolder>(){
     }
 
     interface ItemClickListener {
-        fun itemClick(placeUiData: PlaceUIData)
+        fun itemClick(placeUIData: PlaceUIData)
+        fun callClick(placeUIData: PlaceUIData)
+        fun findLoad(placeUIData: PlaceUIData)
     }
 
-    inner class ResultDiffUtil(
-        val oldItems: List<PlaceUIData>,
-        val newItems: List<PlaceUIData>
-    ) : DiffUtil.Callback() {
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldItems[oldItemPosition] == newItems[newItemPosition]
-        }
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldItems[oldItemPosition].title == newItems[newItemPosition].title
-        }
-
-        override fun getNewListSize(): Int = newItems.size
-
-        override fun getOldListSize(): Int = oldItems.size
-
-    }
 
 }

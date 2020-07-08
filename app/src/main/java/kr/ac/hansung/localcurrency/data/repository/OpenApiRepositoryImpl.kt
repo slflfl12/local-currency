@@ -46,8 +46,8 @@ class OpenApiRepositoryImpl(
             }
     }
 
-    override fun getNearByMapsX5(latitude: Double, longitude: Double): Single<List<SHPlace>> =
-            openApiLocalDataSource.getNearByMapsX5(latitude, longitude)
+    override fun getNearByMaps(latitude: Double, longitude: Double, nearByValue: Double): Single<List<SHPlace>> =
+            openApiLocalDataSource.getNearByMaps(latitude, longitude, nearByValue)
                     .map { it.map(MapEntityMapper::mapToSHPlace) }
 
 

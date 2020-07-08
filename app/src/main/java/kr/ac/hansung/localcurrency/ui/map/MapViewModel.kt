@@ -5,17 +5,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.naver.maps.geometry.LatLng
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kr.ac.hansung.localcurrency.data.repository.OpenApiRepository
 import kr.ac.hansung.localcurrency.ui.base.BaseViewModel
 import kr.ac.hansung.localcurrency.util.SingleLiveEvent
-import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import kr.ac.hansung.localcurrency.data.repository.NaverMapRepository
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
-import kr.ac.hansung.localcurrency.util.splitFirst
-import kr.ac.hansung.localcurrency.util.toForApiString
 
 class MapViewModel(
     private val openApiRepository: OpenApiRepository,
@@ -31,15 +27,19 @@ class MapViewModel(
     val currentMyLocation: LiveData<LatLng>
         get() = _currentMyLocation
 
-    private val _currentNearByValue = MutableLiveData<Float>().apply { postValue(1.5f) }
-    val currentNearByValue: LiveData<Float>
-        get() = _currentNearByValue
+    private val _nearByValue = MutableLiveData<Double>(0.5)
+    val nearByValue: LiveData<Double>
+        get() = _nearByValue
 
 
 
     private val _places = MutableLiveData<List<SHPlace>>()
     val places: LiveData<List<SHPlace>>
         get() = _places
+
+
+
+
 
 
     private val _getNearBySelectedEvent = SingleLiveEvent<Float>()
@@ -66,24 +66,26 @@ class MapViewModel(
         currentLocation.value?.let {
             val latitude = it.latitude
             val longitude = it.longitude
-            openApiRepository.getNearByMapsX5(latitude, longitude)
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe {
-                    loadingSubject.onNext(true)
-                }
-                .doAfterTerminate {
-                    loadingSubject.onNext(false)
-                }
-                .observeOn(Schedulers.io())
-                .subscribe({
-                    if (it.isNotEmpty()) {
-                        _places.postValue(it)
-                    } else {
-                        Log.d("결과 없음", "결과 없음")
+            nearByValue.value?.let { nearByValue ->
+                openApiRepository.getNearByMaps(latitude, longitude, nearByValue)
+                    .subscribeOn(Schedulers.io())
+                    .doOnSubscribe {
+                        loadingSubject.onNext(true)
                     }
-                }, {
+                    .doAfterTerminate {
+                        loadingSubject.onNext(false)
+                    }
+                    .observeOn(Schedulers.io())
+                    .subscribe({
+                        if (it.isNotEmpty()) {
+                            _places.postValue(it)
+                        } else {
+                            Log.d("결과 없음", "결과 없음")
+                        }
+                    }, {
 
-                })
+                    })
+            }
 
         }
     }
@@ -106,8 +108,8 @@ class MapViewModel(
         }
     }
 
-    fun setNearByValue(distance: Float) {
-        _currentNearByValue.value = distance
+    fun setNearByValue(distance: Double) {
+        _nearByValue.value = distance
     }
 
 

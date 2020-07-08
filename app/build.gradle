@@ -87,7 +87,7 @@ dependencies {
 
     implementation "com.naver.maps:map-sdk:3.8.0"
 
-    //구글 위치 정보
+    //구글 위 치 정보
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 
 

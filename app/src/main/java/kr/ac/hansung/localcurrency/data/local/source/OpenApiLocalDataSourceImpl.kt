@@ -40,8 +40,8 @@ class OpenApiLocalDataSourceImpl(
 
     override fun getMapEntitiesBySigun(si:String): Single<List<MapEntity>> = mapDao.getMapsBySi(si)
 
-    override fun getNearByMapsX5(latitude: Double, longitude: Double): Single<List<MapEntity>> {
-        return mapDao.getNearByMapsX5(latitude, longitude)
+    override fun getNearByMaps(latitude: Double, longitude: Double, nearByValue: Double): Single<List<MapEntity>> {
+        return mapDao.getNearByMaps(latitude, longitude, nearByValue)
     }
 
     override fun deleteAll(): Completable {

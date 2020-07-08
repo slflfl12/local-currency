@@ -17,21 +17,18 @@ import kr.ac.hansung.localcurrency.util.showToast
 import kr.ac.hansung.localcurrency.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class ResultFragment : BaseBottomSheetDialogFragment<FragmentResultBinding, MapViewModel>(R.layout.fragment_result), ResultAdapter.ItemClickListener{
+class ResultFragment : BaseBottomSheetDialogFragment<FragmentResultBinding, MapViewModel>(R.layout.fragment_result) {
 
     override val vm: MapViewModel by sharedViewModel()
 
     private val resultAdapter: ResultAdapter by lazy {
         ResultAdapter().apply {
-            itemClickListener = this@ResultFragment
         }
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
 
     }
@@ -55,7 +52,6 @@ class ResultFragment : BaseBottomSheetDialogFragment<FragmentResultBinding, MapV
     }
 
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState)
 
@@ -70,23 +66,21 @@ class ResultFragment : BaseBottomSheetDialogFragment<FragmentResultBinding, MapV
             it?.let {
 
                 it.map {
-                val to = LatLng(it.latitude, it.longitude)
-                PlaceUIData(
-                    title = it.title ?: "",
-                    roadAddress = it.roadAddress ?: "",
-                    telePhone = it.telePhone ?: "",
-                    category = it.category ?: "",
-                    distance = to.toDistanceString(vm.currentMyLocation.value)
-                )
+                    val to = LatLng(it.latitude, it.longitude)
+                    PlaceUIData(
+                            title = it.title ?: "",
+                            roadAddress = it.roadAddress ?: "",
+                            telePhone = it.telePhone ?: "",
+                            category = it.category ?: "",
+                            latitude = it.latitude,
+                            longitude = it.longitude,
+                            distance = to.toDistanceString(vm.currentMyLocation.value)
+                    )
+                }
+            }?.run {
+                resultAdapter.submitList(this)
             }
-        }?.run {
-            resultAdapter.submitList(this)
-        }
         })
-
-    }
-
-    override fun itemClick(placeUiData: PlaceUIData) {
 
     }
 
