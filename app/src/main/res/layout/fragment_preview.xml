@@ -49,192 +49,194 @@
             >
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_address"
-                android:layout_width="0dp"
-                android:layout_height="65dp"
-                android:paddingStart="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_address"
+            android:layout_width="0dp"
+            android:layout_height="65dp"
+            android:paddingStart="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_title">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_address"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_location"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_title">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_address"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_location"
-
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/notosans_bold"
-                    android:gravity="center"
-                    android:text="위치"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_address"
-                    app:layout_constraintStart_toEndOf="@id/iv_address" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/notosans_bold"
+                android:gravity="center"
+                android:text="위치"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="@id/iv_address"
+                app:layout_constraintStart_toEndOf="@id/iv_address" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_address_detailed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/notosans_regular"
-                    android:gravity="center_vertical"
-                    android:paddingStart="10dp"
-                    android:text="@{data.roadAddress}"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_address"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_address" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_distance_detailed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosans_regular"
-                    android:text="@{data.distance}"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintStart_toStartOf="@id/iv_address"
-                    app:layout_constraintTop_toBottomOf="@id/iv_address" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_phone"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_address_detailed"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/notosans_regular"
+                android:gravity="center_vertical"
                 android:paddingStart="10dp"
+                android:text="@{data.roadAddress}"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="@id/iv_address"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_address">
+                app:layout_constraintStart_toEndOf="@id/tv_address" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_phone"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_phone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/notosans_bold"
-                    android:gravity="center"
-                    android:text="번호"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_phone"
-                    app:layout_constraintStart_toEndOf="@id/iv_phone" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_phone_detailed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/notosans_regular"
-                    android:gravity="center_vertical"
-                    android:paddingStart="10dp"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_phone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_phone"
-                    bind:setPhone="@{data.telePhone}" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_category"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_distance_detailed"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosans_regular"
+                android:text="@{data.distance}"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintStart_toStartOf="@id/iv_address"
+                app:layout_constraintTop_toBottomOf="@id/iv_address" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_phone"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:paddingStart="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_address">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_phone"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:alpha="1.0"
+                android:background="@null"
+                android:src="@drawable/ic_phone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/notosans_bold"
+                android:gravity="center"
+                android:text="번호"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="@id/iv_phone"
+                app:layout_constraintStart_toEndOf="@id/iv_phone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_phone_detailed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/notosans_regular"
+                android:gravity="center_vertical"
                 android:paddingStart="10dp"
                 android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="@id/iv_phone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_phone"
+                bind:setPhone="@{data.telePhone}" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_category"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:paddingStart="10dp"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_phone">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_category"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_category" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/notosans_bold"
+                android:gravity="center"
+                android:text="분류"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="@id/iv_category"
+                app:layout_constraintStart_toEndOf="@id/iv_category" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_category_detailed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/notosans_regular"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toBottomOf="@id/iv_category"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_phone">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_category"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_category"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/notosans_bold"
-                    android:gravity="center"
-                    android:text="분류"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_category"
-                    app:layout_constraintStart_toEndOf="@id/iv_category" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_category_detailed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/notosans_regular"
-                    android:gravity="center_vertical"
-                    android:paddingStart="10dp"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_category"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@id/tv_category"
-                    bind:setCategory="@{data.category}" />
+                app:layout_constraintStart_toEndOf="@id/tv_category"
+                bind:setCategory="@{data.category}" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_call_find_load"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_call_find_load"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_category">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tv_call"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:paddingHorizontal="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_color_btn"
+                android:gravity="center"
+                android:text="전화하기"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginBottom="5dp"
-                app:layout_constraintTop_toBottomOf="@id/cl_category">
+                app:layout_constraintWidth_percent="0.45" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/tv_call"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background_color_btn"
-                    android:gravity="center"
-                    android:text="전화하기"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintWidth_percent="0.45" />
-
-                <TextView
-                    android:id="@+id/tv_find_load"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background_color_btn"
-                    android:gravity="center"
-                    android:text="길찾기"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintWidth_percent="0.45" />
+            <TextView
+                android:id="@+id/tv_find_load"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_color_btn"
+                android:gravity="center"
+                android:text="길찾기"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.45" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

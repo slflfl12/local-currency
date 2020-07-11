@@ -13,24 +13,18 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.util.FusedLocationSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_map.*
 import kr.ac.hansung.localcurrency.R
@@ -41,14 +35,12 @@ import kr.ac.hansung.localcurrency.ui.detail.DetailActivity
 import kr.ac.hansung.localcurrency.ui.map.cluster.ClusterDialog
 import kr.ac.hansung.localcurrency.ui.map.preview.PreviewFragment
 import kr.ac.hansung.localcurrency.ui.map.result.ResultAdapter
-import kr.ac.hansung.localcurrency.ui.map.result.ResultFragment
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 import kr.ac.hansung.localcurrency.ui.search.SearchActivity
 import kr.ac.hansung.localcurrency.util.showToast
 import kr.ac.hansung.localcurrency.util.splitPhoneNum
 import kr.ac.hansung.localcurrency.util.toDistance
 import kr.ac.hansung.localcurrency.util.toDistanceString
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
@@ -231,19 +223,22 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 }
             }
 
-            vm.nearByValue.observe(this, Observer {
-                showToast(requireContext(), String.format(getString(R.string.set_distance_text), it))
-            })
-
-
             binding.tvTotal.text = "총 ${markerManager.getMarkerSize()}개"
-
-
         })
 
+        vm.nearByValue.observe(this, Observer {
+            showToast(requireContext(), String.format(getString(R.string.set_distance_text), it))
+        })
 
-        vm.errorMessage.observe(this, Observer
-        {
+        vm.showBottomSheetDialog.observe(this, Observer {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        })
+
+        vm.closeEvent.observe(this, Observer {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        })
+
+        vm.errorMessage.observe(this, Observer {
             showToast(requireContext(), it.toString())
         })
 
@@ -341,18 +336,17 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         }
     }
 
-    override fun markerClick(markerProperty: SHPlace) {
+    override fun onMarkerClick(markerProperty: SHPlace) {
         vm.currentMyLocation.value?.let {
             PreviewFragment.newInstance(markerProperty, doubleArrayOf(it.latitude, it.longitude))
                     .apply {
-                        setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundBottomSheetDialog)
                     }.show(childFragmentManager, PreviewFragment.TAG)
 
             Log.d("fragment", "fragment")
         }
     }
 
-    override fun clusterClick(markers: Collection<SHPlace>) {
+    override fun onClusterClick(markers: Collection<SHPlace>) {
         vm.currentLocation.value?.let {
             ClusterDialog.newInstance(markers as ArrayList<SHPlace>, doubleArrayOf(it.latitude, it.longitude))
                     .show(childFragmentManager, ClusterDialog.TAG)

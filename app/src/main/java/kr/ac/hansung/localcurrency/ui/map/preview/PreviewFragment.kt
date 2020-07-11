@@ -64,7 +64,6 @@ class PreviewFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.data = placeUIData
         initView()
-        initObserve()
     }
 
     fun initView() {
@@ -77,10 +76,11 @@ class PreviewFragment :
         binding.tvFindLoad.setOnClickListener {
             findLoad(placeUIData)
         }
+
+        binding.ivAddress.setImageResource(R.drawable.ic_location)
+        binding.ivAddress.visibility = View.VISIBLE
     }
 
-    fun initObserve() {
-    }
 
 
     fun findLoad(placeUIData: PlaceUIData) {
@@ -109,8 +109,12 @@ class PreviewFragment :
                         putParcelable(KEY_MARKER_PROPERTY, markerProperty)
                         putDoubleArray(KEY_MY_LOCATION, myLocationArray)
                     }
-                    setStyle(DialogFragment.STYLE_NORMAL, R.style.RoundBottomSheetDialog)
+                    setStyle(DialogFragment.STYLE_NO_TITLE, R.style.RoundBottomSheetDialog)
                 }
+    }
+
+    interface PreviewListener {
+        fun onClosePreview()
     }
 
 

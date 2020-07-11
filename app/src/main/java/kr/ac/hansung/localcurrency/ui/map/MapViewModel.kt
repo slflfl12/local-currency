@@ -31,20 +31,23 @@ class MapViewModel(
     val nearByValue: LiveData<Double>
         get() = _nearByValue
 
-
-
     private val _places = MutableLiveData<List<SHPlace>>()
     val places: LiveData<List<SHPlace>>
         get() = _places
 
-
-
+    private val _bottomSheetDialogShow = MutableLiveData<Boolean>()
+    val showBottomSheetDialog:LiveData<Boolean>
+        get() = _bottomSheetDialogShow
 
 
 
     private val _getNearBySelectedEvent = SingleLiveEvent<Float>()
     val getNearBySelectedEvent: LiveData<Float>
         get() = _getNearBySelectedEvent
+
+    private val _bottomSheetcloseEvent = SingleLiveEvent<Unit>()
+    val closeEvent: LiveData<Unit>
+        get() = _bottomSheetcloseEvent
 
 
     val loadingSubject = BehaviorSubject.createDefault(false)
@@ -70,10 +73,10 @@ class MapViewModel(
                 openApiRepository.getNearByMaps(latitude, longitude, nearByValue)
                     .subscribeOn(Schedulers.io())
                     .doOnSubscribe {
-                        loadingSubject.onNext(true)
+                        showLoading()
                     }
                     .doAfterTerminate {
-                        loadingSubject.onNext(false)
+                        hideLoading()
                     }
                     .observeOn(Schedulers.io())
                     .subscribe({
@@ -114,6 +117,14 @@ class MapViewModel(
 
 
 
+    fun showBottomSheetDialog() {
+        _bottomSheetDialogShow.value = true
+    }
+
+    fun onBottomSheetClose() {
+        _bottomSheetcloseEvent.call()
+    }
+
     private fun showLoading() {
         loadingSubject.onNext(true)
     }
@@ -121,6 +132,7 @@ class MapViewModel(
     private fun hideLoading() {
         loadingSubject.onNext(false)
     }
+
 
 
 }

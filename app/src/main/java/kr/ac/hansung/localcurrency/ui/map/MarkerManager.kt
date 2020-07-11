@@ -1,7 +1,6 @@
 package kr.ac.hansung.localcurrency.ui.map
 
 import android.content.Context
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +8,11 @@ import android.widget.TextView
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.NaverMap
-import com.naver.maps.map.overlay.Align
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.Overlay
 import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
-import ted.gun0912.clustering.clustering.Cluster
 import ted.gun0912.clustering.naver.TedNaverClustering
-import java.util.stream.Collectors
 
 class MarkerManager(private val context: Context, private val naverMap: NaverMap) {
 
@@ -26,10 +21,10 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
     private val cluster = TedNaverClustering.with<SHPlace>(context, naverMap)
         .customMarker(::makeMarker)
         .markerClickListener {
-            onMarkerClickListener?.markerClick(it)
+            onMarkerClickListener?.onMarkerClick(it)
         }
         .clusterClickListener { 
-            onMarkerClickListener?.clusterClick(it.items)
+            onMarkerClickListener?.onClusterClick(it.items)
         }
         .make()
 
@@ -111,8 +106,8 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
     }
 
     interface OnMarkerClickListener {
-        fun markerClick(markerProperty: SHPlace)
-        fun clusterClick(markerProperties: Collection<SHPlace>)
+        fun onMarkerClick(markerProperty: SHPlace)
+        fun onClusterClick(markerProperties: Collection<SHPlace>)
     }
 
     inner class InfoWindowAdapter(private val markerProperty: SHPlace) : InfoWindow.ViewAdapter() {
