@@ -11,7 +11,7 @@ import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.databinding.ItemSearchBinding
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 
-class SearchAdapter : ListAdapter<PlaceUIData, SearchAdapter.SearchViewHolder>(object :
+class SearchAdapter(val viewModel: SearchViewModel) : ListAdapter<PlaceUIData, SearchAdapter.SearchViewHolder>(object :
     DiffUtil.ItemCallback<PlaceUIData>() {
     override fun areContentsTheSame(oldItem: PlaceUIData, newItem: PlaceUIData): Boolean {
         return oldItem.title == oldItem.title
@@ -22,7 +22,6 @@ class SearchAdapter : ListAdapter<PlaceUIData, SearchAdapter.SearchViewHolder>(o
     }
 }) {
 
-    var itemClickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val binding = DataBindingUtil.inflate<ItemSearchBinding>(
@@ -31,13 +30,13 @@ class SearchAdapter : ListAdapter<PlaceUIData, SearchAdapter.SearchViewHolder>(o
         )
         val holder = SearchViewHolder(binding)
         holder.itemView.setOnClickListener {
-            itemClickListener?.itemClick(getItem(holder.adapterPosition))
+            viewModel.onItemClick(getItem(holder.adapterPosition))
         }
         holder.itemView.tv_call.setOnClickListener {
-            itemClickListener?.callClick(getItem(holder.adapterPosition))
+            viewModel.onNavigateCall(getItem(holder.adapterPosition))
         }
         holder.itemView.tv_find_load.setOnClickListener {
-            itemClickListener?.findLoad(getItem(holder.adapterPosition))
+            viewModel.onNavigateFindLoad(getItem(holder.adapterPosition))
         }
 
 
@@ -48,11 +47,6 @@ class SearchAdapter : ListAdapter<PlaceUIData, SearchAdapter.SearchViewHolder>(o
         holder.bind(getItem(position))
 
 
-    interface ItemClickListener {
-        fun itemClick(placeUIData: PlaceUIData)
-        fun callClick(placeUIData: PlaceUIData)
-        fun findLoad(placeUIData: PlaceUIData)
-    }
 
 
     class SearchViewHolder(private val binding: ItemSearchBinding) :

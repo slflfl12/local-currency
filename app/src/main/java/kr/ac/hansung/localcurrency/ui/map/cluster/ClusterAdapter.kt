@@ -12,7 +12,9 @@ import kr.ac.hansung.localcurrency.databinding.ItemSearchBinding
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 import kr.ac.hansung.localcurrency.ui.search.SearchAdapter
 
-class ClusterAdapter : ListAdapter<PlaceUIData, ClusterAdapter.ClusterViewHolder>(object :
+class ClusterAdapter(
+        private val viewModel: ClusterViewModel
+) : ListAdapter<PlaceUIData, ClusterAdapter.ClusterViewHolder>(object :
         DiffUtil.ItemCallback<PlaceUIData>() {
     override fun areContentsTheSame(oldItem: PlaceUIData, newItem: PlaceUIData): Boolean {
         return oldItem.title == oldItem.title
@@ -23,7 +25,6 @@ class ClusterAdapter : ListAdapter<PlaceUIData, ClusterAdapter.ClusterViewHolder
     }
 }) {
 
-    var onItemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClusterViewHolder {
         val binding = DataBindingUtil.inflate<ItemClusterBinding>(
@@ -32,7 +33,7 @@ class ClusterAdapter : ListAdapter<PlaceUIData, ClusterAdapter.ClusterViewHolder
         )
         val holder = ClusterViewHolder(binding)
         holder.itemView.setOnClickListener {
-            onItemClickListener?.onPlaceClick(getItem(holder.adapterPosition))
+            viewModel.onPlaceClickEvent(getItem(holder.adapterPosition))
         }
 
         return holder
@@ -50,9 +51,6 @@ class ClusterAdapter : ListAdapter<PlaceUIData, ClusterAdapter.ClusterViewHolder
         }
     }
 
-    interface OnItemClickListener {
-        fun onPlaceClick(placeUIData: PlaceUIData)
-    }
 
 
 }

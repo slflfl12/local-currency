@@ -10,6 +10,8 @@ import io.reactivex.subjects.PublishSubject
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
 import kr.ac.hansung.localcurrency.data.repository.OpenApiRepository
 import kr.ac.hansung.localcurrency.ui.base.BaseViewModel
+import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
+import kr.ac.hansung.localcurrency.util.Event
 import java.util.concurrent.TimeUnit
 
 class SearchViewModel(
@@ -47,6 +49,19 @@ class SearchViewModel(
     private val _errorThrowable = MutableLiveData<Throwable>()
     val errorThrowable: LiveData<Throwable>
         get() = _errorThrowable
+
+
+    private val _itemClickEvent = MutableLiveData<Event<PlaceUIData>>()
+    val itemClickEvent: LiveData<Event<PlaceUIData>>
+        get() = _itemClickEvent
+
+    private val _navigateToCallEvent = MutableLiveData<Event<PlaceUIData>>()
+    val navigateToCallEvent: LiveData<Event<PlaceUIData>>
+        get() = _navigateToCallEvent
+
+    private val _navigateToFindLoadEvent = MutableLiveData<Event<PlaceUIData>>()
+    val navigateToFindLoadEvent: LiveData<Event<PlaceUIData>>
+        get() = _navigateToFindLoadEvent
 
 
     val buttonClickSubject = PublishSubject.create<Unit>()
@@ -113,6 +128,25 @@ class SearchViewModel(
 
     private fun hideProgress() {
         _isProgressBoolean.value = false
+    }
+
+    fun onItemClick(placeUIData: PlaceUIData?) {
+        placeUIData?.let {
+            _itemClickEvent.value = Event(it)
+        }
+    }
+
+    fun onNavigateCall(placeUIData: PlaceUIData?) {
+        placeUIData?.let {
+            _navigateToCallEvent.value = Event(it)
+        }
+    }
+
+
+    fun onNavigateFindLoad(placeUIData: PlaceUIData?) {
+        placeUIData?.let {
+            _navigateToFindLoadEvent.value = Event(it)
+        }
     }
 
     fun setCurrentLocation(currentLocation: LatLng) {

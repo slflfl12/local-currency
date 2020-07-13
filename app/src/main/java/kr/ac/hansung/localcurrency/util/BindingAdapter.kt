@@ -3,6 +3,7 @@ package kr.ac.hansung.localcurrency.util
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.subjects.Subject
 import kr.ac.hansung.localcurrency.R
 
@@ -46,5 +47,12 @@ fun View.setBackground(telePhone: String) {
         this.setBackgroundResource(R.drawable.background_gray_btn)
     } else {
         this.setBackgroundResource(R.drawable.background_color_btn)
+    }
+}
+
+@BindingAdapter("bind:setBottomSheetState")
+fun View.setBottomSheetState(state: Int) {
+    BottomSheetBehavior.from(this).apply {
+        setState(state)
     }
 }

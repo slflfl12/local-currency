@@ -34,7 +34,6 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
     fun setMarkers(markerProperties: ArrayList<SHPlace>) {
         removeMarkers(markerProperties)
         addMarkers(markerProperties)
-        Log.d("sh setMarker", "sh, setMarker")
     }
 
 

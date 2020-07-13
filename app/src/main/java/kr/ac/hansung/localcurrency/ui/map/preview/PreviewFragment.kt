@@ -76,9 +76,6 @@ class PreviewFragment :
         binding.tvFindLoad.setOnClickListener {
             findLoad(placeUIData)
         }
-
-        binding.ivAddress.setImageResource(R.drawable.ic_location)
-        binding.ivAddress.visibility = View.VISIBLE
     }
 
 

@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -16,7 +15,6 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
@@ -37,16 +35,13 @@ import kr.ac.hansung.localcurrency.ui.map.preview.PreviewFragment
 import kr.ac.hansung.localcurrency.ui.map.result.ResultAdapter
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 import kr.ac.hansung.localcurrency.ui.search.SearchActivity
-import kr.ac.hansung.localcurrency.util.showToast
-import kr.ac.hansung.localcurrency.util.splitPhoneNum
-import kr.ac.hansung.localcurrency.util.toDistance
-import kr.ac.hansung.localcurrency.util.toDistanceString
+import kr.ac.hansung.localcurrency.util.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.fragment_map),
-        OnMapReadyCallback, MarkerManager.OnMarkerClickListener, ResultAdapter.ItemClickListener {
+        OnMapReadyCallback, MarkerManager.OnMarkerClickListener {
 
 
     override val vm: MapViewModel by viewModel()
@@ -66,12 +61,11 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private lateinit var rotateBackward: Animation
 
     private val searchClickSubject = PublishSubject.create<Unit>()
+    private val navClickSubject = PublishSubject.create<Unit>()
 
     //BottomSheet
     private val resultAdapter: ResultAdapter by lazy {
-        ResultAdapter().apply {
-            itemClickListener = this@MapFragment
-        }
+        ResultAdapter(vm)
     }
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
@@ -149,20 +143,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             setDisplayShowTitleEnabled(false)
         }
 
-        binding.fab.setOnClickListener {
-            animateFab()
-        }
-
-        binding.fab1.setOnClickListener {
-            vm.setNearByValue(0.5)
-            animateFab()
-        }
-
-        binding.fab2.setOnClickListener {
-            vm.setNearByValue(1.0)
-            animateFab()
-        }
-
 
         //BottomSheet
 
@@ -172,7 +152,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             binding.bottomSheet.let {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
-
         }
 
         binding.ivClear.setOnClickListener {
@@ -226,7 +205,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             binding.tvTotal.text = "총 ${markerManager.getMarkerSize()}개"
         })
 
-        vm.nearByValue.observe(this, Observer {
+        vm.distanceValue.observe(this, Observer {
             showToast(requireContext(), String.format(getString(R.string.set_distance_text), it))
         })
 
@@ -238,10 +217,40 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         })
 
+
         vm.errorMessage.observe(this, Observer {
             showToast(requireContext(), it.toString())
         })
+/*        vm.bottomSheetStateEvent.observe(this, EventObserver(
+                this@MapFragment::onChangeBottomSheet
+        ))*/
+        vm.itemClickEvent.observe(this@MapFragment, EventObserver(
+                this@MapFragment::onItemClick
+        ))
 
+        vm.navigateToCallEvent.observe(this@MapFragment, EventObserver(
+                this@MapFragment::onNavigateToCall
+        ))
+
+        vm.navigateToFindLoadEvent.observe(this@MapFragment, EventObserver(
+                this@MapFragment::onNavigateFindLoad
+        ))
+
+        vm.fabClickEvent.observe(viewLifecycleOwner, Observer {
+            animateFab()
+        })
+
+        vm.fab1ClickEvent.observe(viewLifecycleOwner, Observer {
+            animateFab()
+        })
+
+        vm.fab2ClickEvent.observe(viewLifecycleOwner, Observer {
+            animateFab()
+        })
+
+        vm.navButtonEvent.observe(viewLifecycleOwner, Observer {
+
+        })
 
     }
 
@@ -270,7 +279,12 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                                     startActivity(it)
                                 }
                     }
+                }.addTo(compositeDisposable)
 
+        navClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    showToast(requireContext(), "구현 전 입니다.")
                 }.addTo(compositeDisposable)
     }
 
@@ -278,8 +292,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar, menu)
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -287,6 +299,10 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         return when (item.itemId) {
             R.id.action_search -> {
                 searchClickSubject.onNext(Unit)
+                true
+            }
+            android.R.id.home -> {
+                navClickSubject.onNext(Unit)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -341,8 +357,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             PreviewFragment.newInstance(markerProperty, doubleArrayOf(it.latitude, it.longitude))
                     .apply {
                     }.show(childFragmentManager, PreviewFragment.TAG)
-
-            Log.d("fragment", "fragment")
         }
     }
 
@@ -354,7 +368,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
     }
 
-    override fun itemClick(placeUIData: PlaceUIData) {
+    private fun onItemClick(placeUIData: PlaceUIData) {
         Intent(context, DetailActivity::class.java).apply {
             vm.currentMyLocation.value?.let {
                 putExtra(DetailActivity.KEY_LOCATION, doubleArrayOf(it.latitude, it.longitude))
@@ -365,11 +379,11 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         }
     }
 
-    override fun callClick(placeUIData: PlaceUIData) {
+    private fun onNavigateToCall(placeUIData: PlaceUIData) {
         startActivity(Intent(Intent.ACTION_DIAL, ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()))
     }
 
-    override fun findLoad(placeUIData: PlaceUIData) {
+    private fun onNavigateFindLoad(placeUIData: PlaceUIData) {
         val url = "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
@@ -388,6 +402,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     fun closeBottomSheet() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
+
 
     override fun onRequestPermissionsResult(
             requestCode: Int,
@@ -447,7 +462,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
         fun newInstance() = MapFragment()
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-        private const val SEARCH_REQUEST_CODE = 1
     }
 
 }

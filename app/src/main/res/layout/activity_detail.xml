@@ -8,6 +8,9 @@
             name="uiData"
             type="kr.ac.hansung.localcurrency.ui.model.PlaceUIData" />
 
+        <variable
+            name="vm"
+            type="kr.ac.hansung.localcurrency.ui.detail.DetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -245,6 +248,7 @@
                     android:background="@drawable/background_color_btn"
                     android:gravity="center"
                     android:text="전화하기"
+                    android:onClick="@{() -> vm.onNavigateToCall()}"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintWidth_percent="0.45" />
@@ -256,6 +260,7 @@
                     android:background="@drawable/background_color_btn"
                     android:gravity="center"
                     android:text="길찾기"
+                    android:onClick="@{()->vm.onNavigateFindLoad()}"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintWidth_percent="0.45" />

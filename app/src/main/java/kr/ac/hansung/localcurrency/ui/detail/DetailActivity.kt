@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.core.net.toUri
+import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
@@ -60,6 +61,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
         }
 
 
+        initObserve()
     }
 
     private fun initView() {
@@ -68,31 +70,35 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
             finish()
         }
 
-        binding.tvCall.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_DIAL, ("tel:${uiData?.telePhone?.splitPhoneNum()}").toUri()))
-        }
-
-        binding.tvFindLoad.setOnClickListener {
-            uiData?.let {
-                val url = "nmap://route/walk?dlat=${it.latitude}&dlng=${it.longitude}&dname=${it.title}&appname=kr.ac.hansung.localcurrency"
-                val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-                intent.addCategory(Intent.CATEGORY_BROWSABLE)
-
-                val list: List<ResolveInfo> = getPackageManager()?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
-
-                if (list.isEmpty()) {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")))
-                } else {
-                    startActivity(intent)
-                }
-            }
-
-        }
-
     }
 
     private fun initObserve() {
 
+        vm.navigateToCallEvent.observe(this,
+                Observer { onNavigateToCall() })
+
+        vm.navigateToFindLoadEvent.observe(this,
+                Observer { onNavigateFindLoad() })
+    }
+
+    private fun onNavigateFindLoad() {
+        uiData?.let {
+            val url = "nmap://route/walk?dlat=${it.latitude}&dlng=${it.longitude}&dname=${it.title}&appname=kr.ac.hansung.localcurrency"
+            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+
+            val list: List<ResolveInfo> = getPackageManager()?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+
+            if (list.isEmpty()) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")))
+            } else {
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun onNavigateToCall() {
+        startActivity(Intent(Intent.ACTION_DIAL, ("tel:${uiData?.telePhone?.splitPhoneNum()}").toUri()))
     }
 
     override fun onMapReady(map: NaverMap) {
@@ -109,7 +115,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
         }
 
         uiData?.let {
-            if(::naverMap.isInitialized) {
+            if (::naverMap.isInitialized) {
                 makeMarker(it)
             }
         }

@@ -19,11 +19,12 @@ import kr.ac.hansung.localcurrency.databinding.DialogClusterBinding
 import kr.ac.hansung.localcurrency.ui.base.BaseDialogFragment
 import kr.ac.hansung.localcurrency.ui.detail.DetailActivity
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
+import kr.ac.hansung.localcurrency.util.EventObserver
 import kr.ac.hansung.localcurrency.util.toDistance
 import kr.ac.hansung.localcurrency.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ClusterDialog : BaseDialogFragment<DialogClusterBinding, ClusterViewModel>(R.layout.dialog_cluster), ClusterAdapter.OnItemClickListener {
+class ClusterDialog : BaseDialogFragment<DialogClusterBinding, ClusterViewModel>(R.layout.dialog_cluster){
 
 
     override val vm: ClusterViewModel by viewModel()
@@ -39,7 +40,6 @@ class ClusterDialog : BaseDialogFragment<DialogClusterBinding, ClusterViewModel>
 
         arguments?.getDoubleArray(KEY_MARKER_LOCATION)?.let {
             markerLocation = LatLng(it[0], it[1])
-            Log.d("locations", it.toString())
         }
 
         arguments?.getParcelableArrayList<SHPlace>(KEY_PLACE_LIST)?.let {
@@ -64,12 +64,13 @@ class ClusterDialog : BaseDialogFragment<DialogClusterBinding, ClusterViewModel>
                     clusterAdapter.submitList(this)
             }
         }
+
+        initView()
+        initObserve()
     }
 
     private fun initAdapter() {
-        clusterAdapter = ClusterAdapter().apply {
-            onItemClickListener = this@ClusterDialog
-        }
+        clusterAdapter = ClusterAdapter(vm)
         binding.rvCluster.adapter = clusterAdapter
     }
 
@@ -77,15 +78,18 @@ class ClusterDialog : BaseDialogFragment<DialogClusterBinding, ClusterViewModel>
     private fun initView() {
 
 
+    }
 
-
+    private fun initObserve() {
+        vm.placeClickEvent.observe(this@ClusterDialog,
+                EventObserver(this@ClusterDialog::onPlaceClick))
     }
 
     fun onCancelClick() {
         this.dismiss()
     }
 
-    override fun onPlaceClick(placeUIData: PlaceUIData) {
+    private fun onPlaceClick(placeUIData: PlaceUIData?) {
         Intent(context, DetailActivity::class.java).apply {
             markerLocation?.let {
                 putExtra(DetailActivity.KEY_LOCATION, doubleArrayOf(it.latitude, it.longitude))
@@ -115,8 +119,8 @@ class ClusterDialog : BaseDialogFragment<DialogClusterBinding, ClusterViewModel>
 
         val TAG = this::class.java.simpleName
 
-        val KEY_PLACE_LIST = "KEY_PLACE_LIST"
-        val KEY_MARKER_LOCATION = "KEY_MARKER_LOCATION"
+        const val KEY_PLACE_LIST = "KEY_PLACE_LIST"
+        const val KEY_MARKER_LOCATION = "KEY_MARKER_LOCATION"
 
 
         fun newInstance(list: ArrayList<SHPlace>, locationArray: DoubleArray) = ClusterDialog().apply {

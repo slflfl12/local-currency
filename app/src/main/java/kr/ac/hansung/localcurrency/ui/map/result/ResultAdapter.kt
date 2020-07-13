@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_search.view.*
 import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.databinding.ItemResultBinding
+import kr.ac.hansung.localcurrency.ui.map.MapViewModel
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 
-class ResultAdapter : ListAdapter<PlaceUIData, ResultAdapter.ResultViewHolder>(object :
+class ResultAdapter(
+        private val viewModel: MapViewModel
+) : ListAdapter<PlaceUIData, ResultAdapter.ResultViewHolder>(object :
         DiffUtil.ItemCallback<PlaceUIData>() {
     override fun areContentsTheSame(oldItem: PlaceUIData, newItem: PlaceUIData): Boolean {
         return oldItem.title == oldItem.title
@@ -22,8 +25,6 @@ class ResultAdapter : ListAdapter<PlaceUIData, ResultAdapter.ResultViewHolder>(o
     }
 }){
 
-    var itemClickListener: ItemClickListener? = null
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val binding = DataBindingUtil.inflate<ItemResultBinding>(
@@ -32,14 +33,16 @@ class ResultAdapter : ListAdapter<PlaceUIData, ResultAdapter.ResultViewHolder>(o
         )
         val holder = ResultViewHolder(binding)
         holder.itemView.setOnClickListener {
-            itemClickListener?.itemClick(getItem(holder.adapterPosition))
+            viewModel.onItemClick(getItem(holder.adapterPosition))
         }
         holder.itemView.tv_call.setOnClickListener {
-            itemClickListener?.callClick(getItem(holder.adapterPosition))
+            viewModel.onNavigateCall(getItem(holder.adapterPosition))
         }
         holder.itemView.tv_find_load.setOnClickListener {
-            itemClickListener?.findLoad(getItem(holder.adapterPosition))
+            viewModel.onNavigateFindLoad(getItem(holder.adapterPosition))
         }
+
+
 
         return holder
     }
@@ -54,12 +57,6 @@ class ResultAdapter : ListAdapter<PlaceUIData, ResultAdapter.ResultViewHolder>(o
             binding.uiData = placeUiData
         }
 
-    }
-
-    interface ItemClickListener {
-        fun itemClick(placeUIData: PlaceUIData)
-        fun callClick(placeUIData: PlaceUIData)
-        fun findLoad(placeUIData: PlaceUIData)
     }
 
 

@@ -27,13 +27,13 @@ import kr.ac.hansung.localcurrency.databinding.ActivitySearchBinding
 import kr.ac.hansung.localcurrency.ui.base.BaseActivity
 import kr.ac.hansung.localcurrency.ui.detail.DetailActivity
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
+import kr.ac.hansung.localcurrency.util.EventObserver
 import kr.ac.hansung.localcurrency.util.splitPhoneNum
 import kr.ac.hansung.localcurrency.util.toDistance
 import kr.ac.hansung.localcurrency.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchActivity :
-        BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search), SearchAdapter.ItemClickListener {
+class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search) {
 
     override val vm: SearchViewModel by viewModel()
 
@@ -58,11 +58,11 @@ class SearchActivity :
     }
 
     private fun initView() {
-        searchAdapter = SearchAdapter()
+        searchAdapter = SearchAdapter(vm)
         binding.rvSearch.adapter = searchAdapter
 
         binding.etSearch.apply {
-            setOnKeyListener { v, keyCode, event ->
+            setOnKeyListener { _, keyCode, _ ->
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     vm.searchPlaces()
                     return@setOnKeyListener true
@@ -137,9 +137,22 @@ class SearchActivity :
                 hideKeyboard()
             }
         })
+
+        vm.itemClickEvent.observe(this, EventObserver(
+                this@SearchActivity::onItemClick
+        ))
+
+        vm.navigateToCallEvent.observe(this, EventObserver(
+                this@SearchActivity::onNavigateToCall
+        ))
+
+        vm.navigateToFindLoadEvent.observe(this, EventObserver(
+                this@SearchActivity::onNavigateFindLoad
+        ))
+
     }
 
-    override fun itemClick(placeUIData: PlaceUIData) {
+    private fun onItemClick(placeUIData: PlaceUIData) {
         Intent(this, DetailActivity::class.java).apply {
             currentLocation?.let {
                 putExtra(DetailActivity.KEY_LOCATION, doubleArrayOf(it.latitude, it.longitude))
@@ -150,11 +163,11 @@ class SearchActivity :
         }
     }
 
-    override fun callClick(placeUIData: PlaceUIData) {
+    private fun onNavigateToCall(placeUIData: PlaceUIData) {
         startActivity(Intent(Intent.ACTION_DIAL, ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()))
     }
 
-    override fun findLoad(placeUIData: PlaceUIData) {
+    private fun onNavigateFindLoad(placeUIData: PlaceUIData) {
         val url = "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         intent.addCategory(Intent.CATEGORY_BROWSABLE)

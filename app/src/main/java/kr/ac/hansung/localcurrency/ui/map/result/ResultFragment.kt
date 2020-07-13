@@ -22,7 +22,7 @@ class ResultFragment : BaseBottomSheetDialogFragment<FragmentResultBinding, MapV
     override val vm: MapViewModel by sharedViewModel()
 
     private val resultAdapter: ResultAdapter by lazy {
-        ResultAdapter().apply {
+        ResultAdapter(vm).apply {
         }
     }
 
@@ -44,7 +44,6 @@ class ResultFragment : BaseBottomSheetDialogFragment<FragmentResultBinding, MapV
 
     private fun initView() {
         binding.ivClear.setOnClickListener {
-            showToast(requireContext(), "ivclear")
             binding.root.let {
                 BottomSheetBehavior.from(it).state = BottomSheetBehavior.STATE_COLLAPSED
             }
@@ -61,8 +60,6 @@ class ResultFragment : BaseBottomSheetDialogFragment<FragmentResultBinding, MapV
     private fun initObserve() {
 
         vm.places.observe(this, Observer {
-            showToast(requireContext(), "observing")
-            Log.d("result", "result")
             it?.let {
 
                 it.map {
