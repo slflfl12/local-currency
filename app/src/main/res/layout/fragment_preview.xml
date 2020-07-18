@@ -7,11 +7,11 @@
 
         <variable
             name="vm"
-            type="kr.ac.hansung.gyunggilocalmoneymap.ui.map.preview.PreviewViewModel" />
+            type="kr.ac.hansung.localcurrency.ui.map.preview.PreviewViewModel" />
 
         <variable
             name="data"
-            type="kr.ac.hansung.gyunggilocalmoneymap.ui.model.PlaceUIData" />
+            type="kr.ac.hansung.localcurrency.ui.model.PlaceUIData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,6 +119,8 @@
                 android:id="@+id/iv_phone"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:alpha="1.0"
+                android:background="@null"
                 android:src="@drawable/ic_phone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -168,10 +170,11 @@
                 android:id="@+id/iv_category"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_category"
+                android:background="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_category" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_category"
@@ -207,29 +210,33 @@
             android:id="@+id/cl_call_find_load"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
+            android:paddingHorizontal="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_category">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/tv_call"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:background="@drawable/background_color_btn"
                 android:gravity="center"
                 android:text="전화하기"
                 android:textColor="@color/colorBlack"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintWidth_percent="0.45" />
 
             <TextView
                 android:id="@+id/tv_find_load"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:background="@drawable/background_color_btn"
                 android:gravity="center"
                 android:text="길찾기"
                 android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintWidth_percent="0.45" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

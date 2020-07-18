@@ -6,5 +6,14 @@
     <string name="button_search">검색</string>
     <string name="rv_empty_string">검색 결과가 없습니다</string>
     <string name="error_query_empty">빈칸을 채워주세요</string>
+    <string name="back_key_message">앱을 종료하려면 한번 더 눌러주세요</string>
+    <string name="et_search_hint">장소명 혹은 주소를 입력하세요</string>
+    <string name="tv_total_text">총 %d개</string>
+    <string name="close">닫기</string>
+    <string name="app_title">경기지역화폐 가맹점지도</string>
+    <string name="text_1km">1km</string>
+    <string name="text_0.5km">0.5km</string>
+    <string name="set_distance_text">탐색 범위를 %.1fkm로 설정하였습니다</string>
+    <string name="info_search">현재 지도위치에서 3km 내에 정보만 검색합니다.</string>
 
 </resources>

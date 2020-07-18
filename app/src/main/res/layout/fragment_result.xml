@@ -8,7 +8,7 @@
 
         <variable
             name="placeUIData"
-            type="kr.ac.hansung.gyunggilocalmoneymap.ui.model.PlaceUIData" />
+            type="kr.ac.hansung.localcurrency.ui.model.PlaceUIData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +44,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_info"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            android:background="#f5f6f7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_title"
@@ -53,14 +54,13 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_total"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosans_bold"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="총 N개"
-                android:gravity="center"
-                android:fontFamily="@font/notosans_bold"
-                android:textColor="@color/colorBlack"
+                android:layout_marginStart="10dp"
+                android:text="총 0개"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

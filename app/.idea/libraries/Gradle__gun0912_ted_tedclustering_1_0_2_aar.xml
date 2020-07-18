@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: gun0912.ted:tedclustering:1.0.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7981ab0a82194ac36792bb7ae36f99af/jetified-tedclustering-1.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7981ab0a82194ac36792bb7ae36f99af/jetified-tedclustering-1.0.2/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/gun0912.ted/tedclustering/1.0.2/bf0e852d3c2895c80eabda469380f225d31e9508/tedclustering-1.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/gun0912.ted/tedclustering/1.0.2/dece56b2c0cbaae4a4b7487eeadcd187c2a1f0d3/tedclustering-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
