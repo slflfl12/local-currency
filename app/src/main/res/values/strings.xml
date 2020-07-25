@@ -15,5 +15,8 @@
     <string name="text_0.5km">0.5km</string>
     <string name="set_distance_text">탐색 범위를 %.1fkm로 설정하였습니다</string>
     <string name="info_search">현재 지도위치에서 3km 내에 정보만 검색합니다.</string>
+    <string name="find_load">길찾기</string>
+    <string name="call">전화하기</string>
+    <string name="classify">분류</string>
 
 </resources>

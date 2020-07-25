@@ -209,7 +209,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_call_find_load"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:paddingHorizontal="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -218,21 +218,25 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/tv_call"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     bind:setBackground="@{uiData.telePhone}"
                     android:gravity="center"
-                    android:text="전화하기"
+                    android:text="@string/call"
+                    android:layout_marginTop="5dp"
                     android:textColor="@color/colorBlack"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintWidth_percent="0.45" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/tv_find_load"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:background="@drawable/background_color_btn"
                     android:gravity="center"
-                    android:text="길찾기"
+                    android:text="@string/find_load"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintWidth_percent="0.45" />

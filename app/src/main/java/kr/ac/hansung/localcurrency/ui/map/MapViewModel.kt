@@ -85,7 +85,7 @@ class MapViewModel(
 
     private val _navButtonEvent = SingleLiveEvent<Unit>()
     val navButtonEvent: LiveData<Unit>
-        get() = navButtonEvent
+        get() = _navButtonEvent
 
 
     val loadingSubject = BehaviorSubject.createDefault(false)
@@ -99,9 +99,6 @@ class MapViewModel(
     val initEvent: LiveData<Unit>
         get() = _initEvent
 
-    init {
-        /*reqAllPlaces2()*/
-    }
 
     fun reqNearByMaps_X5() {
         currentLocation.value?.let {

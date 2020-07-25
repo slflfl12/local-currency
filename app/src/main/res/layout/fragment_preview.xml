@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_white_bottom_sheet"
         android:elevation="10dp"
         app:behavior_hideable="true"
@@ -183,7 +183,7 @@
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/notosans_bold"
                 android:gravity="center"
-                android:text="분류"
+                android:text="@string/classify"
                 android:textColor="@color/colorBlack"
                 app:layout_constraintBottom_toBottomOf="@id/iv_category"
                 app:layout_constraintStart_toEndOf="@id/iv_category" />
@@ -209,7 +209,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_call_find_load"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="70dp"
             android:layout_marginBottom="5dp"
             android:paddingHorizontal="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -219,23 +219,28 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/tv_call"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/background_color_btn"
+                android:layout_height="50dp"
                 android:gravity="center"
-                android:text="전화하기"
+                android:text="@string/call"
                 android:textColor="@color/colorBlack"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.45" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.45"
+                bind:setBackground="@{data.telePhone}" />
 
             <TextView
                 android:id="@+id/tv_find_load"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/background_color_btn"
                 android:gravity="center"
-                android:text="길찾기"
+                android:text="@string/find_load"
                 android:textColor="@color/colorBlack"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.45" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

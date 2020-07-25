@@ -216,7 +216,7 @@
                     bind:setBackground="@{uiData.telePhone}"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="전화하기"
+                    android:text="@string/call"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintWidth_percent="0.45" />
@@ -227,7 +227,7 @@
                     android:background="@drawable/background_color_btn"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="길찾기"
+                    android:text="@string/find_load"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintWidth_percent="0.45" />
