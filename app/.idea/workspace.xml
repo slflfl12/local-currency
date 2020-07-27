@@ -6,26 +6,39 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="locat" />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="ads" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0325e776-5f03-4abe-954e-53923c7a09da" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_browser_browser_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_ads_19_2_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_ads_base_19_2_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_ads_lite_19_2_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_gass_19_2_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/release/app-release.apk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/release/output.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/MapViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/MapViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/LocalCurrencyApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/LocalCurrencyApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/detail/DetailActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/detail/DetailActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/preview/PreviewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/preview/PreviewFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/util/StringUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/util/StringUtil.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_detail.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_search.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/item_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/item_result.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/item_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/item_search.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="ce041714d882e73905" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5_API_29" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -47,6 +60,12 @@
       </list>
     </option>
   </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="C:\Users\seunghwan Seo\Desktop\GIT\ApkFiles\localcurrency.jks" />
+    <option name="KEY_ALIAS" value="mykey" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -58,6 +77,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ApkExportedModule" value="app" />
+    <property name="ExportApk.ApkPath" value="C:\Users\seunghwan Seo\Desktop\GIT\GyunggiLocalMoneyMap\app" />
+    <property name="ExportApk.BuildVariants" value="release" />
+    <property name="ExportApk.SignV1" value="true" />
+    <property name="ExportApk.SignV2" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
@@ -149,10 +173,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="0" key="#Plugins/0.0.1280.680@0.0.1280.680" timestamp="1594528916577" />
-    <state x="429" y="56" key="#com.intellij.ide.util.MemberChooser" timestamp="1594214017151">
+    <state x="429" y="56" key="#com.intellij.ide.util.MemberChooser" timestamp="1595760746918">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="429" y="56" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1594214017151" />
+    <state x="429" y="56" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1595760746918" />
     <state x="234" y="33" key="AndroidCreateResourceFileDialog" timestamp="1594123914030">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -161,34 +185,34 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="497" y="153" key="AndroidCreateXmlResourceDialog/0.0.1280.680@0.0.1280.680" timestamp="1595668375045" />
-    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1594979411684">
+    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1595747158088">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1594979411684" />
-    <state width="1220" height="160" key="GridCell.Tab.0.bottom" timestamp="1595669449984">
+    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1595747158088" />
+    <state width="1220" height="117" key="GridCell.Tab.0.bottom" timestamp="1595769189804">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1595669449984" />
-    <state width="1220" height="160" key="GridCell.Tab.0.center" timestamp="1595669449983">
+    <state width="1220" height="117" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1595769189804" />
+    <state width="1220" height="117" key="GridCell.Tab.0.center" timestamp="1595769189803">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1595669449983" />
-    <state width="1220" height="160" key="GridCell.Tab.0.left" timestamp="1595669449983">
+    <state width="1220" height="117" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1595769189803" />
+    <state width="1220" height="117" key="GridCell.Tab.0.left" timestamp="1595769189803">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1595669449983" />
-    <state width="1220" height="160" key="GridCell.Tab.0.right" timestamp="1595669449984">
+    <state width="1220" height="117" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1595769189803" />
+    <state width="1220" height="117" key="GridCell.Tab.0.right" timestamp="1595769189804">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1595669449984" />
+    <state width="1220" height="117" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1595769189804" />
     <state x="436" y="118" key="chooseDestDirectoryDialog" timestamp="1594453685267">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="436" y="118" key="chooseDestDirectoryDialog/0.0.1280.680@0.0.1280.680" timestamp="1594453685267" />
-    <state x="330" y="72" width="641" height="536" key="find.popup" timestamp="1594711685633">
+    <state x="330" y="72" width="728" height="536" key="find.popup" timestamp="1595768002612">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="330" y="72" width="641" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594711685633" />
+    <state x="330" y="72" width="728" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1595768002612" />
     <state x="363" y="0" key="refactoring.ChangeSignatureDialog" timestamp="1594641342722">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

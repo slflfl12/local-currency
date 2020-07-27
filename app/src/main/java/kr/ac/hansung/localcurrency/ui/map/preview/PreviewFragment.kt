@@ -5,15 +5,22 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
+import android.widget.FrameLayout
 import androidx.core.net.toUri
 import androidx.fragment.app.DialogFragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.naver.maps.geometry.LatLng
 import kr.ac.hansung.localcurrency.R
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
 import kr.ac.hansung.localcurrency.databinding.FragmentPreviewBinding
 import kr.ac.hansung.localcurrency.ui.base.BaseBottomSheetDialogFragment
+import kr.ac.hansung.localcurrency.ui.detail.DetailActivity
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
+import kr.ac.hansung.localcurrency.util.or
 import kr.ac.hansung.localcurrency.util.splitPhoneNum
 import kr.ac.hansung.localcurrency.util.toDistance
 import kr.ac.hansung.localcurrency.util.toDistanceString
@@ -25,6 +32,8 @@ class PreviewFragment :
     override val vm: PreviewViewModel by viewModel()
 
     private lateinit var placeUIData: PlaceUIData
+    private lateinit var adView: AdView
+
     private var myLocation: DoubleArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,9 +73,10 @@ class PreviewFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.data = placeUIData
         initView()
+        setUpBannerAd()
     }
 
-    fun initView() {
+    private fun initView() {
         binding.tvCall.setOnClickListener {
             placeUIData.telePhone.let {
                 startActivity(Intent(Intent.ACTION_DIAL, ("tel:${it.splitPhoneNum()}").toUri()))
@@ -76,11 +86,37 @@ class PreviewFragment :
         binding.tvFindLoad.setOnClickListener {
             findLoad(placeUIData)
         }
+
+    }
+
+    private fun setUpBannerAd() {
+        adView = AdView(context)
+        adView.adUnitId = getString(R.string.test_banner_id) or getString(R.string.preview_banner_id)
+        adView.adSize = getAdaptiveBannerAdSize(binding.adViewContainer)
+        adView.loadAd(AdRequest.Builder().build())
+        binding.adViewContainer.addView(adView)
+
+    }
+
+    private fun getAdaptiveBannerAdSize(adViewContainer: FrameLayout): AdSize {
+        val display = activity?.windowManager?.defaultDisplay
+        val metrics = DisplayMetrics()
+        display?.getMetrics(metrics)
+
+        val density = metrics.density
+
+        var adWidthPixels = adViewContainer.width.toFloat()
+        if (adWidthPixels == 0f) {
+            adWidthPixels = metrics.widthPixels.toFloat()
+        }
+
+        val adWidth = (adWidthPixels / density).toInt()
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, adWidth)
     }
 
 
 
-    fun findLoad(placeUIData: PlaceUIData) {
+    private fun findLoad(placeUIData: PlaceUIData) {
         val url = "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
@@ -110,9 +146,28 @@ class PreviewFragment :
                 }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        adView.resume()
+    }
+
+    override fun onPause() {
+        adView.pause()
+        super.onPause()
+    }
+
+
+
+    override fun onDestroy() {
+        adView.destroy()
+        super.onDestroy()
+    }
+
     interface PreviewListener {
         fun onClosePreview()
     }
+
 
 
 }

@@ -7,11 +7,17 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.lifecycle.Observer
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.initialization.InitializationStatus
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
@@ -24,8 +30,10 @@ import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
 import kr.ac.hansung.localcurrency.databinding.ActivityDetailBinding
 import kr.ac.hansung.localcurrency.ui.base.BaseActivity
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
+import kr.ac.hansung.localcurrency.util.or
 import kr.ac.hansung.localcurrency.util.splitPhoneNum
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.layout.activity_detail), OnMapReadyCallback {
 
@@ -33,6 +41,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
 
 
     private lateinit var naverMap: NaverMap
+    private lateinit var adView: AdView
 
     private var currentLocation: LatLng? = null
     private var uiData: PlaceUIData? = null
@@ -42,7 +51,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        initView()
+
 
         binding.mapView.apply {
             onCreate(savedInstanceState)
@@ -60,15 +69,20 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
             binding.uiData = it
         }
 
-
+        initView()
+        setUpBannerAd()
         initObserve()
     }
 
     private fun initView() {
 
+
         binding.ivBack.setOnClickListener {
             finish()
         }
+
+
+
 
     }
 
@@ -79,6 +93,31 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
 
         vm.navigateToFindLoadEvent.observe(this,
                 Observer { onNavigateFindLoad() })
+    }
+
+    private fun setUpBannerAd() {
+        adView = AdView(this)
+        adView.adUnitId = getString(R.string.test_banner_id) or getString(R.string.detail_banner_id)
+        adView.adSize = getAdaptiveBannerAdSize(binding.adViewContainer)
+        adView.loadAd(AdRequest.Builder().build())
+        binding.adViewContainer.addView(adView)
+
+    }
+
+    private fun getAdaptiveBannerAdSize(adViewContainer: FrameLayout): AdSize {
+        val display = windowManager.defaultDisplay
+        val metrics = DisplayMetrics()
+        display.getMetrics(metrics)
+
+        val density = metrics.density
+
+        var adWidthPixels = adViewContainer.width.toFloat()
+        if (adWidthPixels == 0f) {
+            adWidthPixels = metrics.widthPixels.toFloat()
+        }
+
+        val adWidth = (adWidthPixels / density).toInt()
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth)
     }
 
     private fun onNavigateFindLoad() {
@@ -96,6 +135,8 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
             }
         }
     }
+
+
 
     private fun onNavigateToCall() {
         startActivity(Intent(Intent.ACTION_DIAL, ("tel:${uiData?.telePhone?.splitPhoneNum()}").toUri()))
@@ -149,11 +190,13 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
+        adView.resume()
 
     }
 
     override fun onPause() {
         binding.mapView.onResume()
+        adView.pause()
         super.onPause()
     }
 
@@ -170,6 +213,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
 
     override fun onDestroy() {
         binding.mapView.onDestroy()
+        adView.destroy()
         super.onDestroy()
     }
 
@@ -191,11 +235,14 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
 
     }
 
+
+
     companion object {
         val TAG = this::class.java.simpleName
 
-        val KEY_LOCATION = "KEY_LOCATION"
-        val KEY_PLACE = "KEY_PLACE"
+        const val KEY_LOCATION = "KEY_LOCATION"
+        const val KEY_PLACE = "KEY_PLACE"
+
     }
 
 }

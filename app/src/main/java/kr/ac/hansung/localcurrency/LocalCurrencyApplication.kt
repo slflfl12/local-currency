@@ -5,6 +5,8 @@ import android.app.Application
 import android.util.Log
 import androidx.databinding.library.BuildConfig
 import com.facebook.stetho.Stetho
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import kr.ac.hansung.localcurrency.di.*
@@ -19,6 +21,9 @@ class LocalCurrencyApplication : Application() {
     @SuppressLint("LongLogTag")
     override fun onCreate() {
         super.onCreate()
+
+
+
 
         Stetho.initializeWithDefaults(this)
         RxJavaPlugins.setErrorHandler { e ->

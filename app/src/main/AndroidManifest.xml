@@ -30,6 +30,10 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="2id8u5ieiu" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3703834685739437~7199433285"/>
     </application>
 
 </manifest>

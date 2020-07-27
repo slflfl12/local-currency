@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">경기지역화폐 가맹점 MAP</string>
 
-    <string name="progress_text">데이터를 받아오는중 입니다 ... %d/270</string>
+    <string name="progress_text">데이터를 받아오는중 입니다 … %d/270</string>
     <string name="loading_complete_text">로딩이 완료되었습니다. %d/270</string>
     <string name="button_search">검색</string>
     <string name="rv_empty_string">검색 결과가 없습니다</string>
@@ -18,5 +18,7 @@
     <string name="find_load">길찾기</string>
     <string name="call">전화하기</string>
     <string name="classify">분류</string>
-
+    <string name="test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="detail_banner_id">ca-app-pub-3703834685739437/3232268118</string>
+    <string name="preview_banner_id">ca-app-pub-3703834685739437/5041664497</string>
 </resources>

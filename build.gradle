@@ -14,6 +14,7 @@ buildscript {
         material_version = '1.2.0-alpha03'
         room_version = '2.2.2'
         lottie_version = '3.4.0'
+        admob_version = '19.2.0'
     }
 
     repositories {

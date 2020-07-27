@@ -2,6 +2,7 @@ package kr.ac.hansung.localcurrency.util
 
 import android.content.Context
 import android.widget.Toast
+import kr.ac.hansung.localcurrency.BuildConfig
 
 fun String.splitFirst(): String {
 
@@ -35,3 +36,6 @@ fun String.splitPhoneNum(): String {
 fun showToast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
+
+infix fun String.or(that: String): String = if (BuildConfig.DEBUG) this else that
+//
