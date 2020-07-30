@@ -12,26 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0325e776-5f03-4abe-954e-53923c7a09da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_browser_browser_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_ads_19_2_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_ads_base_19_2_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_ads_lite_19_2_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_gass_19_2_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/release/app-release.apk" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/release/output.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/LocalCurrencyApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/LocalCurrencyApplication.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/detail/DetailActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/detail/DetailActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/preview/PreviewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/ui/map/preview/PreviewFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/util/StringUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/ac/hansung/localcurrency/util/StringUtil.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_preview.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

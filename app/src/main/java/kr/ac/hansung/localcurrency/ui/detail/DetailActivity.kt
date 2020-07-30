@@ -126,7 +126,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
             val intent = Intent(Intent.ACTION_VIEW, url.toUri())
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
 
-            val list: List<ResolveInfo> = getPackageManager()?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+            val list: List<ResolveInfo> = packageManager?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
 
             if (list.isEmpty()) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")))
