@@ -1,7 +1,7 @@
 # 경기도 지역화폐 MAP
 
 ## 프로젝트 내용
-<a href='https://play.google.com/store/apps/details?id=kr.ac.hansung.localcurrency&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='다운로드하기 Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png'/></a>
+<p><a href="https://play.google.com/store/apps/details?id=kr.ac.hansung.localcurrency&amp;pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png" alt="다운로드하기 Google Play" width="220" height="100" /></a></p>
 
 경기도 지역화폐 가맹점 지도 어플리케이션입니다.
 주요 기능은 내 주변 3km 이내 까지 사용처 검색을 할 수 있습니다.
