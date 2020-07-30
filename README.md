@@ -30,6 +30,7 @@
     * **RxJava**
     * **RxAndroid**
   * **ETC**
+    * **TedClustering**
     * **Koin**
     * **Lottie**
     * **Gson**
