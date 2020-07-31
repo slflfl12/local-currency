@@ -1,8 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: gun0912.ted:tedclustering-naver:1.0.2@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bd6050957d2c9bba79415697ccd03c40/jetified-tedclustering-naver-1.0.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bd6050957d2c9bba79415697ccd03c40/jetified-tedclustering-naver-1.0.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/30d2b47fa51db9f0975b2b08cb8d4a32/jetified-tedclustering-naver-1.0.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/30d2b47fa51db9f0975b2b08cb8d4a32/jetified-tedclustering-naver-1.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/30d2b47fa51db9f0975b2b08cb8d4a32/jetified-tedclustering-naver-1.0.2/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/gun0912.ted/tedclustering-naver/1.0.2/4aff49fb9d51751ac8a05093e4be0cdf7fca215a/tedclustering-naver-1.0.2-javadoc.jar!/" />

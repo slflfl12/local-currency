@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1424195922/Localcurrency.iml" filepath="$PROJECT_DIR$/.idea/modules/1424195922/Localcurrency.iml" group="Localcurrency" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Localcurrency-app.iml" filepath="$PROJECT_DIR$/.idea/modules/Localcurrency-app.iml" group="Localcurrency/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="Localcurrency/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1576851228/local-currency-Localcurrency.iml" filepath="$PROJECT_DIR$/.idea/modules/1576851228/local-currency-Localcurrency.iml" group="Localcurrency" />
     </modules>
   </component>
 </project>

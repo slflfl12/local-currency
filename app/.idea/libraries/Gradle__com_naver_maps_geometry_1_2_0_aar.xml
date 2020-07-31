@@ -1,8 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.naver.maps:geometry:1.2.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c3082dc64a0c0a5a95f0e30f6c3858ba/jetified-geometry-1.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c3082dc64a0c0a5a95f0e30f6c3858ba/jetified-geometry-1.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a5cdd653a47109a12d51f166d6e0178c/jetified-geometry-1.2.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a5cdd653a47109a12d51f166d6e0178c/jetified-geometry-1.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a5cdd653a47109a12d51f166d6e0178c/jetified-geometry-1.2.0/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.naver.maps/geometry/1.2.0/138d4cfee091f636e2b2329957ad4c02bade560e/geometry-1.2.0-javadoc.jar!/" />

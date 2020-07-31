@@ -24,12 +24,12 @@
     * **AAC ViewModel**
     * **AAC LiveData**
     * **AAC LifeCycle**
+    * **AAC Room**
     * **Databinding**
-    * **Room Persistence**
   * **Reactive Extension**
     * **RxJava**
     * **RxAndroid**
-  * **ETC**
+  * **Etc**
     * **TedClustering**
     * **Koin**
     * **Lottie**

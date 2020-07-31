@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -13,7 +14,7 @@ android {
         applicationId "kr.ac.hansung.localcurrency"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 2
+        versionCode 3
         versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -115,7 +116,10 @@ dependencies {
     implementation 'gun0912.ted:tedclustering-naver:1.0.2'
 
     //firebase
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+
+    // Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
 
     //google Admob
     implementation "com.google.android.gms:play-services-ads:$admob_version"

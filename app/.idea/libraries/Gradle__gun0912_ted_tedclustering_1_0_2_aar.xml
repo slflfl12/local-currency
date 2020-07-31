@@ -1,8 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: gun0912.ted:tedclustering:1.0.2@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7981ab0a82194ac36792bb7ae36f99af/jetified-tedclustering-1.0.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7981ab0a82194ac36792bb7ae36f99af/jetified-tedclustering-1.0.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/743c6af2feb8bb23421ae000acca847c/jetified-tedclustering-1.0.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/743c6af2feb8bb23421ae000acca847c/jetified-tedclustering-1.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/743c6af2feb8bb23421ae000acca847c/jetified-tedclustering-1.0.2/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/gun0912.ted/tedclustering/1.0.2/bf0e852d3c2895c80eabda469380f225d31e9508/tedclustering-1.0.2-javadoc.jar!/" />
