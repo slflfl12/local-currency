@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.net.toUri
@@ -46,6 +47,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(R.la
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.activity = this@SearchActivity
 
         val data = intent.extras?.getDoubleArray(KEY_LOCATION)
         data?.let {
@@ -74,9 +76,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(R.la
             }
         }
 
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
 
     }
 
@@ -150,6 +149,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(R.la
                 this@SearchActivity::onNavigateFindLoad
         ))
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) onBackPressed()
+        return false
     }
 
     private fun onItemClick(placeUIData: PlaceUIData) {

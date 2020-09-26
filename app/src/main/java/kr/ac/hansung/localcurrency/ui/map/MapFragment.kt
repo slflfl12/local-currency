@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit
 
 
 class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.fragment_map),
-        OnMapReadyCallback, MarkerManager.OnMarkerClickListener {
+    OnMapReadyCallback, MarkerManager.OnMarkerClickListener {
 
 
     override val vm: MapViewModel by viewModel()
@@ -61,7 +61,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private lateinit var rotateBackward: Animation
 
     private val searchClickSubject = PublishSubject.create<Unit>()
-    private val navClickSubject = PublishSubject.create<Unit>()
+
 
     //BottomSheet
     private val resultAdapter: ResultAdapter by lazy {
@@ -95,30 +95,25 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         map.apply {
             locationSource = this@MapFragment.locationSource
             locationTrackingMode = locationState
-
-
+            isNightModeEnabled = true
+            mapType = NaverMap.MapType.Navi
             setLayerGroupEnabled(NaverMap.LAYER_GROUP_BUILDING, false)
-
-
+            
             addOnLocationChangeListener { location ->
                 vm.onChangedMyLocation(location)
             }
             addOnCameraIdleListener {
                 vm.onChangedLocation(
-                        LatLng(
-                                cameraPosition.target.latitude,
-                                cameraPosition.target.longitude
-                        )
+                    LatLng(
+                        cameraPosition.target.latitude,
+                        cameraPosition.target.longitude
+                    )
                 )
             }
-
-
         }
-
         markerManager = MarkerManager(context!!, naverMap).apply {
             onMarkerClickListener = this@MapFragment
         }
-
     }
 
 
@@ -137,9 +132,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
         (activity as AppCompatActivity).setSupportActionBar(binding.tbMap)
         (activity as AppCompatActivity).supportActionBar?.run {
-            setDisplayShowHomeEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_menu_black)
+            setDisplayShowHomeEnabled(false)
+            setDisplayHomeAsUpEnabled(false)
             setDisplayShowTitleEnabled(false)
         }
 
@@ -177,20 +171,20 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 } else {
                     markerManager.setMarkers(ArrayList(it))
                     CameraUpdate.fitBounds(markerManager.makeBounds()).animate(CameraAnimation.Fly)
-                            .run {
-                                naverMap.moveCamera(this)
-                            }
+                        .run {
+                            naverMap.moveCamera(this)
+                        }
                 }
 
                 markerManager.getMarkers().map {
                     val to = LatLng(it.latitude, it.longitude)
                     PlaceUIData(
-                            title = it.title ?: "",
-                            roadAddress = it.roadAddress ?: "",
-                            telePhone = it.telePhone ?: "",
-                            category = it.category ?: "",
-                            distance = to.toDistanceString(vm.currentMyLocation.value),
-                            distanceDouble = to.toDistance(vm.currentMyLocation.value)
+                        title = it.title ?: "",
+                        roadAddress = it.roadAddress ?: "",
+                        telePhone = it.telePhone ?: "",
+                        category = it.category ?: "",
+                        distance = to.toDistanceString(vm.currentMyLocation.value),
+                        distanceDouble = to.toDistance(vm.currentMyLocation.value)
                     )
 
                 }
@@ -224,17 +218,23 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 /*        vm.bottomSheetStateEvent.observe(this, EventObserver(
                 this@MapFragment::onChangeBottomSheet
         ))*/
-        vm.itemClickEvent.observe(this@MapFragment, EventObserver(
+        vm.itemClickEvent.observe(
+            this@MapFragment, EventObserver(
                 this@MapFragment::onItemClick
-        ))
+            )
+        )
 
-        vm.navigateToCallEvent.observe(this@MapFragment, EventObserver(
+        vm.navigateToCallEvent.observe(
+            this@MapFragment, EventObserver(
                 this@MapFragment::onNavigateToCall
-        ))
+            )
+        )
 
-        vm.navigateToFindLoadEvent.observe(this@MapFragment, EventObserver(
+        vm.navigateToFindLoadEvent.observe(
+            this@MapFragment, EventObserver(
                 this@MapFragment::onNavigateFindLoad
-        ))
+            )
+        )
 
         vm.fabClickEvent.observe(viewLifecycleOwner, Observer {
             animateFab()
@@ -257,35 +257,30 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     private fun bindViewModel() {
 
         vm.loadingSubject
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    pb_loading.isVisible = it
-                    tv_refresh.isVisible = !it
-                    tv_result.isVisible = !it
-                }
-                .addTo(compositeDisposable)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                pb_loading.isVisible = it
+                tv_refresh.isVisible = !it
+                tv_result.isVisible = !it
+            }
+            .addTo(compositeDisposable)
 
         searchClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    vm.currentMyLocation.value?.let {
-                        Intent(context, SearchActivity::class.java).apply {
-                            putExtra(
-                                    SearchActivity.KEY_LOCATION,
-                                    doubleArrayOf(it.latitude, it.longitude)
-                            )
-                        }
-                                .also {
-                                    startActivity(it)
-                                }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                vm.currentMyLocation.value?.let {
+                    Intent(context, SearchActivity::class.java).apply {
+                        putExtra(
+                            SearchActivity.KEY_LOCATION,
+                            doubleArrayOf(it.latitude, it.longitude)
+                        )
                     }
-                }.addTo(compositeDisposable)
+                        .also {
+                            startActivity(it)
+                        }
+                }
+            }.addTo(compositeDisposable)
 
-        navClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    showToast(requireContext(), "구현 전 입니다.")
-                }.addTo(compositeDisposable)
     }
 
     @SuppressLint("RestrictedApi")
@@ -299,10 +294,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         return when (item.itemId) {
             R.id.action_search -> {
                 searchClickSubject.onNext(Unit)
-                true
-            }
-            android.R.id.home -> {
-                navClickSubject.onNext(Unit)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -355,15 +346,18 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     override fun onMarkerClick(markerProperty: SHPlace) {
         vm.currentMyLocation.value?.let {
             PreviewFragment.newInstance(markerProperty, doubleArrayOf(it.latitude, it.longitude))
-                    .apply {
-                    }.show(childFragmentManager, PreviewFragment.TAG)
+                .apply {
+                }.show(childFragmentManager, PreviewFragment.TAG)
         }
     }
 
     override fun onClusterClick(markers: Collection<SHPlace>) {
         vm.currentLocation.value?.let {
-            ClusterDialog.newInstance(markers as ArrayList<SHPlace>, doubleArrayOf(it.latitude, it.longitude))
-                    .show(childFragmentManager, ClusterDialog.TAG)
+            ClusterDialog.newInstance(
+                markers as ArrayList<SHPlace>,
+                doubleArrayOf(it.latitude, it.longitude)
+            )
+                .show(childFragmentManager, ClusterDialog.TAG)
         }
 
     }
@@ -380,18 +374,32 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
     }
 
     private fun onNavigateToCall(placeUIData: PlaceUIData) {
-        startActivity(Intent(Intent.ACTION_DIAL, ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()))
+        startActivity(
+            Intent(
+                Intent.ACTION_DIAL,
+                ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()
+            )
+        )
     }
 
     private fun onNavigateFindLoad(placeUIData: PlaceUIData) {
-        val url = "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
+        val url =
+            "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
 
-        val list: List<ResolveInfo> = context?.getPackageManager()?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+        val list: List<ResolveInfo> = context?.packageManager?.queryIntentActivities(
+            intent,
+            PackageManager.MATCH_DEFAULT_ONLY
+        ) as List<ResolveInfo>
 
         if (list.isEmpty()) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=com.nhn.android.nmap")
+                )
+            )
         } else {
             startActivity(intent)
         }
@@ -405,9 +413,9 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
 
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             return
