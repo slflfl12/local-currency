@@ -64,6 +64,24 @@ fun bindToolbar(toolbar: Toolbar, activity: AppCompatActivity) {
     activity.simpleToolbar(toolbar)
 }
 
+@BindingAdapter("visibleByHashMap")
+fun visibleByHashMap(view: View, anyMap: HashMap<Any, Any>?) {
+    if(!anyMap.isNullOrEmpty()) {
+        view.visible()
+    } else {
+        view.gone()
+    }
+}
+
+@BindingAdapter("goneByHashMap")
+fun goneByHashMap(view: View, anyMap: HashMap<Any, Any>?) {
+    if(anyMap.isNullOrEmpty()) {
+        view.visible()
+    } else {
+        view.gone()
+    }
+}
+
 fun AppCompatActivity.simpleToolbar(toolbar: Toolbar) {
     setSupportActionBar(toolbar)
     supportActionBar?.run {
@@ -71,4 +89,12 @@ fun AppCompatActivity.simpleToolbar(toolbar: Toolbar) {
         setDisplayShowTitleEnabled(false)
         setHomeAsUpIndicator(R.drawable.ic_clear)
     }
+}
+
+fun View.visible() {
+    visibility = View.VISIBLE
+}
+
+fun View.gone() {
+    visibility = View.GONE
 }

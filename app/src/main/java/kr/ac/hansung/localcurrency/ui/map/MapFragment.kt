@@ -98,7 +98,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             isNightModeEnabled = true
             mapType = NaverMap.MapType.Navi
             setLayerGroupEnabled(NaverMap.LAYER_GROUP_BUILDING, false)
-            
+
             addOnLocationChangeListener { location ->
                 vm.onChangedMyLocation(location)
             }
@@ -114,6 +114,8 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         markerManager = MarkerManager(context!!, naverMap).apply {
             onMarkerClickListener = this@MapFragment
         }
+
+
     }
 
 
@@ -167,7 +169,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             it?.let {
                 if (it.isEmpty()) {
                     markerManager.setMarkers(arrayListOf())
-
                 } else {
                     markerManager.setMarkers(ArrayList(it))
                     CameraUpdate.fitBounds(markerManager.makeBounds()).animate(CameraAnimation.Fly)
@@ -183,11 +184,13 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                         roadAddress = it.roadAddress ?: "",
                         telePhone = it.telePhone ?: "",
                         category = it.category ?: "",
+                        latitude = it.latitude,
+                        longitude = it.longitude,
                         distance = to.toDistanceString(vm.currentMyLocation.value),
                         distanceDouble = to.toDistance(vm.currentMyLocation.value)
                     )
-
                 }
+
             }?.run {
                 sortedBy { it.distanceDouble }
             }?.run {
@@ -196,7 +199,20 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
                 }
             }
 
-            binding.tvTotal.text = "총 ${markerManager.getMarkerSize()}개"
+            markerManager.getMarkerSize().let { size ->
+
+                binding.tvTotal.text = "총 ${size}개"
+
+                if (size == 0) {
+                    binding.tvRequestSearch.visible()
+                    binding.rvResult.gone()
+                } else {
+                    binding.tvRequestSearch.gone()
+                    binding.tvResult.visible()
+                }
+            }
+
+
         })
 
         vm.distanceValue.observe(this, Observer {
@@ -215,9 +231,7 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
         vm.errorMessage.observe(this, Observer {
             showToast(requireContext(), it.toString())
         })
-/*        vm.bottomSheetStateEvent.observe(this, EventObserver(
-                this@MapFragment::onChangeBottomSheet
-        ))*/
+
         vm.itemClickEvent.observe(
             this@MapFragment, EventObserver(
                 this@MapFragment::onItemClick
@@ -248,9 +262,6 @@ class MapFragment : BaseFragment<FragmentMapBinding, MapViewModel>(R.layout.frag
             animateFab()
         })
 
-        vm.navButtonEvent.observe(viewLifecycleOwner, Observer {
-
-        })
 
     }
 

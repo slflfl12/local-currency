@@ -34,7 +34,8 @@ import kr.ac.hansung.localcurrency.util.toDistance
 import kr.ac.hansung.localcurrency.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search) {
+class SearchActivity :
+    BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search) {
 
     override val vm: SearchViewModel by viewModel()
 
@@ -87,12 +88,24 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(R.la
                 it.map {
                     currentLocation?.let { currentLocation ->
                         PlaceUIData(
-                                title = it.title ?: "",
-                                roadAddress = it.roadAddress ?: "",
-                                telePhone = it.telePhone ?: "",
-                                category = it.category ?: "",
-                                distance = currentLocation.toDistanceString(LatLng(it.latitude, it.longitude)),
-                                distanceDouble = currentLocation.toDistance(LatLng(it.latitude, it.longitude))
+                            title = it.title ?: "",
+                            roadAddress = it.roadAddress ?: "",
+                            telePhone = it.telePhone ?: "",
+                            category = it.category ?: "",
+                            latitude = it.latitude,
+                            longitude = it.longitude,
+                            distance = currentLocation.toDistanceString(
+                                LatLng(
+                                    it.latitude,
+                                    it.longitude
+                                )
+                            ),
+                            distanceDouble = currentLocation.toDistance(
+                                LatLng(
+                                    it.latitude,
+                                    it.longitude
+                                )
+                            )
                         )
                     }
                 }
@@ -137,17 +150,23 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(R.la
             }
         })
 
-        vm.itemClickEvent.observe(this, EventObserver(
+        vm.itemClickEvent.observe(
+            this, EventObserver(
                 this@SearchActivity::onItemClick
-        ))
+            )
+        )
 
-        vm.navigateToCallEvent.observe(this, EventObserver(
+        vm.navigateToCallEvent.observe(
+            this, EventObserver(
                 this@SearchActivity::onNavigateToCall
-        ))
+            )
+        )
 
-        vm.navigateToFindLoadEvent.observe(this, EventObserver(
+        vm.navigateToFindLoadEvent.observe(
+            this, EventObserver(
                 this@SearchActivity::onNavigateFindLoad
-        ))
+            )
+        )
 
     }
 
@@ -168,25 +187,35 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(R.la
     }
 
     private fun onNavigateToCall(placeUIData: PlaceUIData) {
-        startActivity(Intent(Intent.ACTION_DIAL, ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()))
+        startActivity(
+            Intent(
+                Intent.ACTION_DIAL,
+                ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()
+            )
+        )
     }
 
     private fun onNavigateFindLoad(placeUIData: PlaceUIData) {
-        val url = "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
+        val url =
+            "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
 
-        val list: List<ResolveInfo> = getPackageManager()?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) as List<ResolveInfo>
+        val list: List<ResolveInfo> = packageManager?.queryIntentActivities(
+            intent,
+            PackageManager.MATCH_DEFAULT_ONLY
+        ) as List<ResolveInfo>
 
         if (list.isEmpty()) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=com.nhn.android.nmap")
+                )
+            )
         } else {
             startActivity(intent)
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 
 

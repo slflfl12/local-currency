@@ -3,7 +3,6 @@ package kr.ac.hansung.localcurrency.ui.map
 import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import io.reactivex.schedulers.Schedulers
 import kr.ac.hansung.localcurrency.data.repository.OpenApiRepository
@@ -100,7 +99,7 @@ class MapViewModel(
         get() = _initEvent
 
 
-    fun reqNearByMaps_X5() {
+    fun reqNearByMaps() {
         currentLocation.value?.let {
             val latitude = it.latitude
             val longitude = it.longitude
@@ -168,12 +167,12 @@ class MapViewModel(
     }
 
     fun onFab1Click() {
-        _distanceValue.value = 0.5
+        _distanceValue.value = 0.3
         _fab1ClickEvent.call()
     }
 
     fun onFab2Click() {
-        _distanceValue.value = 1.0
+        _distanceValue.value = 0.5
         _fab2ClickEvent.call()
     }
 

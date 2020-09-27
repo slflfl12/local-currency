@@ -1,5 +1,6 @@
 package kr.ac.hansung.localcurrency.ui.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.naver.maps.geometry.LatLng

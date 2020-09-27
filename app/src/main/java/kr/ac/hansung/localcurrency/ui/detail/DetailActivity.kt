@@ -8,6 +8,7 @@ import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
@@ -164,7 +165,8 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
     }
 
     private fun makeMarker(uiData: PlaceUIData) {
-
+        Log.d("seunghwan", "seunghwan ${uiData.latitude}, ${uiData.longitude}")
+        Log.d("seunghwan", "$uiData")
         val marker = Marker().apply {
             position = LatLng(uiData.latitude, uiData.longitude)
             map = naverMap
