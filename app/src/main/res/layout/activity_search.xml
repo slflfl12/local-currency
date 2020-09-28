@@ -28,7 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_search"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb_search">
@@ -36,22 +36,25 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_search"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:background="@drawable/backgorund_search_edit_text"
+                android:drawableStart="@drawable/ic_search"
                 android:hint="@string/et_search_hint"
                 android:text="@={vm._query}"
+                android:textColorHint="@color/colorGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_search"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_color_btn"
+                android:fontFamily="@font/black_hans_sans"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="@string/button_search"
+                android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -128,7 +131,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_info2"
-            tools:listitem="@layout/item_search">
+            tools:listitem="@layout/item_result">
 
         </androidx.recyclerview.widget.RecyclerView>
 
