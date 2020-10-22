@@ -66,7 +66,7 @@ fun bindToolbar(toolbar: Toolbar, activity: AppCompatActivity) {
 
 @BindingAdapter("visibleByHashMap")
 fun visibleByHashMap(view: View, anyMap: HashMap<Any, Any>?) {
-    if(!anyMap.isNullOrEmpty()) {
+    if (!anyMap.isNullOrEmpty()) {
         view.visible()
     } else {
         view.gone()
@@ -75,7 +75,7 @@ fun visibleByHashMap(view: View, anyMap: HashMap<Any, Any>?) {
 
 @BindingAdapter("goneByHashMap")
 fun goneByHashMap(view: View, anyMap: HashMap<Any, Any>?) {
-    if(anyMap.isNullOrEmpty()) {
+    if (anyMap.isNullOrEmpty()) {
         view.visible()
     } else {
         view.gone()

@@ -19,14 +19,14 @@ class MarkerManager(private val context: Context, private val naverMap: NaverMap
     private val markerProperties = HashMap<Marker, SHPlace>()
     private val markers = HashMap<SHPlace, Marker>()
     private val cluster = TedNaverClustering.with<SHPlace>(context, naverMap)
-        .customMarker(::makeMarker)
-        .markerClickListener {
-            onMarkerClickListener?.onMarkerClick(it)
-        }
-        .clusterClickListener { 
-            onMarkerClickListener?.onClusterClick(it.items)
-        }
-        .make()
+            .customMarker(::makeMarker)
+            .markerClickListener {
+                onMarkerClickListener?.onMarkerClick(it)
+            }
+            .clusterClickListener {
+                onMarkerClickListener?.onClusterClick(it.items)
+            }
+            .make()
 
     var onMarkerClickListener: OnMarkerClickListener? = null
 

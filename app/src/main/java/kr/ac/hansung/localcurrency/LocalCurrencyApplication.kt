@@ -38,13 +38,13 @@ class LocalCurrencyApplication : Application() {
             if (error is NullPointerException || error is IllegalArgumentException) {
                 // that's likely a bug in the application
                 Thread.currentThread().uncaughtExceptionHandler
-                    .uncaughtException(Thread.currentThread(), error)
+                        .uncaughtException(Thread.currentThread(), error)
                 return@setErrorHandler
             }
             if (error is IllegalStateException) {
                 // that's a bug in RxJava or in a custom operator
                 Thread.currentThread().uncaughtExceptionHandler
-                    .uncaughtException(Thread.currentThread(), error)
+                        .uncaughtException(Thread.currentThread(), error)
                 return@setErrorHandler
             }
             Log.w("Undeliverable exception received, not sure what to do", error)

@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_main, mapFragment, MapFragment.TAG)
-            .commit()
+                .replace(R.id.fl_main, mapFragment, MapFragment.TAG)
+                .commit()
 
 
     }
@@ -45,25 +45,25 @@ class MainActivity : AppCompatActivity() {
 
     fun bindViewModel() {
         backKeySubject
-            .buffer(2, 1)
-            .map { it[0] to it[1] }
-            .subscribe {
-                if(it.second - it.first < 2000L) {
-                    super.onBackPressed()
-                } else {
-                    Toast.makeText(this, R.string.back_key_message, Toast.LENGTH_SHORT).show()
+                .buffer(2, 1)
+                .map { it[0] to it[1] }
+                .subscribe {
+                    if (it.second - it.first < 2000L) {
+                        super.onBackPressed()
+                    } else {
+                        Toast.makeText(this, R.string.back_key_message, Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
-            .addTo(compositeDisposable)
+                .addTo(compositeDisposable)
     }
 
     override fun onBackPressed() {
 
-            val fragment = supportFragmentManager.findFragmentByTag(MapFragment.TAG) as MapFragment
+        val fragment = supportFragmentManager.findFragmentByTag(MapFragment.TAG) as MapFragment
 
-            if(fragment.getBottomSheetState() == BottomSheetBehavior.STATE_EXPANDED) {
-                fragment.closeBottomSheet()
-            } else {
+        if (fragment.getBottomSheetState() == BottomSheetBehavior.STATE_EXPANDED) {
+            fragment.closeBottomSheet()
+        } else {
             backKeySubject.onNext(System.currentTimeMillis())
         }
 

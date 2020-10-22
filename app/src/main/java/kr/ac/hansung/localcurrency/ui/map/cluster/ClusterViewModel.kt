@@ -6,7 +6,7 @@ import kr.ac.hansung.localcurrency.ui.base.BaseViewModel
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 import kr.ac.hansung.localcurrency.util.Event
 
-class ClusterViewModel: BaseViewModel() {
+class ClusterViewModel : BaseViewModel() {
 
     private val _placeClickEvent = MutableLiveData<Event<PlaceUIData>>()
     val placeClickEvent: LiveData<Event<PlaceUIData>>

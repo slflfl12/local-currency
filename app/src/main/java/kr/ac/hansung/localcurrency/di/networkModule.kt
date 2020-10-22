@@ -34,7 +34,7 @@ val networkModule = module {
                 HttpLoggingInterceptor.Level.NONE
             }
         })
-            .build()
+                .build()
     }
 
     single(named(name = "ReverseGeocodeClient")) {
@@ -45,18 +45,18 @@ val networkModule = module {
                 HttpLoggingInterceptor.Level.NONE
             }
         }).addInterceptor(get(named("ReverseGeocodeInterceptor")))
-            .build()
+                .build()
     }
 
 
     single(named(name = "ReverseGeocodeInterceptor")) {
-        Interceptor {chain ->
+        Interceptor { chain ->
             chain.proceed(
-                chain.request()
-                    .newBuilder()
-                    .addHeader("X-NCP-APIGW-API-KEY-ID", "2id8u5ieiu")
-                    .addHeader("X-NCP-APIGW-API-KEY", "sIEUEZUZF9g7oPSCScuDF1Kf2jPfZA8jB3Xn95bd")
-                    .build()
+                    chain.request()
+                            .newBuilder()
+                            .addHeader("X-NCP-APIGW-API-KEY-ID", "2id8u5ieiu")
+                            .addHeader("X-NCP-APIGW-API-KEY", "sIEUEZUZF9g7oPSCScuDF1Kf2jPfZA8jB3Xn95bd")
+                            .build()
             )
         }
     }
@@ -71,28 +71,28 @@ val networkModule = module {
 
     single<OpenApiService> {
         Retrofit.Builder()
-            .baseUrl(OPEN_API_BASE_URL)
-            .client(get(named("OpenApiClient")))
-            .addConverterFactory(get<GsonConverterFactory>())
-            .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
-            .build()
-            .create(OpenApiService::class.java)
+                .baseUrl(OPEN_API_BASE_URL)
+                .client(get(named("OpenApiClient")))
+                .addConverterFactory(get<GsonConverterFactory>())
+                .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
+                .build()
+                .create(OpenApiService::class.java)
     }
 
     single<ReverseGeoCodeService> {
         Retrofit.Builder()
-            .baseUrl(NAVER_REVERSE_GEOCODE_BASE_URL)
-            .client(get(named("ReverseGeocodeClient")))
-            .addConverterFactory(get<GsonConverterFactory>())
-            .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
-            .build()
-            .create(ReverseGeoCodeService::class.java)
+                .baseUrl(NAVER_REVERSE_GEOCODE_BASE_URL)
+                .client(get(named("ReverseGeocodeClient")))
+                .addConverterFactory(get<GsonConverterFactory>())
+                .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
+                .build()
+                .create(ReverseGeoCodeService::class.java)
     }
 
     // local
     single {
         Room.databaseBuilder(androidContext(), MapDatabase::class.java, "map.db")
-            .allowMainThreadQueries().build()
+                .allowMainThreadQueries().build()
     }
 
     single {

@@ -6,7 +6,7 @@ import kr.ac.hansung.localcurrency.data.remote.source.NaverMapRemoteDataSource
 import kr.ac.hansung.localcurrency.data.repository.NaverMapRepository
 
 class NaverMapRepositoryImpl(
-    private val naverMapRemoteDataSource: NaverMapRemoteDataSource
+        private val naverMapRemoteDataSource: NaverMapRemoteDataSource
 ) : NaverMapRepository {
 
     override fun getGeocode(coords: String): Single<GeocodeResponse> = naverMapRemoteDataSource.getGeocode(coords)

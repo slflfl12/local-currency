@@ -13,8 +13,8 @@ import kr.ac.hansung.localcurrency.data.remote.source.OpenApiRemoteDataSource
 import kr.ac.hansung.localcurrency.util.withinSightMarker
 
 class OpenApiRepositoryImpl(
-    private val openApiLocalDataSource: OpenApiLocalDataSource,
-    private val openApiRemoteDataSource: OpenApiRemoteDataSource
+        private val openApiLocalDataSource: OpenApiLocalDataSource,
+        private val openApiRemoteDataSource: OpenApiRemoteDataSource
 ) : OpenApiRepository {
 
     override val appVersion: String?
@@ -26,24 +26,24 @@ class OpenApiRepositoryImpl(
     override val pageLoadingSubject: BehaviorSubject<Int>
         get() = openApiRemoteDataSource.pageLoadingSubject
 
-    override val loadedDataCompletedSubject = BehaviorSubject.createDefault(false)
+
 
     override fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>> =
-        openApiRemoteDataSource.getPlacesByIndex(pIndex)
+            openApiRemoteDataSource.getPlacesByIndex(pIndex)
 
     override fun saveAll(): Completable {
         return openApiLocalDataSource.deleteAll()
-            .andThen(Observable.fromIterable(1..270))
-            .flatMapSingle { page ->
-                pageLoadingSubject.onNext(page)
-                openApiRemoteDataSource.getPlacesByIndex(page.toString())
-            }
-            .concatMapCompletable {
-                openApiLocalDataSource.insertMaps(it)
-            }.doOnTerminate {
-                openApiLocalDataSource.appVersion =
-                    BuildConfig.VERSION_NAME
-            }
+                .andThen(Observable.fromIterable(1..270))
+                .flatMapSingle { page ->
+                    pageLoadingSubject.onNext(page)
+                    openApiRemoteDataSource.getPlacesByIndex(page.toString())
+                }
+                .concatMapCompletable {
+                    openApiLocalDataSource.insertMaps(it)
+                }.doOnTerminate {
+                    openApiLocalDataSource.appVersion =
+                            BuildConfig.VERSION_NAME
+                }
     }
 
     override fun getNearByMaps(latitude: Double, longitude: Double, nearByValue: Double): Single<List<SHPlace>> =
@@ -52,45 +52,45 @@ class OpenApiRepositoryImpl(
 
 
     override fun saveData(): Completable =
-        Observable.fromIterable(loadedData?.rangeTo(270))
-            .flatMapSingle { page ->
-                pageLoadingSubject.onNext(page)
-                openApiLocalDataSource.loadedData = page.toString()
-                openApiRemoteDataSource.getPlacesByIndex(page.toString())
-            }
-            .concatMapCompletable(openApiLocalDataSource::insertMaps)
-            .doOnComplete {
-                openApiLocalDataSource.appVersion =
-                    BuildConfig.VERSION_NAME
-            }
+            Observable.fromIterable(loadedData?.rangeTo(270))
+                    .flatMapSingle { page ->
+                        pageLoadingSubject.onNext(page)
+                        openApiLocalDataSource.loadedData = page.toString()
+                        openApiRemoteDataSource.getPlacesByIndex(page.toString())
+                    }
+                    .concatMapCompletable(openApiLocalDataSource::insertMaps)
+                    .doOnComplete {
+                        openApiLocalDataSource.appVersion =
+                                BuildConfig.VERSION_NAME
+                    }
 
 
     override fun getAllPlaces(): Observable<SHPlace> {
         return openApiLocalDataSource.getMapEntities()
-            .map { it.map(MapEntityMapper::mapToSHPlace) }
-            .flatMapObservable {
-                Observable.fromIterable(it)
-            }
+                .map { it.map(MapEntityMapper::mapToSHPlace) }
+                .flatMapObservable {
+                    Observable.fromIterable(it)
+                }
     }
 
     override fun getAllPlacesPrev(): Single<List<SHPlace>> {
         return openApiLocalDataSource.getMapEntities()
-            .map { it.map(MapEntityMapper::mapToSHPlace) }
+                .map { it.map(MapEntityMapper::mapToSHPlace) }
     }
 
     override fun getNearByPlaces(currentLatLng: LatLng): Single<List<SHPlace>> =
-        openApiLocalDataSource.getMapEntities()
-            .map { it.map(MapEntityMapper::mapToSHPlace) }
-            .map { it.filter { it.withinSightMarker(currentLatLng) } }
+            openApiLocalDataSource.getMapEntities()
+                    .map { it.map(MapEntityMapper::mapToSHPlace) }
+                    .map { it.filter { it.withinSightMarker(currentLatLng) } }
 
     override fun getPlacesBySigun(si: String): Single<List<SHPlace>> =
-        openApiLocalDataSource.getMapEntitiesBySigun(si)
-            .map { it.map(MapEntityMapper::mapToSHPlace) }
+            openApiLocalDataSource.getMapEntitiesBySigun(si)
+                    .map { it.map(MapEntityMapper::mapToSHPlace) }
 
 
     override fun getMapsByQuery(query: String, latitude: Double, longitude: Double): Single<List<SHPlace>> =
-        openApiLocalDataSource.getMapEntitiesByQuery(query, latitude, longitude)
-            .map { it.map(MapEntityMapper::mapToSHPlace)}
+            openApiLocalDataSource.getMapEntitiesByQuery(query, latitude, longitude)
+                    .map { it.map(MapEntityMapper::mapToSHPlace) }
 
     override fun deleteAll(): Completable {
         return openApiLocalDataSource.deleteAll()

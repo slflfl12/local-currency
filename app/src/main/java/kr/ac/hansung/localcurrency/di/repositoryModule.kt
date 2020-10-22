@@ -11,13 +11,13 @@ val repositoryModule = module {
 
     single<OpenApiRepository> {
         OpenApiRepositoryImpl(
-            get(),
-            get()
+                get(),
+                get()
         )
     }
     single<NaverMapRepository> {
         NaverMapRepositoryImpl(
-            get()
+                get()
         )
     }
 }

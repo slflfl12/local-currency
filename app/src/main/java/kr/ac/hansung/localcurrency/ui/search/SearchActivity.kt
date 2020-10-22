@@ -35,7 +35,7 @@ import kr.ac.hansung.localcurrency.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity :
-    BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search) {
+        BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search) {
 
     override val vm: SearchViewModel by viewModel()
 
@@ -88,24 +88,24 @@ class SearchActivity :
                 it.map {
                     currentLocation?.let { currentLocation ->
                         PlaceUIData(
-                            title = it.title ?: "",
-                            roadAddress = it.roadAddress ?: "",
-                            telePhone = it.telePhone ?: "",
-                            category = it.category ?: "",
-                            latitude = it.latitude,
-                            longitude = it.longitude,
-                            distance = currentLocation.toDistanceString(
-                                LatLng(
-                                    it.latitude,
-                                    it.longitude
+                                title = it.title ?: "",
+                                roadAddress = it.roadAddress ?: "",
+                                telePhone = it.telePhone ?: "",
+                                category = it.category ?: "",
+                                latitude = it.latitude,
+                                longitude = it.longitude,
+                                distance = currentLocation.toDistanceString(
+                                        LatLng(
+                                                it.latitude,
+                                                it.longitude
+                                        )
+                                ),
+                                distanceDouble = currentLocation.toDistance(
+                                        LatLng(
+                                                it.latitude,
+                                                it.longitude
+                                        )
                                 )
-                            ),
-                            distanceDouble = currentLocation.toDistance(
-                                LatLng(
-                                    it.latitude,
-                                    it.longitude
-                                )
-                            )
                         )
                     }
                 }
@@ -151,21 +151,21 @@ class SearchActivity :
         })
 
         vm.itemClickEvent.observe(
-            this, EventObserver(
+                this, EventObserver(
                 this@SearchActivity::onItemClick
-            )
+        )
         )
 
         vm.navigateToCallEvent.observe(
-            this, EventObserver(
+                this, EventObserver(
                 this@SearchActivity::onNavigateToCall
-            )
+        )
         )
 
         vm.navigateToFindLoadEvent.observe(
-            this, EventObserver(
+                this, EventObserver(
                 this@SearchActivity::onNavigateFindLoad
-            )
+        )
         )
 
     }
@@ -188,30 +188,30 @@ class SearchActivity :
 
     private fun onNavigateToCall(placeUIData: PlaceUIData) {
         startActivity(
-            Intent(
-                Intent.ACTION_DIAL,
-                ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()
-            )
+                Intent(
+                        Intent.ACTION_DIAL,
+                        ("tel:${placeUIData.telePhone.splitPhoneNum()}").toUri()
+                )
         )
     }
 
     private fun onNavigateFindLoad(placeUIData: PlaceUIData) {
         val url =
-            "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
+                "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
 
         val list: List<ResolveInfo> = packageManager?.queryIntentActivities(
-            intent,
-            PackageManager.MATCH_DEFAULT_ONLY
+                intent,
+                PackageManager.MATCH_DEFAULT_ONLY
         ) as List<ResolveInfo>
 
         if (list.isEmpty()) {
             startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=com.nhn.android.nmap")
-                )
+                    Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=com.nhn.android.nmap")
+                    )
             )
         } else {
             startActivity(intent)

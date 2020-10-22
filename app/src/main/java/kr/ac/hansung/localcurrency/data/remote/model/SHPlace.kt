@@ -9,27 +9,27 @@ import ted.gun0912.clustering.geometry.TedLatLng
 
 
 data class SHPlace(
-    @SerializedName("CMPNM_NM")
-    val title: String?,
-    @SerializedName("REFINE_ROADNM_ADDR")
-    val roadAddress: String?,
-    @SerializedName("REFINE_WGS84_LAT")
-    val latitude: Double,
-    @SerializedName("REFINE_WGS84_LOGT")
-    val longitude: Double,
-    @SerializedName("TELNO")
-    val telePhone: String?,
-    val sigun: String?,
-    val category: String?
+        @SerializedName("CMPNM_NM")
+        val title: String?,
+        @SerializedName("REFINE_ROADNM_ADDR")
+        val roadAddress: String?,
+        @SerializedName("REFINE_WGS84_LAT")
+        val latitude: Double,
+        @SerializedName("REFINE_WGS84_LOGT")
+        val longitude: Double,
+        @SerializedName("TELNO")
+        val telePhone: String?,
+        val sigun: String?,
+        val category: String?
 ) : TedClusterItem, Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readDouble(),
-        parcel.readDouble(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readDouble(),
+            parcel.readDouble(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()
     ) {
     }
 

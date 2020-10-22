@@ -65,8 +65,6 @@ class PreviewFragment :
         }
 
 
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -115,7 +113,6 @@ class PreviewFragment :
     }
 
 
-
     private fun findLoad(placeUIData: PlaceUIData) {
         val url = "nmap://route/walk?dlat=${placeUIData.latitude}&dlng=${placeUIData.longitude}&dname=${placeUIData.title}&appname=kr.ac.hansung.localcurrency"
         val intent = Intent(Intent.ACTION_VIEW, url.toUri())
@@ -158,7 +155,6 @@ class PreviewFragment :
     }
 
 
-
     override fun onDestroy() {
         adView.destroy()
         super.onDestroy()
@@ -167,7 +163,6 @@ class PreviewFragment :
     interface PreviewListener {
         fun onClosePreview()
     }
-
 
 
 }

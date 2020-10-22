@@ -34,7 +34,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(private val
 
     fun showKeyboard() {
         (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
-                InputMethodManager.SHOW_FORCED,0
+                InputMethodManager.SHOW_FORCED, 0
         )
     }
 

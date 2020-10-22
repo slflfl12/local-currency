@@ -24,7 +24,7 @@ import kr.ac.hansung.localcurrency.util.toDistance
 import kr.ac.hansung.localcurrency.util.toDistanceString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ClusterDialog : BaseDialogFragment<DialogClusterBinding, ClusterViewModel>(R.layout.dialog_cluster){
+class ClusterDialog : BaseDialogFragment<DialogClusterBinding, ClusterViewModel>(R.layout.dialog_cluster) {
 
 
     override val vm: ClusterViewModel by viewModel()

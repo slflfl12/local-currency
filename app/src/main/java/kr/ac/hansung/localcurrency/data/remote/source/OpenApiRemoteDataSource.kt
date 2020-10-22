@@ -8,9 +8,7 @@ interface OpenApiRemoteDataSource {
 
     val pageLoadingSubject: BehaviorSubject<Int>
 
-    fun getPlacesByIndex(pIndex: String) : Single<List<SHPlace>>
-
-
+    fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>>
 
 
 }

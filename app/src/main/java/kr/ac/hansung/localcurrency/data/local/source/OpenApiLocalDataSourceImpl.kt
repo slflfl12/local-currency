@@ -9,8 +9,8 @@ import kr.ac.hansung.localcurrency.data.local.pref.PreferencesHelper
 import kr.ac.hansung.localcurrency.data.remote.model.SHPlace
 
 class OpenApiLocalDataSourceImpl(
-    private val mapDao: MapDao,
-    private val pref: PreferencesHelper
+        private val mapDao: MapDao,
+        private val pref: PreferencesHelper
 ) : OpenApiLocalDataSource {
 
     override var appVersion: String?
@@ -27,8 +27,8 @@ class OpenApiLocalDataSourceImpl(
 
     override fun insertMaps(places: List<SHPlace>): Completable {
         return Single.just(places)
-            .map { it.map(MapEntityMapper::mapToLocal) }
-            .flatMapCompletable { mapDao.insertMaps(it) }
+                .map { it.map(MapEntityMapper::mapToLocal) }
+                .flatMapCompletable { mapDao.insertMaps(it) }
     }
 
     override fun getMapEntities(): Single<List<MapEntity>> {
@@ -38,7 +38,7 @@ class OpenApiLocalDataSourceImpl(
 
     override fun getMapEntitiesByQuery(query: String, latitude: Double, longitude: Double): Single<List<MapEntity>> = mapDao.getMapByQuery(query, latitude, longitude)
 
-    override fun getMapEntitiesBySigun(si:String): Single<List<MapEntity>> = mapDao.getMapsBySi(si)
+    override fun getMapEntitiesBySigun(si: String): Single<List<MapEntity>> = mapDao.getMapsBySi(si)
 
     override fun getNearByMaps(latitude: Double, longitude: Double, nearByValue: Double): Single<List<MapEntity>> {
         return mapDao.getNearByMaps(latitude, longitude, nearByValue)

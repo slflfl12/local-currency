@@ -15,7 +15,7 @@ import kr.ac.hansung.localcurrency.ui.map.result.ResultAdapter
 import kr.ac.hansung.localcurrency.ui.model.PlaceUIData
 
 class SearchAdapter(val viewModel: SearchViewModel) : ListAdapter<PlaceUIData, ResultAdapter.ResultViewHolder>(object :
-    DiffUtil.ItemCallback<PlaceUIData>() {
+        DiffUtil.ItemCallback<PlaceUIData>() {
     override fun areContentsTheSame(oldItem: PlaceUIData, newItem: PlaceUIData): Boolean {
         return oldItem.title == oldItem.title
     }
@@ -28,8 +28,8 @@ class SearchAdapter(val viewModel: SearchViewModel) : ListAdapter<PlaceUIData, R
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultAdapter.ResultViewHolder {
         val binding = DataBindingUtil.inflate<ItemResultBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_result, parent, false
+                LayoutInflater.from(parent.context),
+                R.layout.item_result, parent, false
         )
         val holder = ResultAdapter.ResultViewHolder(binding)
         holder.itemView.setOnClickListener {
@@ -48,9 +48,7 @@ class SearchAdapter(val viewModel: SearchViewModel) : ListAdapter<PlaceUIData, R
     }
 
     override fun onBindViewHolder(holder: ResultAdapter.ResultViewHolder, position: Int) =
-        holder.bind(getItem(position))
-
-
+            holder.bind(getItem(position))
 
 
 }

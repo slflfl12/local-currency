@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kr.ac.hansung.localcurrency">
+          package="kr.ac.hansung.localcurrency">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
-        android:name=".LocalCurrencyApplication"
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher_map"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_map_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+            android:name=".LocalCurrencyApplication"
+            android:allowBackup="false"
+            android:icon="@mipmap/ic_launcher_map"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_map_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
         <activity android:name=".ui.main.MainActivity">
 
         </activity>
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".ui.search.SearchActivity"/>
         <activity android:name=".ui.detail.DetailActivity"/>
 
         <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="2id8u5ieiu" />
+                android:name="com.naver.maps.map.CLIENT_ID"
+                android:value="2id8u5ieiu"/>
 
         <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3703834685739437~7199433285"/>
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-3703834685739437~7199433285"/>
     </application>
 
 </manifest>

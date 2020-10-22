@@ -15,17 +15,15 @@ interface OpenApiRepository {
 
     val pageLoadingSubject: BehaviorSubject<Int>
 
-    val loadedDataCompletedSubject: BehaviorSubject<Boolean>
-
     fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>>
 
-    fun getPlacesBySigun(si: String) : Single<List<SHPlace>>
+    fun getPlacesBySigun(si: String): Single<List<SHPlace>>
 
-    fun getAllPlaces() : Observable<SHPlace>
+    fun getAllPlaces(): Observable<SHPlace>
 
     fun getAllPlacesPrev(): Single<List<SHPlace>>
 
-    fun getNearByPlaces(currentLatLng: LatLng) : Single<List<SHPlace>>
+    fun getNearByPlaces(currentLatLng: LatLng): Single<List<SHPlace>>
 
     fun getMapsByQuery(query: String, latitude: Double, longitude: Double): Single<List<SHPlace>>
 

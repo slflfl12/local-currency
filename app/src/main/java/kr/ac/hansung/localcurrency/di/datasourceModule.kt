@@ -13,6 +13,6 @@ val datasourceModule = module {
 
     single<OpenApiLocalDataSource> { OpenApiLocalDataSourceImpl(get(), get()) }
     single<OpenApiRemoteDataSource> { OpenApiRemoteDataSourceImpl(get()) }
-    single<NaverMapRemoteDataSource> { NaverMapRemoteDataSourceImpl(get())}
+    single<NaverMapRemoteDataSource> { NaverMapRemoteDataSourceImpl(get()) }
 
 }

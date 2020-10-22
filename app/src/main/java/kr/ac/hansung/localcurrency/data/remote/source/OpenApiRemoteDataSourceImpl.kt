@@ -11,14 +11,13 @@ class OpenApiRemoteDataSourceImpl(private val openApiService: OpenApiService) : 
     override val pageLoadingSubject = BehaviorSubject.createDefault(0)
 
     override fun getPlacesByIndex(pIndex: String): Single<List<SHPlace>> = openApiService.getPlaces(pIndex)
-        .map {
-            it.regionMnyFacltStus[1].places.filter { place ->
-                place.latitude != null && place.longitude != null
-            }
-        }.map {
-            it.map(SHPlaceRemoteMapper::mapToData)
-        }.retry(3)
-
+            .map {
+                it.regionMnyFacltStus[1].places.filter { place ->
+                    place.latitude != null && place.longitude != null
+                }
+            }.map {
+                it.map(SHPlaceRemoteMapper::mapToData)
+            }.retry(3)
 
 
 }

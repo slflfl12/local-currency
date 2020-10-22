@@ -5,5 +5,5 @@ import kr.ac.hansung.localcurrency.data.remote.model.GeocodeResponse
 
 interface NaverMapRepository {
 
-    fun getGeocode(coords: String) : Single<GeocodeResponse>
+    fun getGeocode(coords: String): Single<GeocodeResponse>
 }

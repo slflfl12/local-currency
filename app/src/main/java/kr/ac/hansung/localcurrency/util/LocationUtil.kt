@@ -13,7 +13,6 @@ const val REFERANCE_LNG_X3 = 3 / 88.74
 fun LatLng.toDistance(from: LatLng?): Double = from?.let { this.distanceTo(it) } ?: 0.0
 
 
-
 fun LatLng.toDistanceString(from: LatLng?): String {
 
     var meter = from?.let { this.distanceTo(it) } ?: 0.0
@@ -38,19 +37,19 @@ fun withinSightMarker_X3(currentPosition: LatLng, markerPosition: LatLng): Boole
     val withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X3
     val withinSightMarkerLng = Math.abs(currentPosition.longitude - markerPosition.longitude) <= REFERANCE_LNG_X3
 
-    return withinSightMarkerLat&&withinSightMarkerLng
+    return withinSightMarkerLat && withinSightMarkerLng
 }
 
 fun withinSightMarker_X1(currentPosition: LatLng, markerPosition: LatLng): Boolean {
     val withinSightMarkerLat = Math.abs(currentPosition.latitude - markerPosition.latitude) <= REFERANCE_LAT_X1
     val withinSightMarkerLng = Math.abs(currentPosition.longitude - markerPosition.longitude) <= REFERANCE_LNG_X1
 
-    return withinSightMarkerLat&&withinSightMarkerLng
+    return withinSightMarkerLat && withinSightMarkerLng
 }
 
 fun SHPlace.withinSightMarker(currentPosition: LatLng): Boolean {
     val withinSightMarkerLat = Math.abs(currentPosition.latitude - this.latitude) <= REFERANCE_LAT_X1
     val withinSightMarkerLng = Math.abs(currentPosition.longitude - this.longitude) <= REFERANCE_LNG_X1
 
-    return withinSightMarkerLat&&withinSightMarkerLng
+    return withinSightMarkerLat && withinSightMarkerLng
 }

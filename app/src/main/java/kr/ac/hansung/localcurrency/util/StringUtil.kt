@@ -15,7 +15,7 @@ fun String.splitFirst(): String {
 
 fun String.splitPhoneNum(): String {
 
-    if(this == "") {
+    if (this == "") {
         return ""
     }
 

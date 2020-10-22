@@ -16,7 +16,7 @@ import kr.ac.hansung.localcurrency.util.Event
 import java.util.concurrent.TimeUnit
 
 class SearchViewModel(
-    private val openApiRepository: OpenApiRepository
+        private val openApiRepository: OpenApiRepository
 ) : BaseViewModel() {
 
 
@@ -69,11 +69,11 @@ class SearchViewModel(
 
     init {
         buttonClickSubject.throttleFirst(2L, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                searchPlaces()
-            }, {
-            }).addTo(compositeDisposable)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    searchPlaces()
+                }, {
+                }).addTo(compositeDisposable)
     }
 
 
@@ -103,7 +103,7 @@ class SearchViewModel(
                             }
                             .subscribe({
                                 it?.let {
-                                    if(it.isNotEmpty()) {
+                                    if (it.isNotEmpty()) {
                                         _places.value = it
                                     } else {
                                         _errorResultEmpty.value = Throwable()
@@ -151,11 +151,10 @@ class SearchViewModel(
     }
 
     fun setCurrentLocation(currentLocation: LatLng) {
-        if(_currentLocation.value != currentLocation) {
+        if (_currentLocation.value != currentLocation) {
             _currentLocation.value = currentLocation
         }
     }
-
 
 
 }

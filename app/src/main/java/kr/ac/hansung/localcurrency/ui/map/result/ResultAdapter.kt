@@ -23,13 +23,13 @@ class ResultAdapter(
     override fun areItemsTheSame(oldItem: PlaceUIData, newItem: PlaceUIData): Boolean {
         return newItem == oldItem
     }
-}){
+}) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val binding = DataBindingUtil.inflate<ItemResultBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_result, parent, false
+                LayoutInflater.from(parent.context),
+                R.layout.item_result, parent, false
         )
         val holder = ResultViewHolder(binding)
         holder.itemView.setOnClickListener {
@@ -48,7 +48,7 @@ class ResultAdapter(
     }
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) =
-        holder.bind(getItem(position))
+            holder.bind(getItem(position))
 
 
     class ResultViewHolder(private val binding: ItemResultBinding) : RecyclerView.ViewHolder(binding.root) {

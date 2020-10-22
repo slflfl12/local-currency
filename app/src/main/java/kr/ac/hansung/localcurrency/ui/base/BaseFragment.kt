@@ -12,16 +12,16 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.databinding.library.baseAdapters.BR
 
-abstract class BaseFragment<B: ViewDataBinding, VM: BaseViewModel>(private val layoutResId: Int) : Fragment() {
+abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(private val layoutResId: Int) : Fragment() {
 
     protected lateinit var binding: B
 
     abstract val vm: VM
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         binding.setVariable(BR.vm, vm)
@@ -37,7 +37,7 @@ abstract class BaseFragment<B: ViewDataBinding, VM: BaseViewModel>(private val l
 
     fun showKeyboard() {
         (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
-                InputMethodManager.SHOW_FORCED,0
+                InputMethodManager.SHOW_FORCED, 0
         )
     }
 

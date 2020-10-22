@@ -83,8 +83,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
         }
 
 
-
-
     }
 
     private fun initObserve() {
@@ -136,7 +134,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
             }
         }
     }
-
 
 
     private fun onNavigateToCall() {
@@ -236,7 +233,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(R.la
         }
 
     }
-
 
 
     companion object {

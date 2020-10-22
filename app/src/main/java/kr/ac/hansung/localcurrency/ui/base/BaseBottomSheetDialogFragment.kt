@@ -22,14 +22,14 @@ abstract class BaseBottomSheetDialogFragment<B : ViewDataBinding, VM : BaseViewM
     abstract val vm: VM
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        binding.setVariable(BR.vm,vm)
+        binding.setVariable(BR.vm, vm)
         binding.lifecycleOwner = this
-        dialog?.let{
+        dialog?.let {
             it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
 
@@ -43,7 +43,7 @@ abstract class BaseBottomSheetDialogFragment<B : ViewDataBinding, VM : BaseViewM
 
     fun showKeyboard() {
         (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
-                InputMethodManager.SHOW_FORCED,0
+                InputMethodManager.SHOW_FORCED, 0
         )
     }
 

@@ -3,21 +3,21 @@
 
     <!--축소확대-->
     <scale
-        android:fromXScale="0.8"
-        android:fromYScale="0.8"
-        android:toXScale="0.0"
-        android:toYScale="0.0"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:duration="300"
-        android:interpolator="@android:anim/linear_interpolator"
-        />
+            android:fromXScale="0.8"
+            android:fromYScale="0.8"
+            android:toXScale="0.0"
+            android:toYScale="0.0"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:duration="300"
+            android:interpolator="@android:anim/linear_interpolator"
+    />
 
     <!--투명도-->
     <alpha
-        android:fromAlpha="1.0"
-        android:toAlpha="0.0"
-        android:duration="300"
-        android:interpolator="@android:anim/accelerate_interpolator"
-        />
+            android:fromAlpha="1.0"
+            android:toAlpha="0.0"
+            android:duration="300"
+            android:interpolator="@android:anim/accelerate_interpolator"
+    />
 </set>

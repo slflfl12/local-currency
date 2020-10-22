@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-            name="dialog"
-            type="kr.ac.hansung.localcurrency.ui.base.CustomAlertDialog" />
+                name="dialog"
+                type="kr.ac.hansung.localcurrency.ui.base.CustomAlertDialog"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="320dp"
-        android:layout_height="160dp">
+            android:layout_width="320dp"
+            android:layout_height="160dp">
 
         <TextView
-            android:id="@+id/tv_title"
-            android:text="@{dialog.title}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="33dp"
-            android:fontFamily="@font/notosans_regular"
-            android:textColor="@android:color/black"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_cancel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/tv_title"
+                android:text="@{dialog.title}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="33dp"
+                android:fontFamily="@font/notosans_regular"
+                android:textColor="@android:color/black"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toTopOf="@id/btn_cancel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/btn_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/notosans_bold"
-            android:onClick="@{()->dialog.okClick()}"
-            android:padding="10dp"
-            android:text="@{dialog.okText}"
-            android:textColor="@android:color/black"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/btn_cancel"
-            app:layout_constraintEnd_toStartOf="@id/btn_cancel"
-            app:layout_constraintTop_toTopOf="@id/btn_cancel"
+                android:id="@+id/btn_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/notosans_bold"
+                android:onClick="@{()->dialog.okClick()}"
+                android:padding="10dp"
+                android:text="@{dialog.okText}"
+                android:textColor="@android:color/black"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/btn_cancel"
+                app:layout_constraintEnd_toStartOf="@id/btn_cancel"
+                app:layout_constraintTop_toTopOf="@id/btn_cancel"
 
-            />
+        />
 
         <TextView
-            android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="14dp"
-            android:fontFamily="@font/notosans_bold"
-            android:onClick="@{()->dialog.cancelClick()}"
-            android:text="@{dialog.cancelText}"
-            android:textColor="@android:color/black"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="14dp"
+                android:fontFamily="@font/notosans_bold"
+                android:onClick="@{()->dialog.cancelClick()}"
+                android:text="@{dialog.cancelText}"
+                android:textColor="@android:color/black"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

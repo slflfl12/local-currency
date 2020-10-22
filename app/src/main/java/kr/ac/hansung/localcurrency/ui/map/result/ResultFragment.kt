@@ -82,7 +82,6 @@ class ResultFragment : BaseBottomSheetDialogFragment<FragmentResultBinding, MapV
     }
 
 
-
     companion object {
         val TAG: String = this::class.java.simpleName
 
