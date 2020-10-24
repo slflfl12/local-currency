@@ -38,10 +38,7 @@ class SplashActivity : AppCompatActivity() {
             binding.setVariable(BR.vm, vm)
             binding.lifecycleOwner = this@SplashActivity
         }
-
-
         initView()
-        bindViewModel()
         initObserve()
     }
 
@@ -73,10 +70,7 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        bindViewModel()
-    }
+
 
     private fun initObserve() {
         vm.loadingSubject
@@ -102,7 +96,7 @@ class SplashActivity : AppCompatActivity() {
             if (pair.first && pair.second) {
                 TedRx2Permission.with(this)
                     .setRationaleTitle("경고")
-                    .setRationaleMessage("위치 권한 허가를 하셔야 정상적으로 서비스를 이용하실 수 있습니다.\\n\\n위치 권한 허용을 해주세요 [Setting] > [Permission]") // "we need permission for read contact and find your location"
+                    .setRationaleMessage("위치 권한 허가를 하셔야 정상적으로 서비스를 이용하실 수 있습니다. 위치 권한 허용을 해주세요 [Setting] > [Permission]") // "we need permission for read contact and find your location"
                     .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
                     .request()
                     .subscribe({
@@ -127,9 +121,7 @@ class SplashActivity : AppCompatActivity() {
         vm.loading.observe(this, EventObserver(this@SplashActivity::setLoadingText))
     }
 
-    private fun bindViewModel() {
 
-    }
 
     private fun setLoadingText(num: Int) {
         if (num == 270) {
